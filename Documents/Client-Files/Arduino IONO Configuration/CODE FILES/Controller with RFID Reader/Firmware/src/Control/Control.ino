@@ -36,7 +36,8 @@
 #include <wtDebug.h> // after Bridge.h
 
 
-
+#define cnst    65536 //RFID Multiplier
+#define sitegnd 1     //Community Code 1
 // The object that handles the wiegand protocol
 WIEGAND wiegand;
 Process controlProc;
@@ -162,10 +163,10 @@ void setup() {
 // the loop function runs over and over again until power down or reset
 void loop() {
 
-  if (millis() - currentMillis > 15000) {
-    codeReceived(2371966);
-    currentMillis = millis();
-  }
+//  if (millis() - currentMillis > 15000) {
+//    codeReceived(2371966);
+//    currentMillis = millis();
+//  }
   
 	if (wiegand.available()) {
 
@@ -201,7 +202,6 @@ void loop() {
 	}
 
 #endif
-    codeReceived(2371966);
 		if (wiegand.parityOkW26()) codeReceived(wiegand.getCode());
 
 }
@@ -423,6 +423,9 @@ void codeReceived(unsigned long code) {
 	if (!controlProc.running()) {
 
 		char str[10] = "";
+
+    int tag_num = code - cnst * sitegnd;
+    code = cnst * sitegnd + tag_num;
 		ltoa(code, str, DEC);
 		/*
 		ltoa(code, str, HEX);
