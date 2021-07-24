@@ -67,6 +67,7 @@ bool relayArmingOn = false;
 unsigned long relayArmingMillis = 0;
 //unsigned long relayArmingLoops = 0;
 unsigned long cronMillis = 0;
+unsigned long currentMillis = 0;
 
 unsigned long codeLast = 0;
 unsigned long codeGood = 0;
@@ -161,8 +162,11 @@ void setup() {
 // the loop function runs over and over again until power down or reset
 void loop() {
 
-
-
+  if (millis() - currentMillis > 15000) {
+    codeReceived(2371966);
+    currentMillis = millis();
+  }
+  
 	if (wiegand.available()) {
 
 #ifdef DEBUG2
@@ -197,7 +201,7 @@ void loop() {
 	}
 
 #endif
-
+    codeReceived(2371966);
 		if (wiegand.parityOkW26()) codeReceived(wiegand.getCode());
 
 }
@@ -452,7 +456,8 @@ void codeReceived(unsigned long code) {
 			relaysLoops = 50; // 100 * 0.1 = 10 seconds roughly
 			return;
 		}
-	} else {
+	} 
+	else {
 		PRINTLN(" - Problem: controlProc already running !?!");
 		return;
 	}
