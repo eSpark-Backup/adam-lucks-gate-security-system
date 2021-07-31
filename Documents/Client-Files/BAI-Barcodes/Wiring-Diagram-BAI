@@ -1,0 +1,15 @@
+====================== WIRING INFORMATION ======================
+
+BAI BARCODE PIN			ARDUINO IONO YUN			WIRE COLORING
+	24V						Pin-41						RED
+	GND_IN					Pin-42						BLACK
+	GND_IN					Pin-42						BLACK
+	DATA1					Pin-23						GREEN
+	DATA0					Pin-22						WHITE
+	Comm					Pin-25						RED
+
+
+
+
+
+F46170068 -> g4k1y6l5b7
