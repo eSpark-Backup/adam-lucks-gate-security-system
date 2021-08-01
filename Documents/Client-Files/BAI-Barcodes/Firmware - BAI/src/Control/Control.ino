@@ -97,7 +97,7 @@ void setup() {
 	wiegand.begin(100, 0);
 #endif
 #if READER_TYPE == 4 // BAI
-  wiegand.begin(1000, 26);
+  wiegand.begin(30, 26);
 #endif
 
 	pinMode(buttonOpenPin, INPUT);
@@ -426,8 +426,8 @@ void codeReceived(unsigned long code) {
 
 		char str[10] = "";
 
-//    int tag_num = code - cnst * sitegnd;
-//    code = (cnst * sitegnd) + tag_num;
+    int tag_num = code - cnst * sitegnd;
+    code = (cnst * sitegnd) + tag_num;
 		ltoa(code, str, DEC);
 		/*
 		ltoa(code, str, HEX);
