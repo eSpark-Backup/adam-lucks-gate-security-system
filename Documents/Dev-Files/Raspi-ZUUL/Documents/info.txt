@@ -50,3 +50,30 @@ curl -F "upload=@licence.jpg" -F regions=us-ca -H "Authorization: Token 80ec03b9
   curl -F "upload=@/home/pi/Pictures/car_lic2.jpg" -F regions=us-ca \
   -H "Authorization: Token 80ec03b9cf3072ba680bd45b6d3008db9d769670" \
   https://api.platerecognizer.com/v1/plate-reader
+
+
+
+===== PYREBASE OBJECT =====
+import pyrebase
+
+config = {
+  "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
+  "authDomain": "zuul-master.firebaseapp.com",
+  "databaseURL": "https://zuul-master.firebaseio.com",
+  "storageBucket": "zuul-master.appspot.com"
+}
+
+firebase = pyrebase.initialize_app(config)
+auth = firebase.auth()
+user = auth.sign_in_with_email_and_password("ketchuma129@gmail.com", "myzuulsystem!")
+db = firebase.database()
+
+data = {
+    "ImageID": "04112021ZUUL2.0"
+}
+
+results = db.child("134:1364:464").push(data, user['idToken'])
+db.child("cameras").child("134:1364:464").update({"capture_progress": "true"}) // Update property
+db.child("cameras").child("134:1364:464").push(data, user['idToken'])
+db.child("cameras").child("134:1364:464").update({"imageURL": "gs://zuul-master.appspot.com/images/OCR_Image.jpg"})
+
