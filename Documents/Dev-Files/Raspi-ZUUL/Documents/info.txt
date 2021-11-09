@@ -71,12 +71,15 @@ db = firebase.database()
 st = firebase.storage();
 
 data = {
-    "ImageID": "04112021ZUUL2.0"
+    "ImageID" : "car_09112021_1",
+    "ImageURL" : "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2Fcar_09112021_1.jpg?alt=media&token=c1bedb39-2ad9-4277-94dc-41b18f899866"
 }
+
+db.child("cameras").child("134:1364:464").update(data)
 
 results = db.child("134:1364:464").push(data, user['idToken'])
 db.child("cameras").child("134:1364:464").update({"capture_progress": "true"}) // Update property
-db.child("cameras").child("134:1364:464").push(data, user['idToken'])
+
 db.child("cameras").child("134:1364:464").update({"imageURL": "gs://zuul-master.appspot.com/images/OCR_Image.jpg"})
 st.child("images/OCR_Image.jpg").get_url(user['idToken'])
 
