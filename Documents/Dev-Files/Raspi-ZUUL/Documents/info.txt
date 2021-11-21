@@ -11,7 +11,7 @@ ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Stream
 ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -vframes 1 /home/pi/Pictures/new_test.jpg
 
 ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf zoom=2 fps=fps=1 /home/pi/Pictures/car_09112021_1.jpg // Zoomed Image
-ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf fps=fps=1 /home/pi/Pictures/car_09112021_1.jpg // Normal Image
+ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf fps=fps=1 /home/pi/Pictures/car_21112021.jpg // Normal Image
 
 ffmpeg -i /home/pi/Pictures/car_03112021.jpg\
        -vf "zoompan=z='min(zoom+0.01,2.5)':x='iw/2-iw*(1/2-27/100)*on/150-iw/zoom/2':y='ih/2-ih*(1/2-81/100)*on/150-ih/zoom/2':d=150" \
@@ -38,6 +38,9 @@ Port for Remote: 3389
 
 username: pi
 password: myzuulsystem
+PI ID: 100000002af993d7
+ImageBaseURL = https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2F
+ImageAuxURL = ?alt=media&token=
 
 Camera IP: 192.168.1.64
 Camera Port: 554
@@ -81,9 +84,9 @@ results = db.child("134:1364:464").push(data, user['idToken'])
 db.child("cameras").child("134:1364:464").update({"capture_progress": "true"}) // Update property
 
 db.child("cameras").child("134:1364:464").update({"imageURL": "gs://zuul-master.appspot.com/images/OCR_Image.jpg"})
-st.child("images/OCR_Image.jpg").get_url(user['idToken'])
+st.child("images/041120212.0.jpg").get_url(user['idToken'])
 
-st.child("images/041120212.0.jpg").put("/home/pi/Pictures/OCR_Image.jpg", user['idToken'])
+st.child("images/upload_test.jpg").put("/home/pi/Pictures/car_18112021_1.jpg", user['idToken'])
 
 x = st.child("images/OCR_Image.jpg").get_url("5d3feaf0-efab-4e1e-a014-789a2ca1acd0")
 db.child("cameras").child("134:1364:464").update({"imageURL": x})
