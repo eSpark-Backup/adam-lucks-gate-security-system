@@ -10,8 +10,8 @@ ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Stream
 
 ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -vframes 1 /home/pi/Pictures/new_test.jpg
 
-ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf zoom=2 fps=fps=1 /home/pi/Pictures/car_09112021_1.jpg // Zoomed Image
-ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf fps=fps=1 /home/pi/Pictures/car_21112021.jpg // Normal Image
+ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500 -loglevel quiet /home/pi/Pictures/zoom_image2.jpg // Zoomed Image
+ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf fps=fps=1 -loglevel quiet /home/pi/Pictures/car_21112021.jpg // Normal Image
 
 ffmpeg -i /home/pi/Pictures/car_03112021.jpg\
        -vf "zoompan=z='min(zoom+0.01,2.5)':x='iw/2-iw*(1/2-27/100)*on/150-iw/zoom/2':y='ih/2-ih*(1/2-81/100)*on/150-ih/zoom/2':d=150" \

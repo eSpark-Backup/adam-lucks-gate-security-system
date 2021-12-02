@@ -10,6 +10,7 @@ imagePath    = "/home/pi/Pictures/"
 ImageBaseURL = "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2F"
 ImageAuxURL  = "?alt=media&token="
 imageformat  = ".jpg"
+zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 
 
 config = {
@@ -39,7 +40,8 @@ try:
 			timestamp = datetime.utcfromtimestamp(imageID)
 			imageID = str(imageID)
 
-			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf fps=fps=1 "+imagePath+imageID+imageformat)
+			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf 'crop=iw/4:ih/4' -loglevel quiet "+imagePath+imageID+imageformat)
+			#os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet "+imagePath+imageID+imageformat)
 			user = auth.refresh(user['refreshToken'])
 			st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
 			accesToken = st_response["downloadTokens"]
