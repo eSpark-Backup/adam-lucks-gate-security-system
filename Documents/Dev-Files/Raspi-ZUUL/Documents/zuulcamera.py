@@ -1,16 +1,45 @@
 import os
-import time
 import json
+import time
+import locale
 import pyrebase
 from time import sleep
+from openalpr import Alpr
 from datetime import datetime
-
+locale.setlocale(locale.LC_ALL, 'C')
 
 imagePath    = "/home/pi/Pictures/"
 ImageBaseURL = "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2F"
 ImageAuxURL  = "?alt=media&token="
 imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
+
+
+def OCR():
+    alpr = None
+    try:
+        alpr = Alpr("us", "/etc/openalpr/openalpr.conf","/usr/share/openalpr/runtime_data",)
+        print("Test")
+
+        if not alpr.is_loaded():
+            print("Error loading OpenALPR")
+        else:
+            print("Using OpenALPR " + alpr.get_version())
+
+        alpr.set_top_n(7)
+        alpr.set_default_region("wa")
+        alpr.set_detect_region(False)
+        jpeg_bytes = open(imagePath+"1637513438"+imageformat, "rb").read()
+        results = alpr.recognize_array(jpeg_bytes)
+        print(results)
+        print(results['results'][0]['plate'])
+        return (results['results'][0]['plate'])
+
+
+
+    finally:
+        if alpr:
+            alpr.unload()
 
 
 config = {
@@ -46,9 +75,12 @@ try:
 			st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
 			accesToken = st_response["downloadTokens"]
 
+			plateNum = OCR()
+
 			data = {"ImageID" : imageID+imageformat,
 			"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
 			"timestamp" : str(timestamp),
+			"plateNum" : plateNum,
 			"capture_progress" : "False"
 			}
 			db.child("cameras").child("134:1364:464").update(data, user['idToken'])
