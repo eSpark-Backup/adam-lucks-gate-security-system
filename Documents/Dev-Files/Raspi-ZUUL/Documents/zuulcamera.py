@@ -15,7 +15,7 @@ imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 
 
-def OCR():
+def OCR(imgpath, imgid, imgformat):
     alpr = None
     try:
         alpr = Alpr("us", "/etc/openalpr/openalpr.conf","/usr/share/openalpr/runtime_data",)
@@ -29,13 +29,19 @@ def OCR():
         alpr.set_top_n(7)
         alpr.set_default_region("wa")
         alpr.set_detect_region(False)
-        jpeg_bytes = open(imagePath+"1637513438"+imageformat, "rb").read()
+        print(imgpath+imgid+imgformat)
+        jpeg_bytes = open(imgpath+imgid+imgformat, "rb").read()
         results = alpr.recognize_array(jpeg_bytes)
         print(results)
-        print(results['results'][0]['plate'])
-        return (results['results'][0]['plate'])
 
+        data = {}
+        for plate in results['results']:
+            for candidate in plate['candidates']:
+                data[candidate['plate']]=candidate['confidence']
+                data.update(data)
 
+        plateNum = max(data, key=data.get)
+        return plateNum
 
     finally:
         if alpr:
@@ -69,13 +75,15 @@ try:
 			timestamp = datetime.utcfromtimestamp(imageID)
 			imageID = str(imageID)
 
-			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf 'crop=iw/4:ih/4' -loglevel quiet "+imagePath+imageID+imageformat)
+			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet "+imagePath+imageID+imageformat)
+			plateNum = OCR(imagePath, imageID, imageformat)
+			os.system("ffmpeg -i "+imagePath+imageID+imageformat+" -y -vf 'crop=iw/4:ih/4' -loglevel quiet "+imagePath+imageID+imageformat)
 			#os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet "+imagePath+imageID+imageformat)
 			user = auth.refresh(user['refreshToken'])
 			st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
 			accesToken = st_response["downloadTokens"]
 
-			plateNum = OCR()
+			
 
 			data = {"ImageID" : imageID+imageformat,
 			"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
