@@ -14,6 +14,8 @@ ImageAuxURL  = "?alt=media&token="
 imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 
+plateNum     = 0
+
 
 def OCR():
     alpr = None
@@ -29,7 +31,7 @@ def OCR():
         alpr.set_top_n(7)
         alpr.set_default_region("wa")
         alpr.set_detect_region(False)
-        jpeg_bytes = open(imagePath+"1637513438"+imageformat, "rb").read()
+        jpeg_bytes = open("/home/pi/Pictures/capture.jpg", "rb").read()
         results = alpr.recognize_array(jpeg_bytes)
         print(results)
         print(results['results'][0]['plate'])
@@ -69,13 +71,14 @@ try:
 			timestamp = datetime.utcfromtimestamp(imageID)
 			imageID = str(imageID)
 
-			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -vf 'crop=iw/4:ih/4' -loglevel quiet "+imagePath+imageID+imageformat)
+			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
+			os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -vf 'crop=iw/4:ih/4' -loglevel quiet "+imagePath+imageID+imageformat)
 			#os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet "+imagePath+imageID+imageformat)
 			user = auth.refresh(user['refreshToken'])
 			st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
 			accesToken = st_response["downloadTokens"]
 
-			plateNum = OCR()
+			#plateNum = OCR()
 
 			data = {"ImageID" : imageID+imageformat,
 			"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
