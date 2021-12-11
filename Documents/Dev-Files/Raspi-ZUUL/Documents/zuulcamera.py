@@ -17,7 +17,7 @@ zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 plateNum     = 0
 
 
-def OCR():
+def OCR(imgpath, imgid, imgformat):
     alpr = None
     try:
         alpr = Alpr("us", "/etc/openalpr/openalpr.conf","/usr/share/openalpr/runtime_data",)
@@ -34,10 +34,15 @@ def OCR():
         jpeg_bytes = open("/home/pi/Pictures/capture.jpg", "rb").read()
         results = alpr.recognize_array(jpeg_bytes)
         print(results)
-        print(results['results'][0]['plate'])
-        return (results['results'][0]['plate'])
 
+        data = {}
+        for plate in results['results']:
+            for candidate in plate['candidates']:
+                data[candidate['plate']]=candidate['confidence']
+                data.update(data)
 
+        plateNum = max(data, key=data.get)
+        return plateNum
 
     finally:
         if alpr:
