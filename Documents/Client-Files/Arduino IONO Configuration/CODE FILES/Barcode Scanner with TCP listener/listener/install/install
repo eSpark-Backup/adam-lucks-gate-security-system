@@ -1,0 +1,103 @@
+#!/bin/bash
+#
+# TCP Listener - Installer
+# @author Alex D. 
+# @link https://www.upwork.com/o/profiles/users/_~0170b9b80bdefdcd81/
+#
+#
+# chmod 0700 /home/ec2-user/listener/install/install && sudo /home/ec2-user/listener/install/install 
+#
+
+
+SCRIPTDIR=$(cd `dirname $0` && pwd)
+force=""
+[ -n "$1" ]	&& force="-f"
+
+mkdir -p /opt/listener/log
+mkdir -p /opt/listener/run
+
+
+
+
+if ! id listener &> /dev/null; then
+
+	yum install socat curl
+
+	echo " - Creating user listener"
+	useradd --home /opt/listener/exec --shell /bin/false --user-group --system --comment Listener listener
+
+fi
+
+
+
+cd /opt/listener
+
+
+## Copy files to the dedicated folder /opt/listener
+if [ "$SCRIPTDIR" != "/opt/listener/install" ]; then
+	echo " - Copying scripts"
+	cp -r $force "$SCRIPTDIR/../"* . &> /dev/null
+fi
+
+## The default configuration file
+if [ ! -f "conf/listen.conf" ]; then
+	cp "$SCRIPTDIR/defaults.conf" conf/listen.conf &> /dev/null
+fi
+
+
+echo " - Setting Permissions"
+
+chown -R root:listener /opt/listener
+
+cd /opt/listener
+
+## all directories, recursively
+find . -type d -exec chmod 750 {} \;
+
+## all files, recursively
+find . -type f -exec chmod 640 {} \;
+
+
+chown -R listener:listener run log
+chmod 0750 /opt/listener run log exec/listen install/install install/cron
+chmod 0660 conf/listen.conf
+rm -f exec/debug
+
+## Add user ec2-user (if exists) to group listener so it could modify the config file
+if id listener &> /dev/null; then
+	usermod -a -G listener ec2-user
+fi
+
+### The demo script that can be called via HTTP to check the barcode
+#echo " - Copy a demo PHP script to /var/www/html/"
+#########################################################
+#cp $force install/barcodeReceived.php /var/www/html/ &> /dev/null
+#chmod 0644 /var/www/html/barcodeReceived.php
+#chown root:www /var/www/html/barcodeReceived.php
+
+
+
+
+echo " - Creating the Cron Job file"
+########################################################
+CRONF=/etc/cron.d/listener
+
+MINUTES=2
+
+cat > $CRONF << \EOF
+SHELL=/bin/bash
+LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+USER=listener
+HOME=/opt/listener/exec
+SHELL=/bin/bash
+LOGNAME=listener
+EOF
+echo -e "*/$MINUTES * * * * listener /opt/listener/install/cron > /dev/null  2>&1" >> $CRONF
+
+
+
+
+
+echo " [ ok ] TCP Listener Installed Sucessfully !"
+########################################################
+echo

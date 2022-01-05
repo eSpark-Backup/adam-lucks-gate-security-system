@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# TCP Listener Cron File
+# Executed every 2-5 minutes !
+# It`s purpose is to start the listener and keep it running indefinetly
+#
+# @author Alex D. 
+# @link https://www.upwork.com/o/profiles/users/_~0170b9b80bdefdcd81/
+#
+
+
+# ,keepalive,keepcnt=5,keepidle=10,keepintvl=2 
+
+# Listener no 1 on port 42001 - should be used by max 5 scanners
+socat -s -d -d -L"/opt/listener/run/listener1.lock" TCP4-LISTEN:42001,reuseaddr,fork EXEC:/opt/listener/exec/listen,pty,ignbrk=0,echo=0 &>"/opt/listener/run/listener1.out" &
+
+# Listener no 2 on port 42002 - should be used by max 5 scanners
+socat -s -d -d -L"/opt/listener/run/listener2.lock" TCP4-LISTEN:42002,reuseaddr,fork EXEC:/opt/listener/exec/listen,pty,ignbrk=0,echo=0 &>"/opt/listener/run/listener2.out" &
+
+
+## sudo -u listener -g listener --
+
+
+## Prevent background jobs from being killed when the terminal closes
+disown -ar
+
+
+
