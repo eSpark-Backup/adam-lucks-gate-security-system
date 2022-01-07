@@ -105,3 +105,16 @@ See the last data sent by scanner 1
 - the next 5, port 42002 
 - the next 5, port 42003 ( + the listener needs to be configured to listen on  42003 )
 - the next 5, port 42004 ( + the listener needs to be configured to listen on  42004 )
+
+### LiquidWeb Backend SSH Credentials
+
+User: root 
+Pass: &M,oLvZCq#}C 
+
+https://72.52.146.4:2087/
+
+ssh sshuser@72.52.146.4 -p 522
+
+Username: sshuser 
+Password: &M,oLvZCq#}C 
+Port: 522
