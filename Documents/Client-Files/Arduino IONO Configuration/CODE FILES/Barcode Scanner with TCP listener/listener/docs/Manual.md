@@ -93,8 +93,8 @@ See a list of connected scanners:
 Disconnect all scanners (they will reconnect in max 3 minutes)
 > sudo killall socat
  
-See the last data sent by scanner 1
-> sudo tail '/opt/listener/log/Scanner1.log'
+See the last data sent by scanner 2
+> sudo tail '/opt/listener/log/Scanner2.log'
 
 
 
