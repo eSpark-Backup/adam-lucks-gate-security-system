@@ -14,8 +14,8 @@
 
 
 #ifndef UniqueID
-#define UniqueID "F46170099"	    // The controller Serial Number, same as hostname
-#define SecretKey "s5m3g5h9e8"		// The controller SecretKey
+#define UniqueID "F46170078"	    // The controller Serial Number, same as hostname
+#define SecretKey "aurr9FMM8x"		// The controller SecretKey
 #endif
 
 
