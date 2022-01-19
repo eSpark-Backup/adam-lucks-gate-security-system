@@ -19,8 +19,8 @@
 #endif
 
 
-#define ApiUrlAllCodes "https://app.zuulsystems.com/api/get_all_rf_code"
-#define ApiUrlCode "https://app.zuulsystems.com/api/scanned_rf_code/"
+#define ApiUrlAllCodes "http://zuul2.zuulsystems.com/api/get-rfid-codes/"
+#define ApiUrlCode "http://zuul2.zuulsystems.com/api/scanned-rfid-code/"
 
 
 
