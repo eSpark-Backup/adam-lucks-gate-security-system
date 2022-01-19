@@ -149,13 +149,6 @@ void setup() {
 	}
 
 
-	//PRINT("ApiArg: ");
-	//PRINTLN(ApiArg);
-	//PRINT("ApiArgs: ");
-	//PRINTLN(ApiArgs);
-
-
-
 }
 
 
@@ -227,7 +220,10 @@ void loop() {
 			if (!controlProc.running()) {
 
 				PRINTLN(" - Running /root/control.sh allcodes");
-
+        PRINT("ApiArg: ");
+        PRINTLN(ApiArg);
+        PRINT("ApiArgs: ");
+        PRINTLN(ApiArgs);
 
 				controlProc.begin("/root/control.sh");
 				controlProc.addParameter("allcodes");
@@ -235,7 +231,7 @@ void loop() {
 				controlProc.addParameter(ApiArgs);
 
 				controlProc.run();
-
+      
 				if (controlProc.exitValue() == 0) {
 					PRINTLN(" - All Codes Fetched!");
 				} else {

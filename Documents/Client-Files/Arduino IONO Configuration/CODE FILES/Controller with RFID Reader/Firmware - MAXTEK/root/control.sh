@@ -7,6 +7,7 @@
 CODESBUF=/tmp/accessCodes.buf
 LOGF=/tmp/access.log
 OFFLINEBUF=/tmp/accessOffline.buf
+TESTFILE=/tmp/debug.buf
 
 uptime=`awk '{print int($1)}' /proc/uptime`
 
@@ -119,7 +120,8 @@ if [ "$1" == 'allcodes' ]; then
 	touch $OFFLINEBUF
 	echo "" > $outA
 
-	status=`curl --connect-timeout 5 --max-time 60 --basic --silent --retry 2 --retry-delay 10 --retry-max-time 60 -H "Content-Type: text/plain" --data-binary "@$OFFLINEBUF" --output /tmp/bufAll.tmp $apiUrl`
+	status=`curl --request GET --connect-timeout 5 --max-time 60 --basic --silent --retry 2 --retry-delay 10 --retry-max-time 60 -H "Content-Type: text/plain" --data-binary "@$OFFLINEBUF" --output /tmp/bufAll.tmp $apiUrl`
+
 	if [ "$status" = "200" ] && [ -s /tmp/bufAll.tmp ]; then
 		firstLine=`head -n 1 /tmp/bufAll.tmp`
 		firstLine=${firstLine//[^[:alnum:]]/}		
@@ -158,7 +160,7 @@ if [ "$1" == 'code' ]; then
 
 		allowedRemote=""
 		allowedLocal=""
-		status=`curl --connect-timeout 3 --max-time 6 --basic --silent --retry 1 --retry-delay 1 --retry-max-time 6 --output /tmp/bufCode.tmp $apiUrl$code`
+		status=`curl --request GET --connect-timeout 3 --max-time 6 --basic --silent --retry 1 --retry-delay 1 --retry-max-time 6 --output /tmp/bufCode.tmp $apiUrl$code`
 
 		firstLine=`head -n 1 /tmp/bufCode.tmp`
 		firstLine=${firstLine//[^[:alnum:]]/}
