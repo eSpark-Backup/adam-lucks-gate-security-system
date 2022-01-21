@@ -108,6 +108,8 @@ See the last data sent by scanner 2
 
 ### LiquidWeb Backend SSH Credentials
 
+### Live Server Info
+
 User: root 
 Pass: &M,oLvZCq#}C 
 
@@ -118,3 +120,15 @@ ssh sshuser@72.52.146.4 -p 522
 Username: sshuser 
 Password: &M,oLvZCq#}C 
 Port: 522
+
+
+### Development Server Info
+
+User: root 
+Pass: &M,oLvZCq#}C 
+
+https://72.52.146.35:2083/
+
+Username: root
+Password: 8\0lHN-}Bhm0s{
+Port: 22
