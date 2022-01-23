@@ -125,10 +125,12 @@ Port: 522
 ### Development Server Info
 
 User: root 
-Pass: &M,oLvZCq#}C 
+Pass: 8\0lHN-}Bhm0s{
 
 https://72.52.146.35:2083/
 
 Username: root
 Password: 8\0lHN-}Bhm0s{
 Port: 22
+
+sudo firewall-cmd --zone=public --add-port=42001/tcp
