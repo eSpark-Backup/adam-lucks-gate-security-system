@@ -8,7 +8,7 @@ elseif (!empty($_POST['BarCode'])) {
 	// Executed via HTTP
 
 	// This script should be called only from certain IPs
-	if (!in_array($_SERVER["REMOTE_ADDR"], ['127.0.0.1', '72.52.146.35'])) {
+	if (!in_array($_SERVER["REMOTE_ADDR"], ['127.0.0.1', '18.217.195.71'])) {
 		die("Access Denied!");
 	}
 
