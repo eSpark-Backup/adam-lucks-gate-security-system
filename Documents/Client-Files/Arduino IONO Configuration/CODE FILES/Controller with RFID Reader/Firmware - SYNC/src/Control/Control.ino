@@ -15,7 +15,7 @@
 
 #ifndef UniqueID
 #define UniqueID "F46170078"	    // The controller Serial Number, same as hostname
-#define SecretKey "aurr9FMM8x"		// The controller SecretKey
+#define SecretKey "aDakBPUOvJ"		// The controller SecretKey
 #endif
 
 
@@ -37,7 +37,7 @@
 
 
 #define cnst    65536 //RFID Multiplier
-#define sitegnd 1     //Community Code 1
+#define sitecode 40     //AZURA
 // The object that handles the wiegand protocol
 WIEGAND wiegand;
 Process controlProc;
@@ -423,8 +423,8 @@ void codeReceived(unsigned long code) {
 
 		char str[10] = "";
 
-    int tag_num = code - cnst * sitegnd;
-    code = cnst * sitegnd + tag_num;
+    int tag_num = code - cnst * sitecode;
+    code = cnst * sitecode + tag_num;
 		ltoa(code, str, DEC);
 		/*
 		ltoa(code, str, HEX);
