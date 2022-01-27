@@ -15,7 +15,7 @@
 
 #ifndef UniqueID
 #define UniqueID "F46170078"	    // The controller Serial Number, same as hostname
-#define SecretKey "5pTJZSsWeC"		// The controller SecretKey
+#define SecretKey "aurr9FMM8x"		// The controller SecretKey
 #endif
 
 
@@ -27,7 +27,7 @@
 
 
 #ifndef READER_TYPE
-#define READER_TYPE 3 // 1=default 2=AWID 3=Maxtek
+#define READER_TYPE 3 // 1=default 2=AWID 3=Maxtek 4=SYNC
 #endif
 
 #include <Bridge.h>
@@ -87,7 +87,7 @@ String ApiArg;
 // the setup function runs once when you press reset or power the board
 void setup() {
 	   
-#if READER_TYPE == 1 // Default
+#if READER_TYPE == 1 // Default AWID
 	wiegand.begin(30 , 26);
 #endif
 #if READER_TYPE == 2 // AWID
@@ -95,6 +95,9 @@ void setup() {
 #endif
 #if READER_TYPE == 3 // MAXTEK
 	wiegand.begin(100, 0);
+#endif
+#if READER_TYPE == 4 // SYNC
+  wiegand.begin(100, 0);
 #endif
 
 
