@@ -97,7 +97,7 @@ See the last data sent by scanner 2
 > sudo tail '/opt/listener/log/Scanner2.log'
 
 See all the SOCAT open ports
-> lsof -i -P -n | grep socat
+> sudo lsof -i -P -n | grep socat
 
 Open FirewallD Port
 > sudo firewall-cmd --zone=public --add-port=42001/tcp
