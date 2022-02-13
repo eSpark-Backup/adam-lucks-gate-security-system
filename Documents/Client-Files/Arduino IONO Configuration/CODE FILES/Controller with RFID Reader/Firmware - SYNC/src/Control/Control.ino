@@ -19,15 +19,15 @@
 #endif
 
 
-#define ApiUrlAllCodes "http://app.zuulsystems.com/api/get-rfid-codes/"
-#define ApiUrlCode "http://app.zuulsystems.com/api/scanned-rfid-code/"
+#define ApiUrlAllCodes "http://zuul2.zuulsystems.com/api/get-rfid-codes/"
+#define ApiUrlCode "http://zuul2.zuulsystems.com/api/scanned-rfid-code/"
 
 
 
 
 
 #ifndef READER_TYPE
-#define READER_TYPE 3 // 1=default 2=AWID 3=Maxtek 4=SYNC
+#define READER_TYPE 4 // 1=default 2=AWID 3=Maxtek 4=SYNC
 #endif
 
 #include <Bridge.h>
@@ -36,8 +36,8 @@
 #include <wtDebug.h> // after Bridge.h
 
 
-#define cnst    65536 //RFID Multiplier
-#define sitecode 40     //AZURA
+#define cnst     65536 // RFID Multiplier
+#define sitecode 40    // AZURA
 // The object that handles the wiegand protocol
 WIEGAND wiegand;
 Process controlProc;
