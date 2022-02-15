@@ -170,8 +170,11 @@ do
 
 				## Sanitize the BarCode (numbers only):				
 				BarCode=${MESSAGE//[^[:digit:]]/}
-				if [ "$BarCode" = "$MESSAGE" ] && [ -n "$BarCode" ]; then					
+				if [ "$BarCode" = "$MESSAGE" ] && [ -n "$BarCode" ]; then
+					echo "Inside Function" >> $LOGF
+					echo "$MESSAGE $IDENTIFIER" >> $LOGF					
 					barcodeReceived "$MESSAGE" "$IDENTIFIER"
+
 				fi
 
 
