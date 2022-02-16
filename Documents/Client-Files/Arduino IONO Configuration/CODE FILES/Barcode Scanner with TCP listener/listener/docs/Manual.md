@@ -16,17 +16,17 @@ The numeric Password will be calculated using the formula ((41414+N)*N) - only t
 - Get Parameters
 - Set parameters as in parameters.png
 ```
- Server 1&2 Address				18.217.195.71
- Server 1&2 Port Number			42001
- Identifier					Scanner N
- Password					{first 5 digits from ((41414+N)*N)}
- Inactivity Timer			99	
- MODE						TCP Client
- DHCP 						on	
- Password Required			off
- Clinet Send ID				on
- Phy monitor				on
- Keep Alives				on
+ Server 1&2 Address             18.217.195.71
+ Server 1&2 Port Number         42001
+ Identifier                 Scanner N
+ Password                   {first 5 digits from ((41414+N)*N)}
+ Inactivity Timer           99  
+ MODE                       TCP Client
+ DHCP                       on  
+ Password Required          off
+ Clinet Send ID             on
+ Phy monitor                on
+ Keep Alives                on
 ```
 - Reboot
 
@@ -93,8 +93,14 @@ See a list of connected scanners:
 Disconnect all scanners (they will reconnect in max 3 minutes)
 > sudo killall socat
  
-See the last data sent by scanner 1
-> sudo tail '/opt/listener/log/Scanner1.log'
+See the last data sent by scanner 2
+> sudo tail '/opt/listener/log/Scanner2.log'
+
+See all the SOCAT open ports
+> sudo lsof -i -P -n | grep socat
+
+Open FirewallD Port
+> sudo firewall-cmd --zone=public --add-port=42001/tcp
 
 
 
@@ -105,3 +111,30 @@ See the last data sent by scanner 1
 - the next 5, port 42002 
 - the next 5, port 42003 ( + the listener needs to be configured to listen on  42003 )
 - the next 5, port 42004 ( + the listener needs to be configured to listen on  42004 )
+
+### LiquidWeb Backend SSH Credentials
+
+### Live Server Info
+
+User: root 
+Pass: &M,oLvZCq#}C 
+
+https://72.52.146.4:2087/
+
+ssh sshuser@72.52.146.4 -p 522
+
+Username: sshuser 
+Password: &M,oLvZCq#}C 
+Port: 522
+
+
+### Development Server Info
+
+User: root 
+Pass: 8\0lHN-}Bhm0s{
+
+https://72.52.146.35:2083/
+
+Username: root
+Password: 8\0lHN-}Bhm0s{
+Port: 22
