@@ -1,0 +1,20 @@
+===== CAMERA ADMIN 01 =====
+administrator
+AZURA_CCTV_#1!
+
+
+===== CAMERA ADMIN 02 =====
+admin
+myzuulsystem1
+
+===== URL FOR STILL IMAGE CAPTURE =====
+http://107.128.123.204/media/cam0/still.jpg?res=max
+
+===== ROUTER ACCESS CODE =====
+%72/#</2%/
+
+===== URL FOR LIVE RTSP STREAM =====
+rtsp://admin:myzuulsystem1@107.128.123.204/defaultPrimary?mtu=1440&streamType=u
+
+===== RTSP GLOBAL BROADCAST URL =====
+<iframe width="640" height="480" src="https://rtsp.me/embed/5YebSyzt/" frameborder="0" allowfullscreen></iframe>
