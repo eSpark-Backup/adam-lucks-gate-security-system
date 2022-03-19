@@ -102,6 +102,9 @@ See all the SOCAT open ports
 Open FirewallD Port
 > sudo firewall-cmd --zone=public --add-port=42001/tcp
 
+Delete a directory
+> sudo rm -r </path/folder-to-delete>
+
 
 
 ### Expanding - adding more scanners:
