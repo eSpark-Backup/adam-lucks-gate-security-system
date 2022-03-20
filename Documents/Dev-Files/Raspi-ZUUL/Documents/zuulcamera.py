@@ -13,6 +13,7 @@ ImageBaseURL = "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.
 ImageAuxURL  = "?alt=media&token="
 imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
+cameraMAC    = "64:25:5E:02:35:93"
 
 plateNum     = 0
 
@@ -65,7 +66,7 @@ st = firebase.storage();
 
 try:
 	while True:
-		camera = db.child("cameras").child("134:1364:464")
+		camera = db.child("cameras").child(cameraMAC)
 		capture_prog = camera.child("capture_progress").get().val()
 		#print(capture_prog)
 
@@ -91,7 +92,7 @@ try:
 			"plateNum" : plateNum,
 			"capture_progress" : "False"
 			}
-			db.child("cameras").child("134:1364:464").update(data, user['idToken'])
+			db.child("cameras").child(cameraMAC).update(data, user['idToken'])
 
 except KeyboardInterrupt:
 	print("Execution Stopped")
