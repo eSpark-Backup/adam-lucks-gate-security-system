@@ -46,8 +46,8 @@ The router used in the final on-site setup should:
 
 Open firewall ports 42001 -> 42005
 Install the `TCP Listener`: unpack this archive `listener.zip` in a temporary folder /tmp
-> chmod 0700 /tmp/listener/install/install 
-> sudo /tmp/listener/install/install 
+> chmod 0700 /tmp/listener/install/install
+> sudo /tmp/listener/install/install
 
 This will install the listener in `/opt/listener` as user `listener`, and set file permissions.
 
@@ -119,7 +119,7 @@ Delete a directory
 
 ### Live Server Info
 
-User: root 
+User: root
 Pass: &M,oLvZCq#}C 
 
 https://72.52.146.4:2087/
@@ -127,7 +127,7 @@ https://72.52.146.4:2087/
 ssh sshuser@72.52.146.4 -p 522
 
 Username: sshuser 
-Password: &M,oLvZCq#}C 
+Password: &M,oLvZCq#}C
 Port: 522
 
 
