@@ -1,0 +1,14 @@
+===== ParklandBayPi =====
+username: ParklandBay
+password: parklandbay!@#
+SSH Port: 3429
+VNC Port: 4747
+
+===== raspberrypi =====
+username: pi
+password: myzuulsystem1
+SSH Port: 22
+VNC Port: 5900
+
+
+Adam Router Device Access Code: %72/#</2%/

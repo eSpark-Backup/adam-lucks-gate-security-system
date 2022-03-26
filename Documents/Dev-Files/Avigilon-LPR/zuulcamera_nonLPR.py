@@ -15,7 +15,7 @@ imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 cameraMAC    = "64:25:5E:02:35:93"
 
-plateNum     = "ABC-123"
+plateNum     = "0"
 
 
 def OCR(imgpath, imgid, imgformat):
