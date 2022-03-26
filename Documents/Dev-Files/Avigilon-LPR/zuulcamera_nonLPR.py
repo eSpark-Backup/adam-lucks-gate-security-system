@@ -8,7 +8,7 @@ from openalpr import Alpr
 from datetime import datetime
 locale.setlocale(locale.LC_ALL, 'C')
 
-imagePath    = "/home/pi/Pictures/"
+imagePath    = "/home/ParklandBay/Pictures/"
 ImageBaseURL = "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2F"
 ImageAuxURL  = "?alt=media&token="
 imageformat  = ".jpg"
@@ -32,7 +32,7 @@ def OCR(imgpath, imgid, imgformat):
         alpr.set_top_n(7)
         alpr.set_default_region("wa")
         alpr.set_detect_region(False)
-        jpeg_bytes = open("/home/pi/Pictures/capture.jpg", "rb").read()
+        jpeg_bytes = open("/home/ParklandBay/Pictures/capture.jpg", "rb").read()
         results = alpr.recognize_array(jpeg_bytes)
         print(results)
 
@@ -77,8 +77,8 @@ try:
 			timestamp = datetime.utcfromtimestamp(imageID)
 			imageID = str(imageID)
 
-			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
-			os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -vf 'crop=iw/4:ih/4' -loglevel quiet "+imagePath+imageID+imageformat)
+			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet -y /home/ParklandBay/Pictures/capture.jpg")
+			os.system("ffmpeg -i /home/ParklandBay/Pictures/capture.jpg -vf 'crop=iw/4:ih/4' -loglevel quiet "+imagePath+imageID+imageformat)
 			#os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet "+imagePath+imageID+imageformat)
 			user = auth.refresh(user['refreshToken'])
 			st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
