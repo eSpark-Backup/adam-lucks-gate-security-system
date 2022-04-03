@@ -1,3 +1,4 @@
+=============== AVIGILON PARAMETERS ===============
 ===== CAMERA ADMIN 01 =====
 administrator
 AZURA_CCTV_#1!
@@ -18,3 +19,8 @@ rtsp://admin:myzuulsystem1@107.128.123.204/defaultPrimary?mtu=1440&streamType=u
 
 ===== RTSP GLOBAL BROADCAST URL =====
 <iframe width="640" height="480" src="https://rtsp.me/embed/5YebSyzt/" frameborder="0" allowfullscreen></iframe>
+
+=============== DOORBIRD PARAMETERS ===============
+username: ghnjcs0001
+password: H4aEZcxrrU
+rtsp: rtsp://ghnjcs0001:H4aEZcxrrU@192.168.1.246/mpeg/1080p/media.amp
