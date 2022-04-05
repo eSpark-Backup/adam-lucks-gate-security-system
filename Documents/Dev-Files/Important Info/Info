@@ -12,3 +12,23 @@ VNC Port: 5900
 
 ===== Router Credentials =====
 Adam Router Device Access Code: %72/#</2%/
+ParklandBay Router Device Access Code: 6132440%4*
+
+===== ParklandBayPi Router Credentials =====
+network={
+ssid="ATTFsSImkI"
+psk="k296?r6g4c6b"
+}
+
+Router Public IP: 99.159.252.224
+
+===== Adam Office Router Credentials =====
+network={
+ssid="ATTxBtrTdS"
+psk=0ffd749e4b55de22a9f2360029a80c1cfdc834d8e38157a176c97c59dec737d5?r6g4c6b
+}
+
+Router Public IP: 99.159.252.224
+
+===== USEFUL COMMANDS =====
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf #Command to edit the WiFi network file
