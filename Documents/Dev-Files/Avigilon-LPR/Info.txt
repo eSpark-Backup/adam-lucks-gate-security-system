@@ -8,6 +8,13 @@ AZURA_CCTV_#1!
 admin
 myzuulsystem1
 
+{
+  "username": "administrator",
+  "password": "AZURA_CCTV_#1!",
+  "clientName": "aClient",
+  "authorizationToken": "0014y00002a7wDZAAY:1649444955:fb4a5eb97b09ea95be677d29153eb9a8f8f8ea7a96b0b3318f65dc3f9b123895"
+}
+
 ===== URL FOR STILL IMAGE CAPTURE =====
 http://107.128.123.204/media/cam0/still.jpg?res=max
 
@@ -27,4 +34,8 @@ rtsp: rtsp://ghnjcs0001:H4aEZcxrrU@192.168.1.246/mpeg/1080p/media.amp
 
 =============== AVIGILON AUTHTOKEN PARAMETERS ===============
 userNonce: 0014y00002a7wDZAAY
+userKey: c1a418c5b5e00ca7815de44cd672b75ed503386850b3648df8571185d6f9b34e
+
+=============== AVIGILON AUTHTOKEN PARAMETERS (lowercase) ===============
+userNonce: 0014y00002a7wdzaay
 userKey: c1a418c5b5e00ca7815de44cd672b75ed503386850b3648df8571185d6f9b34e
