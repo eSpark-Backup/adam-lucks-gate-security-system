@@ -106,8 +106,7 @@ try:
 				timestamp = datetime.utcfromtimestamp(imageID)
 				imageID = str(imageID)
 
-				os.system("ffmpeg -rtsp_transport tcp -i rtsp://ghnjcs0001:H4aEZcxrrU@192.168.1.246/mpeg/1080p/media.amp -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
-				os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -loglevel quiet "+imagePath+imageID+imageformat)
+				os.system("ffmpeg -rtsp_transport tcp -i rtsp://ghnjcs0001:H4aEZcxrrU@192.168.1.246:8557/mpeg/1080p/media.amp -f image2 -loglevel quiet -y "+imagePath+imageID+imageformat)
 				#os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet "+imagePath+imageID+imageformat)
 				user = auth.refresh(user['refreshToken'])
 				st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
