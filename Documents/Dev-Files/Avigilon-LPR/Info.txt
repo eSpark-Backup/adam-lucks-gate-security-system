@@ -11,12 +11,6 @@ AZURA_CCTV_ZUUL#1
 admin
 myzuulsystem1
 
-{
-  "username": "administrator",
-  "password": "AZURA_CCTV_#1!",
-  "clientName": "aClient",
-  "authorizationToken": "0014y00002a7wDZAAY:1649623153:1c1f9344937388d7f707a94cc407c3c70b740f5b2d486b187908ab3130d7bc90"
-}
 
 {
   "username": "administrator",
