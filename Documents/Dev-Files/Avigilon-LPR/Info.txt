@@ -15,14 +15,14 @@ myzuulsystem1
   "username": "administrator",
   "password": "AZURA_CCTV_#1!",
   "clientName": "aClient",
-  "authorizationToken": "0014y00002a7wdzaay:1649445617:985d78bf3082627ec7a8849f13da06d3ba7d4f6e987262882208098c097d203b"
+  "authorizationToken": "0014y00002a7wDZAAY:1649623153:1c1f9344937388d7f707a94cc407c3c70b740f5b2d486b187908ab3130d7bc90"
 }
 
 {
   "username": "administrator",
   "password": "AZURA_CCTV_ZUUL#1",
-  "clientName": "abc",
-  "authorizationToken": "0014y00002a7wdzaay:1649446727:82544998f67d00947df13a89cb366ac8ec492310e264916b1449fcbee76864de"
+  "clientName": "azura",
+  "authorizationToken": "0014y00002a7wDZAAY:1649623153:1c1f9344937388d7f707a94cc407c3c70b740f5b2d486b187908ab3130d7bc90"
 }
 
 ===== URL FOR STILL IMAGE CAPTURE =====
