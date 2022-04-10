@@ -31,6 +31,8 @@ psk=0ffd749e4b55de22a9f2360029a80c1cfdc834d8e38157a176c97c59dec737d5?r6g4c6b
 Router Public IP: 107.128.123.204
 
 ===== USEFUL COMMANDS =====
-sudo nano /etc/wpa_supplicant/wpa_supplicant.conf #Command to edit the WiFi network file
+> sudo nano /etc/wpa_supplicant/wpa_supplicant.conf #Command to edit the WiFi network file
 
-Set-NetIPAddress -InterfaceIndex 4 -PrefixLength 16 #To change subnet through windows powershell
+> Set-NetIPAddress -InterfaceIndex 4 -PrefixLength 16 #To change subnet through windows powershell
+
+> cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2 #Raspberry Pi Serial Number

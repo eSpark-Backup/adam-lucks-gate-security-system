@@ -3,6 +3,9 @@
 administrator
 AZURA_CCTV_#1!
 
+administrator
+AZURA_CCTV_ZUUL#1
+
 
 ===== CAMERA ADMIN 02 =====
 admin
@@ -12,7 +15,14 @@ myzuulsystem1
   "username": "administrator",
   "password": "AZURA_CCTV_#1!",
   "clientName": "aClient",
-  "authorizationToken": "0014y00002a7wDZAAY:1649444955:fb4a5eb97b09ea95be677d29153eb9a8f8f8ea7a96b0b3318f65dc3f9b123895"
+  "authorizationToken": "0014y00002a7wdzaay:1649445617:985d78bf3082627ec7a8849f13da06d3ba7d4f6e987262882208098c097d203b"
+}
+
+{
+  "username": "administrator",
+  "password": "AZURA_CCTV_ZUUL#1",
+  "clientName": "abc",
+  "authorizationToken": "0014y00002a7wdzaay:1649446727:82544998f67d00947df13a89cb366ac8ec492310e264916b1449fcbee76864de"
 }
 
 ===== URL FOR STILL IMAGE CAPTURE =====

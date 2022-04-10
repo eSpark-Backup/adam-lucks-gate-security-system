@@ -88,8 +88,7 @@ try:
 			data = {"ImageID" : imageID+imageformat,
 			"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
 			"timestamp" : str(timestamp),
-			"plateNum" : plateNum,
-			"capture_progress" : "False"
+			"plateNum" : plateNum
 			}
 			db.child("cameras").child(cameraMAC).update(data, user['idToken'])
 

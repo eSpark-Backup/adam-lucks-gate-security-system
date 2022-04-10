@@ -8,6 +8,7 @@ from openalpr import Alpr
 from datetime import datetime
 locale.setlocale(locale.LC_ALL, 'C')
 
+RPI_ID       = "100000002af993d7"
 imagePath    = "/home/pi/Pictures/"
 ImageBaseURL = "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2F"
 ImageAuxURL  = "?alt=media&token="
@@ -16,8 +17,6 @@ zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 doorbirdMAC  = "1C:CA:E3:7B:B7:5A"
 AvigilonMAC  = "00:18:85:3D:3D:90"
 req_node	 = "capture_request"
-
-plateNum     = "ABC-123"
 
 
 def OCR():
@@ -65,18 +64,15 @@ user = auth.sign_in_with_email_and_password("ketchuma129@gmail.com", "myzuulsyst
 db = firebase.database()
 st = firebase.storage();
 
-
 try:
 	while True:
-		camera = db.child("cameras").child(req_node)
-		capture_prog = camera.child("status").get().val()
+		capture_prog = db.child(RPI_ID).child(req_node).child("status").get().val()
 		#print(capture_prog)
 
 
 		if "true" in str(capture_prog).lower():
 			print(capture_prog)
-			mac = db.child("cameras").child(req_node)
-			cameraMAC = mac.child("mac_address").get().val()
+			cameraMAC = db.child(RPI_ID).child(req_node).child("mac_address").get().val()
 			print(cameraMAC)
 
 
@@ -96,10 +92,9 @@ try:
 				data = {"ImageID" : imageID+imageformat,
 				"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
 				"timestamp" : str(timestamp),
-				"plateNum" : plateNum,
-				"capture_progress" : "False"
+				"plateNum" : ""
 				}
-				db.child("cameras").child(cameraMAC).update(data, user['idToken'])
+				db.child(RPI_ID).child(AvigilonMAC).update(data, user['idToken'])
 
 			elif cameraMAC == doorbirdMAC:
 				imageID = int(time.time())
@@ -115,14 +110,12 @@ try:
 
 				data = {"ImageID" : imageID+imageformat,
 				"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
-				"timestamp" : str(timestamp),
-				"plateNum" : plateNum,
-				"capture_progress" : "False"
+				"timestamp" : str(timestamp)
 				}
-				db.child("cameras").child(cameraMAC).update(data, user['idToken'])
+				db.child(RPI_ID).child(doorbirdMAC).update(data, user['idToken'])
 
 			data = {"status": "false"}
-			db.child("cameras").child(req_node).update(data, user['idToken'])
+			db.child(RPI_ID).child(req_node).update(data, user['idToken'])
 
 
 
