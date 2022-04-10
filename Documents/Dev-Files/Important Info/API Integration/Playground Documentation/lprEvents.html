@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)https://192.168.1.189/mt/playground/public/lprEvents.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="./lprEvents_files/atomic.css">
+                <link rel="stylesheet" type="text/css" href="./lprEvents_files/playground.css">
+                </head><body><div style="overflow:hidden;line-height:0;border-bottom:1px solid #f0f0f0">
+                <div id="banner"> <img id="logo" src="./lprEvents_files/AvigilonMSILogo.png"></div>
+                </div> <div id="playground"><h1 id="lpr-license-plate-recognition-events">LPR (License Plate Recognition) Events</h1>
+<h2 id="introduction">Introduction</h2>
+<p>LPR events are used for detecting the license plate. 
+There are four events involved during the life cycle of license plate detection.</p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Triggered when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DEVICE_LPR_PLATE_FOUND</td>
+<td>License plate is detected initially by the LPR system</td>
+</tr>
+<tr>
+<td>DEVICE_LPR_PLATE_UPDATE</td>
+<td>Detected license plate is updated</td>
+</tr>
+<tr>
+<td>DEVICE_LPR_PLATE_LOST</td>
+<td>License plate no longer detected in the region of interest</td>
+</tr>
+<tr>
+<td>DEVICE_LPR_MATCH</td>
+<td>License plate in an LPR watch list was detected</td>
+</tr>
+</tbody></table>
+<h2 id="interpret-roi-to-construct-the-cropped-image-from-actual-image">Interpret ROI to construct the cropped Image from Actual image</h2>
+<p>Region of Interest (ROI) information is shared in DEVICE_LPR_PLATE_FOUND, DEVICE_LPR_PLATE_LOST and DEVICE_LPR_MATCH events.</p>
+<h3 id="device_lpr_plate_found-and-device_lpr_plate_lost">DEVICE_LPR_PLATE_FOUND and DEVICE_LPR_PLATE_LOST</h3>
+<pre><code class="language-math">top left x = (roi.topLeft.x * image.PixelWidth) 
+top left y = (roi.topLeft.y * image.PixelHeight) 
+width = (roi.bottomRight.x * image.PixelWidth - roi.topLeft.x * image.PixelWidth)
+height = (roi.bottomRight.y * image.PixelHeight - roi.topLeft.y * image.PixelHeight)
+
+crop = width:height:x:y</code></pre>
+<h3 id="device_lpr_match">DEVICE_LPR_MATCH</h3>
+<pre><code class="language-math">top left x = (plateBox.left * image.PixelWidth)
+top left y = (plateBox.top * image.PixelHeight)
+width = (plateBox.right * image.PixelWidth - plateBox.left * image.PixelWidth)
+height = (plateBox.bottom * image.PixelHeight - plateBox.top * image.PixelHeight) 
+
+crop = width:height:x:y</code></pre>
+<h2 id="sample-event-structure">Sample Event structure</h2>
+<h3 id="device_lpr_plate_found">DEVICE_LPR_PLATE_FOUND</h3>
+<pre><code class="language-json">{
+  "licensePlate": "[AUT0MAT10N]",
+  "confidence": 1,
+  "roi": {
+    "topLeft": {
+      "x": 0,
+      "y": 1
+    },
+    "topRight": {
+      "x": 0,
+      "y": 1
+    },
+    "bottomLeft": {
+      "x": 0,
+      "y": 1
+    },
+    "bottomRight": {
+      "x": 0,
+      "y": 1
+    }
+  },
+  "thisId": "23821",
+  "linkedEventId": "-1",
+  "timestamp": "2020-02-05T20:10:12.343Z",
+  "originatingServerName": "[Eventful Server]",
+  "type": "DEVICE_LPR_PLATE_FOUND",
+  "originatingServerId": "T8Z1t1Z7TZtZtaztOzTztA",
+  "cameraIds": [],
+  "entityIds": []
+}</code></pre>
+<h3 id="device_lpr_plate_update">DEVICE_LPR_PLATE_UPDATE</h3>
+<pre><code class="language-json">{
+  "siteId": "FhWR70dzTg6Y92b97eVvNg",
+  "type": "EVENT",
+  "time": "2021-01-29T00:58:37.552Z",
+  "id": "lzIP_uFpR2CjJCHn_Q6IYA",
+  "event": {
+    "oldPlate": "AC636W",
+    "newPlate": "AC636",
+    "confidence": 0.8671594262123108,
+    "cameraId": "4xIx1DMwMDQ1TTEzMTIzTdNLTsw1MBASSKmS_26j517VfUfMdmOu8zQA",
+    "thisId": "607297",
+    "linkedEventId": "607295",
+    "timestamp": "2021-01-29T00:58:37.496Z",
+    "originatingEventId": "607297",
+    "originatingServerName": "[Eventful Server]",
+    "type": "DEVICE_LPR_PLATE_UPDATE",
+    "originatingServerId": "ZHof9zwuR3qL3BY9sW1Dlg",
+    "cameraIds": [],
+    "entityIds": []
+  }
+}</code></pre>
+<h3 id="device_lpr_plate_lost">DEVICE_LPR_PLATE_LOST</h3>
+<pre><code class="language-json">{
+  "licensePlate": "[AUT0MAT10N]",
+  "confidence": 1,
+  "roi": {
+    "topLeft": {
+      "x": 0,
+      "y": 1
+    },
+    "topRight": {
+      "x": 0,
+      "y": 1
+    },
+    "bottomLeft": {
+      "x": 0,
+      "y": 1
+    },
+    "bottomRight": {
+      "x": 0,
+      "y": 1
+    }
+  },
+  "thisId": "23820",
+  "linkedEventId": "-1",
+  "timestamp": "2020-02-05T20:10:12.236Z",
+  "originatingServerName": "[Eventful Server]",
+  "type": "DEVICE_LPR_PLATE_LOST",
+  "originatingServerId": "T8Z1t1Z7TZtZtaztOzTztA",
+  "cameraIds": [],
+  "entityIds": []
+}</code></pre>
+<h3 id="device_lpr_match">DEVICE_LPR_MATCH</h3>
+<pre><code class="language-json">{
+  "detectedPlate": "[AUT0MAT10N]",
+  "candidatePlate": "[AUTOMATION]",
+  "confidence": 1,
+  "plateBox": {
+    "left": 0,
+    "top": 0,
+    "right": 1,
+    "bottom": 1
+  },
+  "thisId": "23822",
+  "linkedEventId": "-1",
+  "timestamp": "2020-02-05T20:10:12.449Z",
+  "originatingServerName": "[Eventful Server]",
+  "type": "DEVICE_LPR_MATCH",
+  "originatingServerId": "T8Z1t1Z7TZtZtaztOzTztA",
+  "cameraIds": [],
+  "entityIds": []
+}</code></pre>
+</div><div id="footer">
+               <p style="color: rgb(227, 227, 227); font-size: 11px; margin: 5px 5px 5px; float: right;">
+               © 2019 Avigilon Corporation</p> </div></body></html>

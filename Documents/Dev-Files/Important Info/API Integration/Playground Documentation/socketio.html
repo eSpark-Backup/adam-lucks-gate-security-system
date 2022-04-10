@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://192.168.1.189/mt/playground/public/socketio.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="./socketio_files/atomic.css">
+                <link rel="stylesheet" type="text/css" href="./socketio_files/playground.css">
+                </head><body><div style="overflow:hidden;line-height:0;border-bottom:1px solid #f0f0f0">
+                <div id="banner"> <img id="logo" src="./socketio_files/AvigilonMSILogo.png"></div>
+                </div> <div id="playground"><h1 id="subscribing-to-acc-notifications">Subscribing to ACC Notifications</h1>
+<p>You can subscribe to runtime ACC notifications using socket.io, an open-source event-based communication engine. When you first configure your system, the ACC Server will return a notification package detailing the initial state of the system. After that, you will receive a notification when an alarm, camera, server, or site is modified or removed.</p>
+<p>The following notification topics are available:</p>
+<table style="width: 100%;"><colgroup><col style="width: 30%;"> <col style="width: 70%;"></colgroup>
+<tbody>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Hello</td>
+<td>Start of the initial notification transmission.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Heartbeat</td>
+<td>Automatic messages to confirm the server is connected to the client. Sent every 10 seconds unless a notification is received.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Slow_Heartbeat</td>
+<td>Automatic messages to confirm the server is connected to the client. Sent every 3 minutes unless a notification is received.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Alarms</td>
+<td>List of alarm IDS that have changed state.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Cameras*</td>
+<td>List of camera IDs that have changed state. Excludes camera link changes.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Cameras_Light*</td>
+<td>List of camera IDs that have changed state. Excludes camera link changes.
+<b>DEPRECATED</b></td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Servers</td>
+<td>List of server IDs that have changed state.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Site</td>
+<td>Site object with the state change included.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Alarm_objects</td>
+<td>List of modified or removed alarm objects.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Camera_objects*</td>
+<td>List of modified or removed cameras. Excludes camera link changes.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Camera_objects_Light*</td>
+<td>List of modified or removed cameras. Excludes camera link changes.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Server_Objects</td>
+<td>List of modified or removed servers.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Event</td>
+<td>ACC Server-specific events (not site-wide).</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">Rule_Action_Client</td>
+<td>Rule actions that are triggered by an event.</td>
+</tr>
+<tr>
+<td style="text-transform: uppercase;font-weight: bold;">End_of_Catalog</td>
+<td>End of the initial notification transmission.</td>
+</tr>
+</tbody>
+</table>
+
+<p>To subscribe to alarm and camera notifications, your ACC Server must be licensed.</p>
+<p><strong>*</strong> A camera link refers to any addition, removal, or change to the logical connection between a camera and a digital i/o, audio i/o, or server-based analytics, available on the ES Analytics Appliance or the AI Appliance.</p>
+<h2 id="configuring-notifications">Configuring Notifications</h2>
+<p>To configure your system to subscribe to ACC notifications, you need to install the <a href="https://github.com/socketio/socket.io-client">socket.io-client</a>, then add code to begin receiving notifications. In the following examples, node.js is used.</p>
+<p>Note: You will need a valid session ID. You can obtain this by logging in to the API playground.</p>
+<pre><code class="language-javascript">const io = require('socket.io-client');
+
+const ioOptions = {
+    autoConnect: false,
+    rejectUnauthorized: false // needed when using a self signed cert
+};
+
+const apiAddress = 'https://localhost:8443/mt/api/rt/v1';
+
+const socket = io(apiAddress, ioOptions)
+    .on('connect', () =&gt; console.log('connected'))
+    .on('connect_error', error =&gt; console.log('connect_error):', error))
+    .on('error', error =&gt; console.log('error:', error));
+
+console.log('open connection');
+socket.open();
+
+// login to get a valid session...
+const session = 'session_id';
+const topics = ['HELLO', 'HEARTBEAT', 'ALARM_OBJECTS', 'CAMERA_OBJECTS', 'SERVER_OBJECTS', 'SITE', 'END_OF_CATALOG', 'EVENT'];
+
+// The subtopics are only available for 'EVENT' topic
+const subtopics = {
+  EVENT: {
+    // DEPRECATED: The usage of whitelist/blacklist will be deprecated in ACC 8
+    // use include to include specific events
+    // use exclude to exclude specific events
+    include: ['DEVICE']
+  }  
+};
+
+socket.emit(
+    'sub-notification',
+    { session, topics, subtopics, getSiteWideEvents: false },
+    response =&gt; console.log('sub-notification:\n', JSON.stringify(response, undefined, '  '))
+);
+
+socket.on('notification', (notification, callback) =&gt; {
+    console.log('notification:\n', JSON.stringify(notification, undefined, '  '));
+    callback(); // invoking callback(false) will stop the notifications
+});</code></pre>
+<p>When you run the file, the server will return a notification package detailing the initial state of the system. Subsequent notifications will be sent once an event occurs.</p>
+<h3 id="getsitewideevents">getSiteWideEvents</h3>
+<p>This parameter specifies whether this particular instance of Web Endpoint should send events from every server within the site or just events generated within this particular server.</p>
+<p>Setting this parameter to true while connected to multiple Web Endpoint instances in the same site will cause duplicate events to be received.</p>
+<p>Setting this parameter to true will be the equivalent of setting all event Types to be site-wide.</p>
+<p>The default value of this parameter is false and can be configured through the WebEndpoint.config.yaml file:</p>
+<pre><code>eventSubscribe:
+  getSiteWideEventsDefault: false</code></pre><h2 id="filtering-event-notifications">Filtering Event Notifications</h2>
+<p>When subscribing to event notifications, you can filter which events you want to be notified about using subtopics to include or exclude events. These events differ from the alarm_objects, camera_objects, server_objects and site notifications, which return information about settings.</p>
+<p>For more information, regarding obtaining event topics and how to include and exclude topics, please see <a href="https://192.168.1.189/mt/playground/public/eventTopics.html">Filtering ACC Events</a>.</p>
+<p>The following example shows how to get a list of events:</p>
+<pre><code class="language-javascript">socket.emit(
+    'read-event-subtopics',
+    {},
+    response =&gt; console.log('read-event-subtopics:\n', JSON.stringify(response, undefined, '  '))
+);</code></pre>
+<p>The following example shows how to subscribe to events:</p>
+<pre><code class="language-javascript">const subtopics = {
+  EVENT: {
+    exclude: ['DB_REINDEX']  // subscribe to all events except 'DB_REINDEX'
+    }
+};</code></pre>
+<h2 id="important-considerations">Important Considerations</h2>
+<p>The client must acknowledge all server notifications. If the client is down or experiencing an error that prevents it from acknowledging notifications, the server will close the notification channel to prevent a resource leak.</p>
+<p>To close the notification channel gracefully, return <strong>false</strong> in the acknowledge <code>callback()</code>.</p>
+<pre><code class="language-javascript">socket.on('notification', (notification, callback) =&gt; {
+    console.log('notification:\n', JSON.stringify(notification, undefined, '  '));
+    callback(false); 
+});</code></pre>
+<h3 id="detecting-failures">Detecting Failures</h3>
+<p>If you’re building an application to monitor if the ACC server disconnects, add the following code:</p>
+<pre><code class="language-javascript">socket
+  .on('acc_disconnect', (error) =&gt; {
+    logger.error('Received ACC disconnect with error: ', error);
+
+    // add application logic to handle ACC disconnection case
+    // ...
+  });</code></pre>
+<h3 id="unsubscribing-from-notifications">Unsubscribing from Notifications</h3>
+<p>You may want to keep the socket connection open but unsubscribe from the notifications, either to reconnect with a new set of topics or terminate the notification channel completely.</p>
+<p>Use the unsubscribe event to communicate the notification channel termination without closing the socket connection:</p>
+<pre><code class="language-javascript">  function unsubscribe(socket, reason){
+    socket.emit('unsubscribe', reason);
+  }</code></pre>
+<h2 id="notification-parameters">Notification Parameters</h2>
+<p>The notification object properties are described below.</p>
+<table style="width: 100%;"><colgroup><col style="width: 15%;"><col style="width: 15%;"><col style="width: 70%;"></colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: center;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>siteId</td>
+<td style="text-align: center;">string</td>
+<td>The ACC site ID.</td>
+</tr>
+<tr>
+<td>description</td>
+<td style="text-align: center;">string</td>
+<td>A description of the notification.</td>
+</tr>
+<tr>
+<td>type</td>
+<td style="text-align: center;">string</td>
+<td>The notification topic.</td>
+</tr>
+<tr>
+<td>time</td>
+<td style="text-align: center;">string</td>
+<td>The notification timestamp in UTC.</td>
+</tr>
+<tr>
+<td>id</td>
+<td style="text-align: center;">string</td>
+<td>The notification ID.</td>
+</tr>
+<tr>
+<td>modified</td>
+<td style="text-align: center;">array</td>
+<td>The site, server, or camera IDs that were modified. For a description of the included parameters, see the API documentation.</td>
+</tr>
+<tr>
+<td>removed</td>
+<td style="text-align: center;">array</td>
+<td>The site, server, or camera IDs that were removed. For a description of the included parameters, see the API documentation.</td>
+</tr>
+<tr>
+<td>sequence</td>
+<td style="text-align: center;">integer</td>
+<td>The order the notification is displayed in a notification package.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="sample-notifications">Sample Notifications</h2>
+<p>The following is a sample notification package consisting of each notification topic.</p>
+<h3 id="success-message">Success Message</h3>
+<pre><code class="language-json">{
+"status": "success"
+}</code></pre>
+<p><strong>HELLO</strong></p>
+<pre><code class="language-json">{
+"siteId": "-hoXjStvQe-0fGpQ_QViuQ",
+"type": "HELLO",
+"description": "site connection established",
+"time": "2018-06-27T18:57:10.474Z",
+"sequence": 0
+}</code></pre>
+<p><strong>ALARMS</strong></p>
+<pre><code class="language-json">{
+"siteId": "-hoXjStvQe-0fGpQ_QViuQ",
+"type": "ALARMS",
+"time": "2018-06-27T18:57:10.497Z",
+"id": "zO6Xj97MQ8iWUUg5F71eeA",
+"ids": ["stQrlQEoQruO1mkn-w_7Fw", "stQrlQEoQruO1m8n-x_6Fz"],
+"sequence": 9
+}</code></pre>
+<p><strong>ALARM_OBJECTS</strong></p>
+<pre><code class="language-json">{
+"siteId": "-hoXjStvQe-0fGpQ_QViuQ",
+"type": "ALARM_OBJECTS",
+"time": "2018-06-27T18:57:10.497Z",
+"id": "zO6Xj97MQ8iWUUg5F71eeA",
+"modified": [{
+    "id": "stQrlQEoQruO1mkn-w_7Fw",
+    "name": "first Alarm",
+    "state": "ACTIVE",
+    "isAssignedToCurrentUser": false,
+    "timeOfLastStateChange": "2018-07-09T20:50:48.041Z",
+    "type": "NORMAL",
+    "associatedCameras": [
+        "49Ix0UuDgGRdEAkjLEx1LdKSEg0M0lKME9PS9JITcw0MhAT2z2Pq9c11SWpNi80r4nnfCgA",
+        "4xIx1DMwMLSwMDVISUtNNNNLTsw1MBAS2D-Pqdc31yWpNS02r4jnfSsA",
+        "4xIx1DMwMLSwMDUwMjFONtBLTsw1MBAS2D-Pqdc31yWpNS02r4jnfSsA"
+    ],
+    "priority": 0,
+    "isNoteRequired": false,
+    "missedTriggers": 22472,
+    "timeOfMostRecentAcknowledgement": "2018-06-28T00:10:13.067Z",
+    "timeOfMostRecentActivation": "2018-07-09T20:50:48.041Z",
+    "timeOfMostRecentPurge": "2018-06-28T00:10:21.851Z",
+    "durationOfPreRecording": "PT5S",
+    "durationOfPostRecording": "PT1M",
+    "digitalOutputsToActivate": []
+}],
+"removed": ["stQrlQEoQruO1m8n-x_6Fz"],
+"sequence": 9
+}</code></pre>
+<p><strong>CAMERAS</strong></p>
+<pre><code class="language-json">{
+"siteId":"S3oeQPf2SDORGivAvEEkuw",
+"type":"CAMERAS",
+"time":"2019-11-28T23:10:38.783Z",
+"id":"iL1JlntSTDiEgpLEn7fcuQ",
+"ids":["4xIx1DMwMLSwMDUwTjI1T9JLTsw1MBASmH24poltq-_SVaxfG9u_Mi4BAA"],
+"sequence":17
+}</code></pre>
+<p><strong>CAMERAS_LIGHT</strong></p>
+<pre><code class="language-json">{
+"siteId":"S3oeQPf2SDORGivAvEEkuw",
+"type":"CAMERAS_LIGHT",
+"time":"2019-11-28T23:10:38.783Z",
+"id":"iL1JlntSTDiEgpLEn7fcuQ",
+"ids":["4xIx1DMwMLSwMDUwTjI1T9JLTsw1MBASmH24poltq-_SVaxfG9u_Mi4BAA"],
+"sequence":17
+}</code></pre>
+<p><strong>CAMERA_OBJECTS_LIGHT</strong></p>
+<pre><code class="language-json">{
+"siteId": "-hoXjStvQe-0fGpQ_QViuQ",
+"type": "CAMERA_OBJECTS_LIGHT",
+"time": "2018-06-27T18:57:10.512Z",
+"id": "EOJzkfrkT_C7l9gLfh8N1w",
+"modified": [
+    {
+    "id": "4xIx1DMwMLSwMDUwMjFONtBLTsw1MBASqJT8tdg42sdpyvefvq2PH30CAA",
+    "name": "[ASSET-1921]2.0-H3-B2(148416)",
+    "location": "SE Corridor",
+    "model": "2.0-H3-B2",
+    "serial": "12228416",
+    "manufacturer": "Avigilon (ONVIF)",
+    "connected": true,
+    "available": true,
+    "active": false,
+    "connectionState": "LONG_FAILED",
+    "connectionStatus": {
+        "isConnectable": true,
+        "state": "LONG_FAILED",
+        "errorFlags": [
+            "LICENSE"
+        ],
+        "startTime": "2018-06-21T19:12:05.065Z"
+    },
+    "firmwareVersion": "2.6.0.168(22434)",
+    "firmwareUpgradeStatus": {
+        "state": "IDLE",
+        "timestamp": "1970-01-01T00:00:00.000Z",
+        "progress": 0,
+        "error": "UNKNOWN (1)"
+    },
+    "operatingPriority": 0,
+    "physicalAddress": "00:18:85:02:43:C0",
+    "ipAddress": "10.42.120.188:443",
+    "logicalId": 4294967295,
+    "apiType": "ONVIF_SOAP",
+    "serverId": "eRn6ozNbTEKU9_lNhePi8g",
+    "recordedData": true,
+    "defaultWidth": 1920,
+    "defaultHeight": 1080,
+    "capabilities": {
+        "general": ["REBOOT", "CONTROL_LEDS", "PRIVACY_ZONES", "PRIVACY_ZONE_POSITION", "CHANGE_PASSWORD"],
+        "ptz": ["ENABLE_DISABLE", "PROTOCOL", "DIP_SWITCH"],
+        "network": ["AUTO_IP_CONF", "MANUAL_IP_CONF", "HTTP_PORT", "MULTICAST"],
+        "compression": ["MJPEG", "H264", "MJPEG_DEC", "H264_DEC"],
+        "mjpeg": ["VARIABLE_BIT_RATE", "IDLE_SCENE_MODE", "IDLE_SCENE_MODE_IMAGE_RATE", "IDLE_SCENE_MODE_IMAGE_QUALITY", "IDLE_SCENE_MODE_POST_MOTION_DELAY", "VBR_IMAGE_RATE", "VBR_IMAGE_QUALITY", "HDSM_SMART_BANDWIDTH_REDUCTION"],
+        "h264": ["RESOLUTION", "VARIABLE_BIT_RATE", "IDLE_SCENE_MODE", "IDLE_SCENE_MODE_IMAGE_RATE", "IDLE_SCENE_MODE_IMAGE_QUALITY", "IDLE_SCENE_MODE_MAX_BIT_RATE", "IDLE_SCENE_MODE_KEY_FRAME_INTERVAL_FRAMES", "IDLE_SCENE_MODE_POST_MOTION_DELAY", "VBR_IMAGE_RATE", "VBR_IMAGE_QUALITY", "VBR_MAX_BIT_RATE", "VBR_KEY_FRAME_INTERVAL_FRAMES", "HDSM_SMART_BACKGROUND_IMAGE_QUALITY", "HDSM_SMART_BANDWIDTH_REDUCTION"],
+        "acquisition": ["BACKLIGHT_COMP", "BACKLIGHT_COMP_LEVEL", "COLOUR_SATURATION", "SHARPNESS", "IR_CUT_FILTER", "WHITE_BALANCE_AUTO", "WHITE_BALANCE_MANUAL", "FLICKER_CONTROL", "FOCUS_MANUAL", "FOCUS_ONE_SHOT", "FOCUS_ADJ_IR_ILLUM_TYPE", "IMAGE_ROTATION", "DAY_NIGHT_THRESHOLD", "RESTORE_DEFAULTS"],
+        "exposure": ["EXPOSURE_AUTO", "EXPOSURE_AUTO_PRIORITY", "EXPOSURE_AUTO_MAX_VALUE", "EXPOSURE_MANUAL", "GAIN_AUTO_MAX_VALUE", "IRIS_AUTO", "IRIS_AUTO_MAX", "IRIS_MANUAL"],
+        "motion": ["MASK", "SENSITIVITY", "THRESHOLD"],
+        "digitalIo": ["INPUT_DEFAULT_CIRCUIT_STATE", "OUTPUT_DEFAULT_CIRCUIT_STATE", "OUTPUT_ACTIVATE", "OUTPUT_MODE"],
+        "audio": ["MICROPHONE_GAIN"],
+        "speaker": ["SPEAKER_OUTPUT"],
+        "streamRecording": ["RESOLUTION", "VARIABLE_BIT_RATE", "IDLE_SCENE_MODE", "IDLE_SCENE_MODE_IMAGE_RATE", "IDLE_SCENE_MODE_IMAGE_QUALITY", "IDLE_SCENE_MODE_MAX_BIT_RATE", "IDLE_SCENE_MODE_KEY_FRAME_INTERVAL_FRAMES", "IDLE_SCENE_MODE_POST_MOTION_DELAY", "VBR_IMAGE_RATE", "VBR_IMAGE_QUALITY", "VBR_MAX_BIT_RATE", "VBR_KEY_FRAME_INTERVAL_FRAMES", "HDSM_SMART_BACKGROUND_IMAGE_QUALITY", "HDSM_SMART_BANDWIDTH_REDUCTION"],
+        "profileRecording": ["RECORDING_PROFILES"]
+    }
+    },
+    {
+    "id": "4xIx1DMwMLSwMDUwMrVMS9VLTsw1MBASqJT8tdg42sdpyvefvq2PH30CAA",
+    "name": "[ASSET-0647]1.0-H3-B1(154110)",
+    "location": "NW Entrance",
+    "model": "1.0-H3-B1",
+    "serial": "12254110",
+    "manufacturer": "Avigilon (ONVIF)",
+    "connected": true,
+    "available": true,
+    "active": false,
+    "connectionState": "LONG_FAILED",
+    "connectionStatus": {
+        "isConnectable": true,
+        "state": "LONG_FAILED",
+        "errorFlags": [
+            "LICENSE"
+        ],
+        "startTime": "2018-06-21T19:12:05.066Z"
+    },
+    "firmwareVersion": "2.6.0.168(22434)",
+    "firmwareUpgradeStatus": {
+    "state": "IDLE",
+    "timestamp": "1970-01-01T00:00:00.000Z",
+    "progress": 0,
+    "error": "UNKNOWN (1)"
+    },
+    "operatingPriority": 0,
+    "physicalAddress": "00:18:85:02:59:FE",
+    "ipAddress": "10.42.121.9:443",
+    "logicalId": 4294967295,
+    "apiType": "ONVIF_SOAP",
+    "serverId": "eRn6ozNbTEKU9_lNhePi8g",
+    "recordedData": true,
+    "defaultWidth": 1280,
+    "defaultHeight": 720,
+    "capabilities": {
+        "general": ["REBOOT", "CONTROL_LEDS", "PRIVACY_ZONES", "PRIVACY_ZONE_POSITION", "CHANGE_PASSWORD"],
+        "ptz": ["ENABLE_DISABLE", "PROTOCOL", "DIP_SWITCH"],
+        "network": ["AUTO_IP_CONF", "MANUAL_IP_CONF", "HTTP_PORT", "MULTICAST"],
+        "compression": ["MJPEG", "H264", "MJPEG_DEC", "H264_DEC"],
+        "mjpeg": ["VARIABLE_BIT_RATE", "IDLE_SCENE_MODE", "IDLE_SCENE_MODE_IMAGE_RATE", "IDLE_SCENE_MODE_IMAGE_QUALITY", "IDLE_SCENE_MODE_POST_MOTION_DELAY", "VBR_IMAGE_RATE", "VBR_IMAGE_QUALITY", "HDSM_SMART_BANDWIDTH_REDUCTION"],
+        "h264": ["RESOLUTION", "VARIABLE_BIT_RATE", "IDLE_SCENE_MODE", "IDLE_SCENE_MODE_IMAGE_RATE", "IDLE_SCENE_MODE_IMAGE_QUALITY", "IDLE_SCENE_MODE_MAX_BIT_RATE", "IDLE_SCENE_MODE_KEY_FRAME_INTERVAL_FRAMES", "IDLE_SCENE_MODE_POST_MOTION_DELAY", "VBR_IMAGE_RATE", "VBR_IMAGE_QUALITY", "VBR_MAX_BIT_RATE", "VBR_KEY_FRAME_INTERVAL_FRAMES", "HDSM_SMART_BACKGROUND_IMAGE_QUALITY", "HDSM_SMART_BANDWIDTH_REDUCTION"],
+        "acquisition": ["BACKLIGHT_COMP", "BACKLIGHT_COMP_LEVEL", "COLOUR_SATURATION", "SHARPNESS", "IR_CUT_FILTER", "WHITE_BALANCE_AUTO", "WHITE_BALANCE_MANUAL", "FLICKER_CONTROL", "FOCUS_MANUAL", "FOCUS_ONE_SHOT", "FOCUS_ADJ_IR_ILLUM_TYPE", "IMAGE_ROTATION", "DAY_NIGHT_THRESHOLD", "RESTORE_DEFAULTS"],
+        "exposure": ["EXPOSURE_AUTO", "EXPOSURE_AUTO_PRIORITY", "EXPOSURE_AUTO_MAX_VALUE", "EXPOSURE_MANUAL", "GAIN_AUTO_MAX_VALUE", "IRIS_AUTO", "IRIS_AUTO_MAX", "IRIS_MANUAL"],
+        "motion": ["MASK", "SENSITIVITY", "THRESHOLD"],
+        "digitalIo": ["INPUT_DEFAULT_CIRCUIT_STATE", "OUTPUT_DEFAULT_CIRCUIT_STATE", "OUTPUT_ACTIVATE", "OUTPUT_MODE"],
+        "audio": ["MICROPHONE_GAIN", "MICROPHONE_LINKAGE_DISABLED"],
+        "speaker": ["SPEAKER_OUTPUT", "SPEAKER_LINKAGE_DISABLED"],
+        "streamRecording": ["RESOLUTION", "VARIABLE_BIT_RATE", "IDLE_SCENE_MODE", "IDLE_SCENE_MODE_IMAGE_RATE", "IDLE_SCENE_MODE_IMAGE_QUALITY", "IDLE_SCENE_MODE_MAX_BIT_RATE", "IDLE_SCENE_MODE_KEY_FRAME_INTERVAL_FRAMES", "IDLE_SCENE_MODE_POST_MOTION_DELAY", "VBR_IMAGE_RATE", "VBR_IMAGE_QUALITY", "VBR_MAX_BIT_RATE", "VBR_KEY_FRAME_INTERVAL_FRAMES", "HDSM_SMART_BACKGROUND_IMAGE_QUALITY", "HDSM_SMART_BANDWIDTH_REDUCTION"],
+        "profileRecording": ["RECORDING_PROFILES"]
+    }
+    },
+],
+"removed": ["49Ix0UuDgGRdEAkjLEx1LdKSEg0M0lKME9PS9JITcw0MhAT2z2Pq9c11SWpNi80r4nnfCgA"],
+"sequence": 2
+}</code></pre>
+<p><strong>CAMERA_OBJECTS</strong></p>
+<pre><code class="language-json">{
+"siteId": "S3oeQPf2SDORGivAvEEkuw",
+"type": "CAMERA_OBJECTS",
+"time": "2019-11-28T23:19:52.332Z",
+"id": "x4vEzTZ9RrKweF4E-xeF0A",
+"modified": [{
+    "id": "4xIx1DMwMLSwMDUwTjI1T9JLTsw1MBASmH24poltq-_SVaxfG9u_Mi4BAA",
+    "location": "Chris' Cubby",
+    "name": "24L-H4PRO-B (BoB)",
+    "model": "24L-H4PRO-B",
+    "serial": "1",
+    "manufacturer": "Avigilon",
+    "connected": true,
+    "available": true,
+    "connectionState": "CONNECTED",
+    "connectionStatus": {
+        "isConnectable": true,
+        "state": "CONNECTED",
+        "errorFlags": [],
+        "startTime": "2019-11-15T22:33:37.688Z"
+    },
+    "firmwareVersion": "3.16.0.252(26079)",
+    "firmwareUpgradeStatus": {
+        "state": "IDLE",
+        "timestamp": "1970-01-01T00:00:00.000Z",
+        "progress": 0,
+        "error": "UNKNOWN (1)"
+    },
+    "operatingPriority": 0,
+    "physicalAddress": "00:18:85:03:B5:7B",
+    "ipAddress": "10.89.121.62:443",
+    "apiType": "AVIGILON_SOAP",
+    "serverId": "m8N8gga1TaWqBfWBh_UBpA",
+    "active": true,
+    "logicalId": 4294967295,
+    "capabilities": {
+        "general": ["REBOOT", "CONTROL_LEDS", "PRIVACY_ZONES", "PRIVACY_ZONE_POSITION", "CHANGE_PASSWORD"],
+        "ptz": ["ENABLE_DISABLE", "PROTOCOL", "DIP_SWITCH"],
+        "network": ["AUTO_IP_CONF", "MANUAL_IP_CONF", "HTTP_PORT", "MULTICAST"],
+        "compression": ["MJPEG", "H264", "MJPEG_DEC", "H264_DEC"],
+        "mjpeg": ["VARIABLE_BIT_RATE", "IDLE_SCENE_MODE", "IDLE_SCENE_MODE_IMAGE_RATE", "IDLE_SCENE_MODE_IMAGE_QUALITY", "IDLE_SCENE_MODE_POST_MOTION_DELAY", "VBR_IMAGE_RATE", "VBR_IMAGE_QUALITY", "HDSM_SMART_BANDWIDTH_REDUCTION"],
+        "h264": ["RESOLUTION", "VARIABLE_BIT_RATE", "IDLE_SCENE_MODE", "IDLE_SCENE_MODE_IMAGE_RATE", "IDLE_SCENE_MODE_IMAGE_QUALITY", "IDLE_SCENE_MODE_MAX_BIT_RATE", "IDLE_SCENE_MODE_KEY_FRAME_INTERVAL_FRAMES", "IDLE_SCENE_MODE_POST_MOTION_DELAY", "VBR_IMAGE_RATE", "VBR_IMAGE_QUALITY", "VBR_MAX_BIT_RATE", "VBR_KEY_FRAME_INTERVAL_FRAMES", "HDSM_SMART_BACKGROUND_IMAGE_QUALITY", "HDSM_SMART_BANDWIDTH_REDUCTION"],
+        "acquisition": ["BACKLIGHT_COMP", "BACKLIGHT_COMP_LEVEL", "COLOUR_SATURATION", "SHARPNESS", "IR_CUT_FILTER", "WHITE_BALANCE_AUTO", "WHITE_BALANCE_MANUAL", "FLICKER_CONTROL", "FOCUS_MANUAL", "FOCUS_ONE_SHOT", "FOCUS_ADJ_IR_ILLUM_TYPE", "IMAGE_ROTATION", "DAY_NIGHT_THRESHOLD", "RESTORE_DEFAULTS"],
+        "exposure": ["EXPOSURE_AUTO", "EXPOSURE_AUTO_PRIORITY", "EXPOSURE_AUTO_MAX_VALUE", "EXPOSURE_MANUAL", "GAIN_AUTO_MAX_VALUE", "IRIS_AUTO", "IRIS_AUTO_MAX", "IRIS_MANUAL"],
+        "motion": ["MASK", "SENSITIVITY", "THRESHOLD"],
+        "digitalIo": ["INPUT_DEFAULT_CIRCUIT_STATE", "OUTPUT_DEFAULT_CIRCUIT_STATE", "OUTPUT_ACTIVATE", "OUTPUT_MODE"],
+        "audio": ["MICROPHONE_GAIN"],
+        "speaker": ["SPEAKER_OUTPUT"],
+        "streamRecording": ["RESOLUTION", "VARIABLE_BIT_RATE", "IDLE_SCENE_MODE", "IDLE_SCENE_MODE_IMAGE_RATE", "IDLE_SCENE_MODE_IMAGE_QUALITY", "IDLE_SCENE_MODE_MAX_BIT_RATE", "IDLE_SCENE_MODE_KEY_FRAME_INTERVAL_FRAMES", "IDLE_SCENE_MODE_POST_MOTION_DELAY", "VBR_IMAGE_RATE", "VBR_IMAGE_QUALITY", "VBR_MAX_BIT_RATE", "VBR_KEY_FRAME_INTERVAL_FRAMES", "HDSM_SMART_BACKGROUND_IMAGE_QUALITY", "HDSM_SMART_BANDWIDTH_REDUCTION"],
+        "profileRecording": ["RECORDING_PROFILES"]
+    },
+    "links": [{
+        "type": "AUDIO_INPUT",
+        "id": "oT4Fx7QORr2l9lQBaJMWVw",
+        "source": "4xIx1DMwMLSwMDUwTjI1T9LLzUw2MBASmH24poltq-_SVaxfG9u_Mi4BAA",
+        "target": "4xIx1DMwMLSwMDUwTjI1T9JLTsw1MBASmH24poltq-_SVaxfG9u_Mi4BAA"
+    }, {
+        "type": "DIGITAL_OUTPUT",
+        "id": "GfY9NLKVQTOTKE-zPpwvIA",
+        "source": "4xIx1DMwMLSwMDUwTjI1T9JLyS8xMBASmH24poltq-_SVaxfG9u_Mi4BAA",
+        "target": "4xIx1DMwMLSwMDUwTjI1T9JLTsw1MBASmH24poltq-_SVaxfG9u_Mi4BAA"
+    }, {
+        "type": "AUDIO_OUTPUT",
+        "id": "2J4pKF8bSjWMkEx4WVQ3Xw",
+        "source": "4xIx1DMwMLSwMDUwTjI1T9IrLsg2MBASmH24poltq-_SVaxfG9u_Mi4BAA",
+        "target": "4xIx1DMwMLSwMDUwTjI1T9JLTsw1MBASmH24poltq-_SVaxfG9u_Mi4BAA"
+    }, {
+        "type": "DIGITAL_INPUT",
+        "id": "qcMrrDEZSpCmuApM5t51BQ",
+        "source": "4xIx1DMwMLSwMDUwTjI1T9JLycwzMBASmH24poltq-_SVaxfG9u_Mi4BAA",
+        "target": "4xIx1DMwMLSwMDUwTjI1T9JLTsw1MBASmH24poltq-_SVaxfG9u_Mi4BAA"
+    }],
+    "ptzInfo": {
+        "capabilities": []
+    },
+    "recordedData": true,
+    "defaultWidth": 6016,
+    "defaultHeight": 4008
+}],
+"sequence": 16
+}</code></pre>
+<p><strong>SERVER_OBJECTS</strong></p>
+<pre><code class="language-json">{
+"siteId": "S3oeQPf2SDORGivAvEEkuw",
+"type": "SERVER_OBJECTS",
+"time": "2019-11-28T23:24:57.012Z",
+"id": "jVlOXFA2Q-iSZQuUPIBHdQ",
+"modified": [{
+    "networks": [{
+        "ip": "10.42.122.84",
+        "rxBytesPerSec": 2588560,
+        "txBytesPerSec": 409565,
+        "operStatus": 1,
+        "linkSpeed": 1000000000,
+        "name": "Ethernet"
+    }, {
+        "linkSpeed": 1215752192,
+        "ip": "169.254.97.172",
+        "txBytesPerSec": 0,
+        "rxBytesPerSec": 0,
+        "name": "Npcap Loopback Adapter",
+        "operStatus": 1
+    }],
+    "license": {
+        "serverSpeakerTotal": 0,
+        "serverLPR6Total": 0,
+        "siteFaceMatchTotal": 0,
+        "serverFailoverUsed": 0,
+        "siteSpeakerUsed": 0,
+        "siteFailoverTotal": 0,
+        "siteLPR6Used": 0,
+        "serverCameraTotal": 0,
+        "serverCameraUsed": 0,
+        "siteSpeakerTotal": 65535,
+        "siteAnalyticsUsed": 0,
+        "sitePOSUsed": 0,
+        "serverLPRTotal": 0,
+        "siteLPR6Total": 0,
+        "siteAnalyticsTotal": 0,
+        "siteLPRTotal": 0,
+        "siteAudioUsed": 0,
+        "sitePOSTotal": 0,
+        "siteLPRUsed": 0,
+        "serverFaceMatchUsed": 0,
+        "serverLPRUsed": 0,
+        "serverAnalyticsUsed": 0,
+        "serverSpeakerUsed": 0,
+        "serverPOSTotal": 0,
+        "serverAnalyticsTotal": 0,
+        "siteCameraTotal": 16,
+        "siteCameraUsed": 3,
+        "serverAudioUsed": 0,
+        "siteAudioTotal": 65535,
+        "siteFaceMatchUsed": 0,
+        "serverPOSUsed": 0,
+        "serverAudioTotal": 0,
+        "serverLPR6Used": 0,
+        "siteFailoverUsed": 0,
+        "serverFailoverTotal": 0,
+        "serverFaceMatchTotal": 0
+    },
+    "availablePhysicalMemoryBytes": 9644150784,
+    "physicalMemoryUsageBytes": 9644150784,
+    "processCPU": 5,
+    "systemCPU": 49,
+    "startTime": "2019-11-14T05:50:11.049Z",
+    "id": "m8N8gga1TaWqBfWBh_UBpA",
+    "siteId": "S3oeQPf2SDORGivAvEEkuw",
+    "name": "GCANDAN-1",
+    "machineName": "GCANDAN-1",
+    "available": true,
+    "version": "7.4.0.6.0"
+}],
+"sequence": 1
+}</code></pre>
+<p><strong>SERVERS</strong></p>
+<pre><code class="language-json">{
+"siteId": "S3oeQPf2SDORGivAvEEkuw",
+"type": "SERVERS",
+"time": "2019-11-28T23:25:57.037Z",
+"id": "L21KBHiYT1ywoEuZahh9TA",
+"ids": ["m8N8gga1TaWqBfWBh_UBpA"],
+"sequence": 1
+}</code></pre>
+<p><strong>SITE</strong></p>
+<pre><code class="language-json">{
+"siteId": "-hoXjStvQe-0fGpQ_QViuQ",
+"type": "SITE",
+"time": "2018-06-27T18:57:10.497Z",
+"id": "zO6Xj97MQ8iIUUg5F71ReQ",
+"modified": {
+    "id": "-hoXjStvQe-0fGpQ_QViuQ",
+    "name": "ACCSERVER-2"
+},
+"sequence": 4
+}</code></pre>
+<p><strong>END_OF_CATALOG</strong></p>
+<pre><code class="language-json">{
+"siteId": "-hoXjStvQe-0fGpQ_QViuQ",
+"type": "END_OF_CATALOG",
+"time": "2018-06-27T18:57:10.563Z",
+"id": "UmCzpfQ6SqaGB7TCzlIXbg",
+"sequence": 5
+}</code></pre>
+<p><strong>HEARTBEAT</strong></p>
+<pre><code class="language-json">{
+"siteId": "-hoXjStvQe-0fGpQ_QViuQ",
+"type": "HEARTBEAT",
+"time": "2018-06-27T18:57:30.558Z",
+"id": "ZXDC1yGqRWWvuRpkznbbGg",
+"sequence": 6
+}</code></pre>
+<p><strong>SLOW_HEARTBEAT</strong></p>
+<pre><code class="language-json">{
+"siteId": "-hoXjStvQe-0fGpQ_QViuQ",
+"type": "SLOW_HEARTBEAT",
+"time": "2018-06-27T18:57:30.558Z",
+"id": "ZXDC1yGqRWWvuRpkznbbGg",
+"sequence": 7
+}</code></pre>
+<h3 id="event">Event</h3>
+<p>The Event notification has a property called <strong>event</strong> with following properties: </p>
+<table style="width: 100%;"><colgroup><col style="width: 15%;"><col style="width: 15%;"><col style="width: 70%;"></colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: center;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td style="text-align: center;">string</td>
+<td>The event sub-topic.</td>
+</tr>
+<tr>
+<td>originatingServerName</td>
+<td style="text-align: center;">string</td>
+<td>The server that triggered the event.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Other properties depends on the type of the event.</p>
+<pre><code class="language-json">{
+  "siteId": "CPWl0DzKTNiVqQ239x3S4g",
+  "type": "EVENT",
+  "time": "2019-04-02T16:29:44.455Z",
+  "id": "gVFgQqjMTFOuD3r0L5c8UQ",
+  "event": {
+    "thisId": "193611",
+    "timestamp": "2019-04-02T16:29:44.164Z",
+    "originatingEventId": "193611",
+    "originatingServerName": "ACC-SERVER-NAME",
+    "type": "ALARM_TRIGGERED",
+    "alarmId": "dcMMtJVbRtOtCjw3bjfoMw==",
+    "alarmName": "Motion Detection Alarm",
+    "alarmTrigger": {
+      "alarmId": "dcMMtJVbRtOtCjw3bjfoMw==",
+      "timestamp": "2019-04-02T16:29:44.164Z",
+      "triggerType": "ALARM_TRIGGER_TYPE_EVENT",
+      "triggerEvent": {
+        "eventId": "193610",
+        "eventMsg": "Motion detected on camera '[CAMERA_NAME]'."
+      }
+    }
+  },
+  "sequence": 22
+}</code></pre>
+<p><strong>RULE_ACTION_CLIENT</strong></p>
+<p>The Rule_Action_Client notification has a property called <strong>event</strong> with following properties:</p>
+<table style="width: 100%;"><colgroup><col style="width: 15%;"><col style="width: 15%;"><col style="width: 70%;"></colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: center;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td style="text-align: center;">string</td>
+<td>The rule action type.</td>
+</tr>
+<tr>
+<td>cameraId</td>
+<td style="text-align: center;">string</td>
+<td>The camera that this rule action is linked to.</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code class="language-json">{
+  "siteId": "CPWl0DzKTNiVqQ239x3S4g",
+  "type": "RULE_ACTION_CLIENT",
+  "time": "2019-04-08T21:57:03.777Z",
+  "id": "moysCw-VSu6KJu-POrw7wA",
+  "event": {
+    "type": "RULE_ACTION_TYPE_VIDEO_INTERCOM_CALL",
+    "cameraId": "4xIx1DMwMLSwMDUyMDdPTtVLTsw1MBASEG1LdM5U9ImZfXfWyRyhrf8A",
+    "executionDelayMs": 0
+  },
+  "sequence": 2
+}</code></pre>
+<p>In this sample, a video intercom call is received on the camera with <code>cameraId</code>. 
+The call can be answered using the <a href="https://192.168.1.189/mt/playground/rest#!/mt/putCameraCommandsIntercom">PUT /camera/commands/intercom route</a>.</p>
+</div><div id="footer">
+               <p style="color: rgb(227, 227, 227); font-size: 11px; margin: 5px 5px 5px; float: right;">
+               © 2019 Avigilon Corporation</p> </div></body></html>

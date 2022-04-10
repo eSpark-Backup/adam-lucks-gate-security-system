@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://192.168.1.189/mt/playground/public/webhooks.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="./webhooks_files/atomic.css">
+                <link rel="stylesheet" type="text/css" href="./webhooks_files/playground.css">
+                </head><body><div style="overflow:hidden;line-height:0;border-bottom:1px solid #f0f0f0">
+                <div id="banner"> <img id="logo" src="./webhooks_files/AvigilonMSILogo.png"></div>
+                </div> <div id="playground"><h1 id="event-monitoring-with-acc-webhooks">Event Monitoring with ACC Webhooks</h1>
+<p>With the ACC Web Endpoint, you can set up webhooks to receive events from the ACC site.</p>
+<p>Webhooks is available for HTTP and HTTPS endpoints. HTTPS is recommended as  notifications directed to HTTP endpoints will not be encrypted.</p>
+<p>This document outlines how to set up webhooks and describes the format of messages received.  All examples are in JSON and Javascript.</p>
+<p>Only events are available via Webhooks. For more information regarding alarm_objects, camera_objects, server_objects and site notifications, you will need to use the <a href="https://192.168.1.189/mt/playground/public/socketio.html">Socket.io Notification Channel</a>.</p>
+<h2 id="before-you-start">Before you start</h2>
+<p>You’ll need the following:</p>
+<ul>
+<li>The <code>session</code> string generated from the Login Request.</li>
+<li>A valid <code>url</code> that will receive ACC webhook notifications.</li>
+<li>A list of <code>eventTopics</code> that you would like to subscribe to.<ul>
+<li>This is the same as socket.io notification <code>subTopics</code> and requires the same whitelist/blacklist format.</li>
+<li>For more information, see <a href="https://192.168.1.189/mt/playground/public/eventTopics.html">Filtering ACC Events</a>.</li>
+</ul>
+</li>
+<li>An  <code>authenticationToken</code> to verify event messages are originating from the ACC webhook service.</li>
+</ul>
+<h3 id="generating-authentication-token">Generating Authentication Token</h3>
+<p>With the authenticationToken, you can verify that event messages are originating from the ACC webhook service and not a third party.</p>
+<p>The authenticationToken string should be:</p>
+<ul>
+<li>atleast 16 bytes of secure, randomly generated data</li>
+<li>Base-64 encoded</li>
+</ul>
+<p>For security, we recommend using a unique authenticationToken for each webhook configuration.</p>
+<p>Example:</p>
+<pre><code class="language-javascript">const crypto = require('crypto');
+let authenticationToken;
+crypto.randomBytes(16, (err, buf) =&gt; {
+  if (err) throw err;
+  console.log(`${buf.length} bytes of random data: ${buf.toString('hex')}`);
+  authenticationToken = buff.ToString('base64');
+});</code></pre>
+<h3 id="filtering-event-notifications">Filtering Event Notifications</h3>
+<p>You can filter which events you want to be notified about using <code>eventTopics</code> parameter to whitelist or blacklist events.</p>
+<p>For more information, see <a href="https://192.168.1.189/mt/playground/public/eventTopics.html">Filtering ACC Events</a>.</p>
+<p>The following example shows how to subscribe to events:</p>
+<pre><code class="language-json"> "eventTopics": {
+    // subscribes to all events except the following
+    "blacklist": [
+        "DEVICE_MOTION_START",
+        "DEVICE_MOTION_STOP"
+    ]
+ }</code></pre>
+<h2 id="general-webhook-configuration-format">General Webhook Configuration Format</h2>
+<pre><code class="language-json">{
+    "session": "string",
+    "webhook": {
+        "url": "string",
+        "heartbeat": {
+            "enable": true,
+            "frequencyMs": 30000
+        },
+        "authenticationToken": "string",
+        "eventTopics": {
+            // use whitelist to include specific events
+            "whitelist": [
+                "DEVICE"
+            ]
+        }
+    }
+}</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description  </th>
+</tr>
+</thead>
+<tbody><tr>
+<td>session</td>
+<td>The session Token generated from the Login Request. (required)</td>
+</tr>
+<tr>
+<td>url</td>
+<td>The URL of the webhook receiving the event notifications. (required)</td>
+</tr>
+<tr>
+<td>heartbeat</td>
+<td>An object that contains heartbeat notification configurations.</td>
+</tr>
+<tr>
+<td>enable</td>
+<td>Specify whether to enable (true) or disable (false) heartbeat notifications. If enabled, unless specified,                       <code>frequencyMs</code> will be defaulted to 1 hour.</td>
+</tr>
+<tr>
+<td>frequencyMs</td>
+<td>The time interval for sending heartbeat notifications in milliseconds.</td>
+</tr>
+<tr>
+<td>authenticationToken</td>
+<td>The authenticationToken used to secure Webhook notifications. (required)</td>
+</tr>
+<tr>
+<td>eventTopics</td>
+<td>The event topics to receive notifications for. Use whitelist to include event topics and blacklist to exclude event topics. (required)</td>
+</tr>
+<tr>
+<td>whitelist</td>
+<td>An array of all event topics/categories that should be included</td>
+</tr>
+<tr>
+<td>blacklist</td>
+<td>An array of all event topics/categories that should be excluded</td>
+</tr>
+</tbody></table>
+<h2 id="creating-a-webhook">Creating a Webhook</h2>
+<p>Use the <code>POST /webhooks</code> API to create webhook configurations for your ACC site.</p>
+<p>A successful response will let you know which settings were accepted or rejected. An error response indicates the request contained validation errors.</p>
+<h2 id="updating-a-webhook">Updating a Webhook</h2>
+<p>Use the <code>PUT /webhooks</code> API to update an existing webhook configuration for your ACC site.  You will need the webhook <code>id</code> and the parameters you want to update. </p>
+<p>For example, to disable heartbeat notifications, enter the following. This clears the <code>frequencyMs</code> parameter and will require you to reset it when enabling heartbeat notifications.</p>
+<pre><code class="language-json">{
+    "session": "string",
+    "webhook": {
+        "id" : &lt;WEBHOOK_ID&gt;,
+        "heartbeat": {
+            "enable": false
+        }
+    }
+}</code></pre>
+<h2 id="getting-a-webhook">Getting a Webhook</h2>
+<p>Use the <code>GET /webhooks</code> API to get all webhook configurations for your ACC site or specific webhook configurations using webhook IDs.  The response object returns the eventTopics as a list of eventTopics (), not  as event groups.</p>
+<p>To get all the webhook configurations in your ACC site, use the following GET request using your SESSION_TOKEN.</p>
+<p><code>https://127.0.0.1:8443/mt/api/rest/v1/webhooks?session=&lt;SESSION_TOKEN&gt;</code></p>
+<p>To get specific webhook configurations, use the following GET request using your SESSION_TOKEN and webhook IDs.</p>
+<p><code>https://127.0.0.1:8443/mt/api/rest/v1/webhooks?session=&lt;SESSION_TOKEN&gt;&amp;ids=&lt;WEBHOOK_ID1&gt;&amp;ids=&lt;WEBHOOK_ID2&gt;</code></p>
+<h2 id="verifying-messages-over-https">Verifying Messages over HTTPS</h2>
+<p>For webhooks directed to HTTPS endpoints, the webhook notification is presented in JSON format. The notification will contain the authenticationToken within the payload so you can verify the authenticity.</p>
+<p>The following example shows how to verify an HTTPS webhook:</p>
+<pre><code class="language-javascript">function verifyAuthorizationTokenHTTPS(request) {
+    return authenticationToken === request.body.authenticationToken;
+}</code></pre>
+<p>The following example shows how to extract the payload:</p>
+<pre><code class="language-javascript">function extractPayloadHTTPS(request) {
+    return request.body;
+}</code></pre>
+<h2 id="verifying-messages-over-http">Verifying Messages over HTTP</h2>
+<p>For webhooks directed to HTTP endpoints, the webhook notification is presented as a string, with the following headers:</p>
+<ul>
+<li><code>Content-Type: plain/text</code></li>
+<li>A hash-based message authentication code (HMAC)-encrypted authorization header.</li>
+</ul>
+<p>Use the authorization header to verify the authenticity of the message content by recalculating the hash using the binary buffer of the <code>authenticationToken</code>.</p>
+<pre><code class="language-javascript">function verifyAuthorizationTokenHTTP(request) {
+    const authenticationTokenBinary = Buffer.from(authenticationToken, 'base64');
+
+    const authHeader = request.headers.authorization;
+    const hmac = crypto.createHmac('sha256', authenticationTokenBinary);
+    hmac.update(request.body);
+    const hashInBase64 = hmac.digest('base64');
+
+    return hashInBase64 === authHeader;
+}</code></pre>
+<p>To extract the notification, parse the string payload into JSON.  The following Javascript function is an example of how to do so:</p>
+<pre><code class="language-javascript">function extractPayloadHTTP(request) {
+    return JSON.parse(request.body);
+}</code></pre>
+<h2 id="webhook-notification-format">Webhook Notification Format</h2>
+<p>The general webhook notification structure will always contain the following information:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>siteId</td>
+<td>The ACC site ID.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>The webhook notification type. Examples: HELLO, HEARTBEAT, NOTIFICATION.</td>
+</tr>
+<tr>
+<td>time</td>
+<td>The notification timestamp in ISO-8601.</td>
+</tr>
+</tbody></table>
+<h3 id="hello-message">Hello Message</h3>
+<p>The hello message is denoted by <code>type: 'HELLO'</code> and indicates that a disconnected ACC server has reconnected. It is an indication that some events may have been missed.</p>
+<pre><code class="language-json"> {
+    siteId: 'a267ac4e-d926-4177-91ed-e67b05364016',
+    type: 'HELLO',
+    time: '2019-10-20T19:01:29.022Z'
+  }</code></pre>
+<h3 id="heartbeat-message">Heartbeat Message</h3>
+<p>The heartbeat message is denoted by <code>type: 'HEARTBEAT'</code> and is sent at the configured <code>frequencyMs</code> time interval after the last successful webhook notification. It indicates that the ACC server is connected, although there are no notifications.</p>
+<pre><code class="language-json"> {
+    siteId: 'a267ac4e-d926-4177-91ed-e67b05364016',
+    type: 'HEARTBEAT',
+    time: '2019-10-20T19:01:29.022Z'
+  }</code></pre>
+<h3 id="notifications">Notifications</h3>
+<p>The notification message is denoted by <code>type: 'NOTIFICATION'</code> and will contain event details.  The notification is an array of events denoted by the <code>notification: []</code> parameter.</p>
+<pre><code class="language-json"> { siteId: '864f5919-1d6f-47f3-a1c6-f4defdfadfz7',
+  type: 'NOTIFICATION',
+  time: '2019-10-29T17:02:18.528Z',
+  notifications:
+   [{ // Device Event Example
+       siteId: '864f5919-1d6f-47f3-a1c6-f4def314a737',
+       type: 'EVENT',
+       time: '2019-10-29T17:02:18.528Z',
+       event: {
+            thisId: '1901620',
+            linkedEventId: '-1',
+            timestamp: '2019-10-29T17:02:18.261Z',
+            recordTriggerParams: { 
+                prePostRecordTime: { low: 705032704, high: 1, unsigned: false },
+                isPrePost: true,
+                triggerJiffy: 1618690171,
+                isTriggerJiffy: true },
+            originatingEventId: '1901620',
+            originatingServerName: 'TEST-1',
+            type: 'DEVICE_MOTION_START',
+            originatingServerId: 'Y8P1s1K7TWqCbaqxOhRhwA',
+            cameraId: '4xIx1DMwMLSwMDUyN0iySNNLTsw1MBASSD78dXPQbt-sptxVG61EEg8AAA' 
+        }
+    }, { // Alarm Example
+        siteId: '864f5919-1d6f-47f3-a1c6-f4def314a737',
+        type: 'EVENT',
+        time: '2019-10-29T17:06:17.426Z',
+        id: 'GBOcYc3XQMS3HI8o80SI8g',
+        event: { 
+            alarmId: 'Z8o9AUd2R3-TECFsxjXucA',
+            alarmName: 'alarmFromWin',
+            alarmTrigger:
+                {
+                    alarmId: 'Z8o9AUd2R3-TECFsxjXucA',
+                    timestamp: '2019-10-29T17:06:17.168Z',
+                    triggerType: 'ALARM_TRIGGER_TYPE_EVENT',
+                    triggerEvent: {
+                            eventId: '1902147',
+                            eventMsg: 'Motion detected on camera \'[ASSET-3767] 3.0C-H4A-B2-B(2558863)\'.' 
+                    }
+                },
+                thisId: '1902148',
+                timestamp: '2019-10-29T17:06:17.168Z',
+                originatingEventId: '1902148',
+                originatingServerName: 'DZHANG-1',
+                type: 'ALARM_TRIGGERED',
+                originatingServerId: 'Y8P1s1K7TWqCbaqxOhRhwA',
+            }
+    }]
+}</code></pre>
+<h2 id="tips-and-best-practices">Tips and Best Practices</h2>
+<ul>
+<li>Check that all webhook targets are up and running before receiving notifications. The ACC Web Endpoint can have 5 webhook notifications in flight at a time. If 5 or more webhook targets are unavailable, there will be a noticeable delay receiving notifications on available webhook targets due to timeouts.</li>
+<li>Queue incoming webhook notifications on a webhook target client instead of processing them right away. If notifications are processed right away, the client is likely to hang.</li>
+</ul>
+</div><div id="footer">
+               <p style="color: rgb(227, 227, 227); font-size: 11px; margin: 5px 5px 5px; float: right;">
+               © 2019 Avigilon Corporation</p> </div></body></html>

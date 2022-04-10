@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)https://192.168.1.189/mt/playground/public/diff-between-socket-webhooks.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="./diff-between-socket-webhooks_files/atomic.css">
+                <link rel="stylesheet" type="text/css" href="./diff-between-socket-webhooks_files/playground.css">
+                </head><body><div style="overflow:hidden;line-height:0;border-bottom:1px solid #f0f0f0">
+                <div id="banner"> <img id="logo" src="./diff-between-socket-webhooks_files/AvigilonMSILogo.png"></div>
+                </div> <div id="playground"><h1 id="webhooks-vs-socket-io">Webhooks vs Socket.IO</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Both Socket.IO and webhooks are used for real time updates between ACC servers and clients.
+Webhooks are recommended as they can provide notifications for the whole site, whereas Socket.IO only provides notifications from the server that WEP is co-located with so that the Web Endpoint service, and the Socket.IO connection needs to be run on each server within the site.</p>
+<h2 id="webhooks-site-wide-notifications-recommended-">Webhooks (Site-wide notifications - Recommended)</h2>
+<p>Webhooks are callbacks that are triggered by events on the ACC Server. The client can configure a public URL to receive events from an ACC site.
+Webhooks are available over HTTP/HTTPS protocols and are configured for site-wide communication.
+Optional heart beat notifications can be configured to make sure connection to the ACC Web Endpoint has not been interrupted.</p>
+<h3 id="pros">Pros</h3>
+<ol>
+<li>ACC Web Endpoint forwards notifications via a non-persistent HTTP/HTTPS connection.</li>
+<li>Performs well across a multi-server site.</li>
+<li>Server and site-wide notifications are sent to the client.</li>
+</ol>
+<h3 id="cons">Cons</h3>
+<ol>
+<li>Only events are available via Webhooks. To receive ALARM_OBJECTS, CAMERA_OBJECTS, SERVER_OBJECTS and SITE notifications, you will need to subscribe via Socket.IO.</li>
+<li>Clients need to setup a receiving HTTP/HTTPS server to make use of this functionality.</li>
+<li>Each push to HTTP/HTTPS server initiates a new TCP connection.</li>
+<li>Webhooks can only facilitate one-way communication from server to client.</li>
+</ol>
+<h2 id="setting-up-webhooks">Setting up Webhooks</h2>
+<ul>
+<li><a href="https://192.168.1.189/mt/playground/public/webhooks.html">Link to Event Monitoring with ACC Webhooks</a></li>
+</ul>
+<h2 id="socket-io-server-wide-notifications-not-recommended-">Socket.IO (Server-wide notifications - Not Recommended)</h2>
+<p>Socket notifications rely on persistent web socket connections between the 3rd party client and ACC Web Endpoint, and a notification channel between ACC Web Endpoint and ACC server. The socket-based connection is configured between a specific server and a client. </p>
+<h3 id="pros">Pros</h3>
+<ol>
+<li>Fast two-way channel between a web browser and a server.</li>
+<li>Low latency communication between a client and web service.</li>
+<li>ALARM_OBJECTS, CAMERA_OBJECTS, SERVER_OBJECTS, SITE notifications, and events are available through socket connection.</li>
+</ol>
+<h3 id="cons">Cons</h3>
+<ol>
+<li>Session required for full life cycle: A session is required to open the notification channel as well as to keep the notification channel alive. These sessions can expire, which means that the client would have additional work to regenerate a new token and resubscribe to notifications again.</li>
+<li>The client has additional responsibility to listen for notification channel disconnect event and re-establish the notification channel subscription if the connection went down for some reason.</li>
+<li>ACC Web Endpoint need to be installed on each server and socket.io connection is required for each server to receive site-wide events</li>
+<li>Only server-specific notifications are sent to the client.</li>
+<li>Performance and Scale : Due to multiple channels for each server, with multiple clients, we have exponential channels open between ACC server and ACC Web Endpoint.</li>
+</ol>
+<h2 id="comparison-between-webhooks-and-socket-io">Comparison between Webhooks and Socket.IO</h2>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Socket.IO</th>
+<th>Webhooks</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Connection</td>
+<td>Persistent</td>
+<td>Non-Persistent</td>
+</tr>
+<tr>
+<td>Protocol</td>
+<td>WebSocket</td>
+<td>HTTP  / HTTPS</td>
+</tr>
+<tr>
+<td>Ease of Use</td>
+<td>Clients need to have Socket.IO client</td>
+<td>Clients need to setup a receiving HTTP/HTTPS server</td>
+</tr>
+<tr>
+<td>Session</td>
+<td>Session-based</td>
+<td>Session only needed during configuration</td>
+</tr>
+</tbody></table>
+</div><div id="footer">
+               <p style="color: rgb(227, 227, 227); font-size: 11px; margin: 5px 5px 5px; float: right;">
+               © 2019 Avigilon Corporation</p> </div></body></html>
