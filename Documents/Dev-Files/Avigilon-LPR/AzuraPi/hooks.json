@@ -1,0 +1,19 @@
+[
+  {
+    "id": "response",   
+    "pass-arguments-to-command":
+    [
+      {
+        "source": "string",
+        "name": "sudo"
+      },
+      {
+        "source": "string",
+        "name": "sh"
+      }
+    ],
+    "execute-command": "/home/pi/response.sh",
+    "command-working-directory": "/home/pi",
+    "response-message": "success"
+  }
+]

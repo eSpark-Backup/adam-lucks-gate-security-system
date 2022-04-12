@@ -16,10 +16,35 @@ myzuulsystem1
   "username": "administrator",
   "password": "AZURA_CCTV_ZUUL#1",
   "clientName": "azura",
-  "authorizationToken": "0014y00002a7wDZAAY:1649725437:b2358fa7e6567b21ea6852a21bfe170314fd0bcb8cf23270a469ebfe5bc46178"
+  "authorizationToken": "0014y00002a7wDZAAY:1649770279:d7b41b2dc5f802d0fef7319634f75a2cc1641e21cd748a12496e337ee4a0c3a4"
 }
 
-sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUSDZJvEV9Ah7YB-tIZHpBfG0Gc6waEAofQi8pO00yspj5WPUT2lAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
+sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUxLAE-QZCz1VLGX4Yab9iGR6E0cEaEOcCzYfmKkbwlbICiPL72pEiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
+
+===== CREATE WEBHOOK ON AVIGILON =====
+{
+    "session": "AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUSDZJvEV9Ah7YB-tIZHpBfG0Gc6waEAofQi8pO00yspj5WPUT2lAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I",
+    "webhook": {
+        "url": "http://192.168.1.247:9000/hooks/response",
+        "heartbeat": {
+            "enable": true,
+            "frequencyMs": 30000
+        },
+        "authenticationToken": "0014y00002a7wDZAAY:1649770279:d7b41b2dc5f802d0fef7319634f75a2cc1641e21cd748a12496e337ee4a0c3a4",
+        "eventTopics": {
+            "whitelist": [
+                "DEVICE_LPR_PLATE_UPDATE"
+            ]
+        }
+    }
+}
+
+===== READ WEBHOOK ON AVIGILON =====
+
+> https://192.168.1.189/mt/api/rest/v1/webhooks?session=AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUSDZJvEV9Ah7YB-tIZHpBfG0Gc6waEAofQi8pO00yspj5WPUT2lAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
+
+===== DELETE WEBHOOK ON AVIGILON =====
+
 
 ===== URL FOR STILL IMAGE CAPTURE =====
 http://107.128.123.204/media/cam0/still.jpg?res=max
