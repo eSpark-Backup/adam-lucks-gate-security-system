@@ -16,8 +16,10 @@ myzuulsystem1
   "username": "administrator",
   "password": "AZURA_CCTV_ZUUL#1",
   "clientName": "azura",
-  "authorizationToken": "0014y00002a7wDZAAY:1649623153:1c1f9344937388d7f707a94cc407c3c70b740f5b2d486b187908ab3130d7bc90"
+  "authorizationToken": "0014y00002a7wDZAAY:1649725437:b2358fa7e6567b21ea6852a21bfe170314fd0bcb8cf23270a469ebfe5bc46178"
 }
+
+sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUSDZJvEV9Ah7YB-tIZHpBfG0Gc6waEAofQi8pO00yspj5WPUT2lAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
 
 ===== URL FOR STILL IMAGE CAPTURE =====
 http://107.128.123.204/media/cam0/still.jpg?res=max
