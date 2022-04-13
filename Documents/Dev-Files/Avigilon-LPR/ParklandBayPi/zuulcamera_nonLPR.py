@@ -8,14 +8,14 @@ from openalpr import Alpr
 from datetime import datetime
 locale.setlocale(locale.LC_ALL, 'C')
 
+RPI_ID       = "100000004e546d6b"
 imagePath    = "/home/ParklandBay/Pictures/"
 ImageBaseURL = "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2F"
 ImageAuxURL  = "?alt=media&token="
 imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
-cameraMAC    = "64:25:5E:02:35:93"
-
-plateNum     = "0"
+cameraMAC    = "EC:C8:9C:6D:83:F1"
+req_node	 = "capture_request"
 
 
 def OCR(imgpath, imgid, imgformat):
@@ -66,13 +66,15 @@ st = firebase.storage();
 
 try:
 	while True:
-		camera = db.child("cameras").child(cameraMAC)
-		capture_prog = camera.child("capture_progress").get().val()
+		capture_prog = db.child(RPI_ID).child(req_node).child("status").get().val()
 		#print(capture_prog)
 
 
 		if "true" in str(capture_prog).lower():
-			print("true")
+			print(capture_prog)
+			cameraMAC = db.child(RPI_ID).child(req_node).child("mac_address").get().val()
+			print(cameraMAC)
+			
 			imageID = int(time.time())
 			timestamp = datetime.utcfromtimestamp(imageID)
 			imageID = str(imageID)
@@ -89,7 +91,7 @@ try:
 			"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
 			"timestamp" : str(timestamp)
 			}
-			db.child("cameras").child(cameraMAC).update(data, user['idToken'])
+			db.child(RPI_ID).child(cameraMAC).update(data, user['idToken'])
 
 except KeyboardInterrupt:
 	print("Execution Stopped")
