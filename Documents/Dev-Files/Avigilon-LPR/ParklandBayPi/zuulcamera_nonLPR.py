@@ -74,7 +74,7 @@ try:
 			print(capture_prog)
 			cameraMAC = db.child(RPI_ID).child(req_node).child("mac_address").get().val()
 			print(cameraMAC)
-			
+
 			imageID = int(time.time())
 			timestamp = datetime.utcfromtimestamp(imageID)
 			imageID = str(imageID)
@@ -92,6 +92,9 @@ try:
 			"timestamp" : str(timestamp)
 			}
 			db.child(RPI_ID).child(cameraMAC).update(data, user['idToken'])
+			
+			data = {"status": "false"}
+			db.child(RPI_ID).child(req_node).update(data, user['idToken'])
 
 except KeyboardInterrupt:
 	print("Execution Stopped")
