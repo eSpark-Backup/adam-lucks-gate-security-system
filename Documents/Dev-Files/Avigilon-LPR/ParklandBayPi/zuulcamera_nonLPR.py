@@ -89,10 +89,11 @@ try:
 
 			data = {"ImageID" : imageID+imageformat,
 			"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
-			"timestamp" : str(timestamp)
+			"timestamp" : str(timestamp),
+			"plateNum" : ""
 			}
 			db.child(RPI_ID).child(cameraMAC).update(data, user['idToken'])
-			
+
 			data = {"status": "false"}
 			db.child(RPI_ID).child(req_node).update(data, user['idToken'])
 
