@@ -1,0 +1,86 @@
+11/14/2019 9:36:00 AM - Patch My PC Started
+11/14/2019 9:36:00 AM - Checking connection to patchmypc.com
+11/14/2019 9:36:00 AM - Verified connection to patchmypc.com. Status Code: 200
+11/14/2019 9:36:00 AM - Getting latest definitions from patchmypc.com
+11/14/2019 9:36:01 AM - Definition load completed in: 0.92 seconds
+11/14/2019 9:36:01 AM - Microsoft.Win32.TaskScheduler.dll not found in Global Assembly Cache
+11/14/2019 9:36:01 AM - Downloading: https://patchmypc.com/freeupdater/applications/taskscheduler/gacutil.exe to C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\gacutil.exe
+11/14/2019 9:36:01 AM - Patch My PC version 4.1.0.3 is running. The latest is 4.1.0.3
+11/14/2019 9:36:01 AM - Performing scan of installed applications
+11/14/2019 9:36:02 AM - Downloading: https://patchmypc.com/freeupdater/applications/taskscheduler/gacutil.exe.config to C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\gacutil.exe.config
+11/14/2019 9:36:02 AM - Downloading: https://patchmypc.com/freeupdater/applications/taskscheduler/gacutlrc.dll to C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\1033\gacutlrc.dll
+11/14/2019 9:36:02 AM - Downloading: https://patchmypc.com/freeupdater/applications/taskschedulerv4.0/Microsoft.Win32.TaskScheduler.dll to C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\Microsoft.Win32.TaskScheduler.dll
+11/14/2019 9:36:02 AM - Running: C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\gacutil.exe /i C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\Microsoft.Win32.TaskScheduler.dll
+11/14/2019 9:36:03 AM - Error loading Microsoft.Win32.TaskScheduler.dll Could not load file or assembly 'Microsoft.Win32.TaskScheduler, Version=2.5.28.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae' or one of its dependencies. The system cannot find the file specified.
+11/14/2019 9:36:04 AM - Scan completed in: 2.50 seconds
+11/14/2019 9:38:13 AM - Patch My PC 4.1.0.3 | Definitions: 13-Nov-2019 | 11/14/2019 9:38:13 AM
+
+11/14/2019 9:38:13 AM - OS: Microsoft Windows 10 Home x64
+
+11/14/2019 9:38:13 AM - 5 App(s) to install or update...
+11/14/2019 9:38:13 AM - Download URL: https://download-installer-origin.cdn.mozilla.net/pub/firefox/releases/70.0.1/win64/en-US/Firefox%20Setup%2070.0.1.exe
+11/14/2019 9:38:14 AM - Download Path: C:\PatchMyPCUpdates\Mozilla Firefox 70.0.1 (x64).exe
+11/14/2019 9:38:14 AM - Download size: 49.06 MB
+11/14/2019 9:38:14 AM - Download Starting for: https://download-installer-origin.cdn.mozilla.net/pub/firefox/releases/70.0.1/win64/en-US/Firefox%20Setup%2070.0.1.exe
+11/14/2019 9:38:19 AM - Total download time in seconds: 5.45
+11/14/2019 9:38:19 AM - Install Command: -ms
+11/14/2019 9:38:19 AM - Installing Mozilla Firefox 70.0.1 (x64) Silently
+11/14/2019 9:38:51 AM - Install Successful for Mozilla Firefox 70.0.1 (x64)
+
+11/14/2019 9:38:51 AM - Download URL: http://download.advanced-ip-scanner.com/download/files/Advanced_IP_Scanner_2.5.3850.exe
+11/14/2019 9:38:52 AM - Download Path: C:\PatchMyPCUpdates\Advanced IP Scanner 2.5.3850.exe
+11/14/2019 9:38:52 AM - Download size: 19.44 MB
+11/14/2019 9:38:52 AM - Download Starting for: http://download.advanced-ip-scanner.com/download/files/Advanced_IP_Scanner_2.5.3850.exe
+11/14/2019 9:39:03 AM - Total download time in seconds: 11.40
+11/14/2019 9:39:03 AM - Install Command: /VERYSILENT /NOCLOSEAPPLICATIONS /NORESTARTAPPLICATIONS /NORESTART
+11/14/2019 9:39:03 AM - Installing Advanced IP Scanner 2.5.3850 Silently
+11/14/2019 9:39:21 AM - Unable to delete: C:\PatchMyPCUpdates\Advanced IP Scanner 2.5.3850.exe file may be in use
+11/14/2019 9:39:21 AM - Download URL: http://download.notepad-plus-plus.org/repository/7.x/7.8.1/npp.7.8.1.Installer.x64.exe
+11/14/2019 9:39:50 AM - Download Path: C:\PatchMyPCUpdates\Notepad++ 7.8.1 (x64).exe
+11/14/2019 9:39:50 AM - Download size: 3.8 MB
+11/14/2019 9:39:50 AM - Download Starting for: http://download.notepad-plus-plus.org/repository/7.x/7.8.1/npp.7.8.1.Installer.x64.exe
+11/14/2019 9:40:48 AM - Total download time in seconds: 57.69
+11/14/2019 9:40:48 AM - Install Command: /S
+11/14/2019 9:40:48 AM - Installing Notepad++ 7.8.1 (x64) Silently
+11/14/2019 9:40:57 AM - Deleted file: C:\PatchMyPCUpdates\Notepad++ 7.8.1 (x64).exe
+11/14/2019 9:40:57 AM - Download URL: https://the.earth.li/~sgtatham/putty/0.73/w64/putty-64bit-0.73-installer.msi
+11/14/2019 9:40:58 AM - Download Path: C:\PatchMyPCUpdates\PuTTY 0.73 (x64).msi
+11/14/2019 9:40:58 AM - Download size: 3.02 MB
+11/14/2019 9:40:58 AM - Download Starting for: https://the.earth.li/~sgtatham/putty/0.73/w64/putty-64bit-0.73-installer.msi
+11/14/2019 9:41:00 AM - Total download time in seconds: 2.42
+11/14/2019 9:41:00 AM - Install Command: /qn REBOOT=ReallySuppress
+11/14/2019 9:41:00 AM - Installing PuTTY 0.73 (x64) Silently
+11/14/2019 9:41:05 AM - Deleted file: C:\PatchMyPCUpdates\PuTTY 0.73 (x64).msi
+11/14/2019 9:41:05 AM - 
+Patch My PC Update Complete 11/14/2019 9:41:05 AM
+11/14/2019 10:11:47 AM - Patch My PC Started
+11/14/2019 10:11:47 AM - Checking connection to patchmypc.com
+11/14/2019 10:11:47 AM - Verified connection to patchmypc.com. Status Code: 200
+11/14/2019 10:11:48 AM - Getting latest definitions from patchmypc.com
+11/14/2019 10:11:48 AM - Definition load completed in: 0.88 seconds
+11/14/2019 10:11:49 AM - Microsoft.Win32.TaskScheduler.dll not found in Global Assembly Cache
+11/14/2019 10:11:49 AM - Downloading: https://patchmypc.com/freeupdater/applications/taskscheduler/gacutil.exe to C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\gacutil.exe
+11/14/2019 10:11:49 AM - Patch My PC version 4.1.0.3 is running. The latest is 4.1.0.3
+11/14/2019 10:11:49 AM - Performing scan of installed applications
+11/14/2019 10:11:50 AM - Downloading: https://patchmypc.com/freeupdater/applications/taskscheduler/gacutil.exe.config to C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\gacutil.exe.config
+11/14/2019 10:11:50 AM - Downloading: https://patchmypc.com/freeupdater/applications/taskscheduler/gacutlrc.dll to C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\1033\gacutlrc.dll
+11/14/2019 10:11:50 AM - Downloading: https://patchmypc.com/freeupdater/applications/taskschedulerv4.0/Microsoft.Win32.TaskScheduler.dll to C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\Microsoft.Win32.TaskScheduler.dll
+11/14/2019 10:11:50 AM - Running: C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\gacutil.exe /i C:\Users\ZUUL SYSTEMS\AppData\Roaming\PatchMyPC\Microsoft.Win32.TaskScheduler.dll
+11/14/2019 10:11:51 AM - Error loading Microsoft.Win32.TaskScheduler.dll Could not load file or assembly 'Microsoft.Win32.TaskScheduler, Version=2.5.28.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae' or one of its dependencies. The system cannot find the file specified.
+11/14/2019 10:11:52 AM - Scan completed in: 3.11 seconds
+11/14/2019 10:12:13 AM - Patch My PC 4.1.0.3 | Definitions: 13-Nov-2019 | 11/14/2019 10:12:12 AM
+
+11/14/2019 10:12:13 AM - OS: Microsoft Windows 10 Home x64
+
+11/14/2019 10:12:13 AM - 1 App(s) to install or update...
+11/14/2019 10:12:13 AM - Download URL: https://newcontinuum.dl.sourceforge.net/project/winscp/WinSCP/5.15.5/WinSCP-5.15.5-Setup.exe
+11/14/2019 10:12:13 AM - Download Path: C:\PatchMyPCUpdates\WinSCP 5.15.5.exe
+11/14/2019 10:12:13 AM - Download size: 9.39 MB
+11/14/2019 10:12:13 AM - Download Starting for: https://newcontinuum.dl.sourceforge.net/project/winscp/WinSCP/5.15.5/WinSCP-5.15.5-Setup.exe
+11/14/2019 10:12:27 AM - Total download time in seconds: 13.62
+11/14/2019 10:12:27 AM - Install Command: /VERYSILENT /NOCLOSEAPPLICATIONS /NORESTARTAPPLICATIONS /NORESTART /SP-
+11/14/2019 10:12:27 AM - Installing WinSCP 5.15.5 Silently
+11/14/2019 10:12:47 AM - Install Successful for WinSCP 5.15.5
+
+11/14/2019 10:12:47 AM - 
+Patch My PC Update Complete 11/14/2019 10:12:47 AM
