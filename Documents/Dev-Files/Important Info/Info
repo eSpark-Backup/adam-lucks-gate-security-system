@@ -4,11 +4,21 @@ password: parklandbay!@#
 SSH Port: 3429
 VNC Port: 4747
 
-===== raspberrypi =====
+===== Azuraypi =====
 username: pi
 password: myzuulsystem1
 SSH Port: 22
 VNC Port: 5900
+
+===== Mockuppi =====
+username: pi
+password: mockupzuul1
+SSH Port: 22
+VNC Port: 5900
+
+username: root
+password: @#%IKAVNIa1
+
 
 ===== Router Credentials =====
 Adam Router Device Access Code: %72/#</2%/
@@ -25,14 +35,28 @@ Router Public IP: 99.159.252.224
 ===== Adam Office Router Credentials =====
 network={
 ssid="ATTxBtrTdS"
-psk=0ffd749e4b55de22a9f2360029a80c1cfdc834d8e38157a176c97c59dec737d5?r6g4c6b
+psk="5616701699"
 }
 
 Router Public IP: 107.128.123.204
 
 ===== USEFUL COMMANDS =====
-> sudo nano /etc/wpa_supplicant/wpa_supplicant.conf #Command to edit the WiFi network file
+# Command to edit the WiFi network file
+> sudo nano /etc/wpa_supplicant/wpa_supplicant.conf 
 
-> Set-NetIPAddress -InterfaceIndex 4 -PrefixLength 16 #To change subnet through windows powershell
+# To change subnet through windows powershell
+> Set-NetIPAddress -InterfaceIndex 4 -PrefixLength 16 
 
-> cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2 #Raspberry Pi Serial Number
+# Raspberry Pi Serial Number
+> cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2 
+
+===== USEFUL LINKS =====
+# Change Pi hostname on a network
+> https://thepihut.com/blogs/raspberry-pi-tutorials/19668676-renaming-your-raspberry-pi-the-hostname
+
+===== CHANGE VNC PORT =====
+1. Connect to the rpi via ssh and before enabling VNC, create the following file:
+> sudo nano /etc/vnc/config.d/vncserver-x11
+
+2. RfbPort=xxxx (where xxxx is the port you wish to use)
+

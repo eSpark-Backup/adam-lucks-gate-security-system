@@ -16,16 +16,16 @@ myzuulsystem1
   "username": "administrator",
   "password": "AZURA_CCTV_ZUUL#1",
   "clientName": "azura",
-  "authorizationToken": "0014y00002a7wDZAAY:1649770279:d7b41b2dc5f802d0fef7319634f75a2cc1641e21cd748a12496e337ee4a0c3a4"
+  "authorizationToken": "0014y00002a7wDZAAY:1650707656:68a92d8d5e926f89e9aa864bc29778ff1a0eabeb279a30276ff9b0483f8aea87"
 }
 
-sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUxLAE-QZCz1VLGX4Yab9iGR6E0cEaEOcCzYfmKkbwlbICiPL72pEiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
+sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUMSpj43BV_mSNx3zw6_3qoTecXiQaEJVklkSUEkzPpabiclenHRAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
 
 ===== CREATE WEBHOOK ON AVIGILON =====
 {
-    "session": "AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUSDZJvEV9Ah7YB-tIZHpBfG0Gc6waEAofQi8pO00yspj5WPUT2lAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I",
+    "session": "AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUMSpj43BV_mSNx3zw6_3qoTecXiQaEJVklkSUEkzPpabiclenHRAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I",
     "webhook": {
-        "url": "http://192.168.1.247:9000/hooks/response",
+        "url": "https://newman-api.getpostman.com/run/20430047/97cdb496-2512-4817-ba8e-437070ff856f",
         "heartbeat": {
             "enable": true,
             "frequencyMs": 30000
@@ -41,7 +41,7 @@ sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUxLAE-QZCz1VLGX4Yab9iGR6E0cEaEOcCz
 
 ===== READ WEBHOOK ON AVIGILON =====
 
-> https://192.168.1.189/mt/api/rest/v1/webhooks?session=AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUSDZJvEV9Ah7YB-tIZHpBfG0Gc6waEAofQi8pO00yspj5WPUT2lAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
+> https://192.168.1.189/mt/api/rest/v1/webhooks?session=AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUMSpj43BV_mSNx3zw6_3qoTecXiQaEJVklkSUEkzPpabiclenHRAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
 
 ===== DELETE WEBHOOK ON AVIGILON =====
 
@@ -70,3 +70,6 @@ userKey: c1a418c5b5e00ca7815de44cd672b75ed503386850b3648df8571185d6f9b34e
 =============== AVIGILON AUTHTOKEN PARAMETERS (lowercase) ===============
 userNonce: 0014y00002a7wdzaay
 userKey: c1a418c5b5e00ca7815de44cd672b75ed503386850b3648df8571185d6f9b34e
+
+
+PMAK-6264517e0c577b2d93b9defe-6e695b2b70a73ff559c2954fd73fb66c39
