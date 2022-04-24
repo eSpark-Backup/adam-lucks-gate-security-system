@@ -15,6 +15,10 @@
       },
       {
         "source": "payload",
+        "name": "notifications.0.event.type"
+      },
+      {
+        "source": "payload",
         "name": "notifications.0.event.newPlate"
       },
       {
