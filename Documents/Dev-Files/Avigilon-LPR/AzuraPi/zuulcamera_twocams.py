@@ -83,7 +83,7 @@ try:
 
 				os.system("ffmpeg -rtsp_transport tcp -i 'rtsp://admin:myzuulsystem1@192.168.1.186/defaultPrimary?mtu=1440&streamType=u' -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
 				os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -vf 'crop=iw/4:ih/4' -loglevel quiet "+imagePath+imageID+imageformat)
-				#os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet "+imagePath+imageID+imageformat)
+
 				user = auth.refresh(user['refreshToken'])
 				st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
 				accesToken = st_response["downloadTokens"]
