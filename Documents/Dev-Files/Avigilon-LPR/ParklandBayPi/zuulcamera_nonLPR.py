@@ -4,9 +4,7 @@ import time
 import locale
 import pyrebase
 from time import sleep
-from openalpr import Alpr
 from datetime import datetime
-locale.setlocale(locale.LC_ALL, 'C')
 
 RPI_ID       = "100000004e546d6b"
 imagePath    = "/home/ParklandBay/Pictures/"
@@ -16,39 +14,6 @@ imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 cameraMAC    = "EC:C8:9C:6D:83:F1"
 req_node	 = "capture_request"
-
-
-def OCR(imgpath, imgid, imgformat):
-    alpr = None
-    try:
-        alpr = Alpr("us", "/etc/openalpr/openalpr.conf","/usr/share/openalpr/runtime_data",)
-        print("Test")
-
-        if not alpr.is_loaded():
-            print("Error loading OpenALPR")
-        else:
-            print("Using OpenALPR " + alpr.get_version())
-
-        alpr.set_top_n(7)
-        alpr.set_default_region("wa")
-        alpr.set_detect_region(False)
-        jpeg_bytes = open("/home/ParklandBay/Pictures/capture.jpg", "rb").read()
-        results = alpr.recognize_array(jpeg_bytes)
-        print(results)
-
-        data = {}
-        for plate in results['results']:
-            for candidate in plate['candidates']:
-                data[candidate['plate']]=candidate['confidence']
-                data.update(data)
-
-        plateNum = max(data, key=data.get)
-        return plateNum
-
-    finally:
-        if alpr:
-            alpr.unload()
-
 
 config = {
   "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
@@ -86,7 +51,6 @@ try:
 			user = auth.refresh(user['refreshToken'])
 			st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
 			accesToken = st_response["downloadTokens"]
-			#plateNum = OCR()
 
 			data = {"ImageID" : imageID+imageformat,
 			"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
@@ -94,9 +58,11 @@ try:
 			"plateNum" : ""
 			}
 			db.child(RPI_ID).child(cameraMAC).update(data, user['idToken'])
+			os.system("sudo rm "+imagePath+imageID+imageformat)
 
-			data = {"status": "false"}
-			db.child(RPI_ID).child(req_node).update(data, user['idToken'])
+		data = {"status": "false"}
+		db.child(RPI_ID).child(req_node).update(data, user['idToken'])
+		
 
 except KeyboardInterrupt:
 	print("Execution Stopped")
