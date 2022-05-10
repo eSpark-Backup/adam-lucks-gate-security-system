@@ -5,7 +5,6 @@ import locale
 import pyrebase
 from time import sleep
 from datetime import datetime
-locale.setlocale(locale.LC_ALL, 'C')
 
 RPI_ID       = "10000000ac28b34c"
 imagePath    = "/home/pi/Pictures/"
@@ -29,40 +28,36 @@ user = auth.sign_in_with_email_and_password("ketchuma129@gmail.com", "myzuulsyst
 db = firebase.database()
 st = firebase.storage();
 
-
 try:
-	while True:
-		capture_prog = db.child(RPI_ID).child(req_node).child("status").get().val()
-		#print(capture_prog)
+  while True:
+    capture_prog = db.child(RPI_ID).child(req_node).child("status").get().val()
 
+    if "true" in str(capture_prog).lower():
+      print(capture_prog)
+      cameraMAC = db.child(RPI_ID).child(req_node).child("mac_address").get().val()
+      print(cameraMAC)
+      
+      imageID = int(time.time())
+      timestamp = datetime.utcfromtimestamp(imageID)
+      imageID = str(imageID)
 
-		if "true" in str(capture_prog).lower():
-			print(capture_prog)
-			cameraMAC = db.child(RPI_ID).child(req_node).child("mac_address").get().val()
-			print(cameraMAC)
+      os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
+      os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -vf 'crop=iw/2:ih/2' -loglevel quiet "+imagePath+imageID+imageformat)
 
-			imageID = int(time.time())
-			timestamp = datetime.utcfromtimestamp(imageID)
-			imageID = str(imageID)
+      user = auth.refresh(user['refreshToken'])
+      st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
+      accesToken = st_response["downloadTokens"]
 
-			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myZUULsystem!@192.168.1.64:554/Streaming/Channels/101/ -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
-			os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -vf 'crop=iw/2:ih/2' -loglevel quiet "+imagePath+imageID+imageformat)
+      data = {"ImageID" : imageID+imageformat,
+      "ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
+      "timestamp" : str(timestamp),
+      "plateNum" : ""
+      }
 
-			user = auth.refresh(user['refreshToken'])
-			st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
-			accesToken = st_response["downloadTokens"]
-
-			data = {"ImageID" : imageID+imageformat,
-			"ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
-			"timestamp" : str(timestamp),
-			"plateNum" : ""
-			}
-			db.child(RPI_ID).child(cameraMAC).update(data, user['idToken'])
-			os.system("sudo rm "+imagePath+imageID+imageformat)
-
-		data = {"status": "false"}
-		db.child(RPI_ID).child(req_node).update(data, user['idToken'])
-		
+      db.child("cameras").child(cameraMAC).update(data, user['idToken'])
+      os.system("sudo rm "+imagePath+imageID+imageformat)
+      data = {"status": "false"}
+      db.child(RPI_ID).child(req_node).update(data, user['idToken'])
 
 except KeyboardInterrupt:
-	print("Execution Stopped")
+  print("Execution Stopped")
