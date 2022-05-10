@@ -20,8 +20,7 @@ config = {
   "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
   "authDomain": "zuul-master.firebaseapp.com",
   "databaseURL": "https://zuul-master.firebaseio.com",
-  "storageBucket": "zuul-master.appspot.com",
-  "serviceAccount": "/home/pi/tmp/zuul-master-firebase-adminsdk-us959-e9bfca113d.json"
+  "storageBucket": "zuul-master.appspot.com"
 }
 
 firebase = pyrebase.initialize_app(config)

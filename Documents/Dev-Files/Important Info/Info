@@ -13,8 +13,8 @@ VNC Port: 5900
 ===== Mockuppi =====
 username: pi
 password: mockupzuul1
-SSH Port: 22
-VNC Port: 5900
+SSH Port: 1131
+VNC Port: 2562
 
 username: root
 password: @#%IKAVNIa1
