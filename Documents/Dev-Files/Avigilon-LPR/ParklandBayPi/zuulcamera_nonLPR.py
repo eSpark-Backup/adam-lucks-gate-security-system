@@ -19,8 +19,7 @@ config = {
   "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
   "authDomain": "zuul-master.firebaseapp.com",
   "databaseURL": "https://zuul-master.firebaseio.com",
-  "storageBucket": "zuul-master.appspot.com",
-  "serviceAccount": "/home/ParklandBay/tmp/zuul-master-firebase-adminsdk-us959-e9bfca113d.json"
+  "storageBucket": "zuul-master.appspot.com"
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -33,8 +32,6 @@ st = firebase.storage();
 try:
 	while True:
 		capture_prog = db.child(RPI_ID).child(req_node).child("status").get().val()
-		#print(capture_prog)
-
 
 		if "true" in str(capture_prog).lower():
 			print(capture_prog)
@@ -57,11 +54,10 @@ try:
 			"timestamp" : str(timestamp),
 			"plateNum" : ""
 			}
-			db.child(RPI_ID).child(cameraMAC).update(data, user['idToken'])
+			db.child("cameras").child(cameraMAC).update(data, user['idToken'])
 			os.system("sudo rm "+imagePath+imageID+imageformat)
-
-		data = {"status": "false"}
-		db.child(RPI_ID).child(req_node).update(data, user['idToken'])
+			data = {"status": "false"}
+			db.child(RPI_ID).child(req_node).update(data, user['idToken'])
 		
 
 except KeyboardInterrupt:
