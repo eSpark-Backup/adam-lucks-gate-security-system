@@ -13,7 +13,7 @@ ImageAuxURL  = "?alt=media&token="
 imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 cameraMAC    = "EC:C8:9C:6D:83:F1"
-req_node	 = "capture_request"
+req_node	   = "capture_request"
 
 config = {
   "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",

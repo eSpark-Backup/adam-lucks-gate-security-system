@@ -4,11 +4,11 @@ password: parklandbay!@#
 SSH Port: 3429
 VNC Port: 4747
 
-===== Azuraypi =====
+===== Azurapi =====
 username: pi
-password: myzuulsystem1
-SSH Port: 22
-VNC Port: 5900
+password: AzuraZUUL^#$132
+SSH Port: 1234
+VNC Port: 4200
 
 ===== Mockuppi =====
 username: pi
@@ -20,7 +20,7 @@ username: root
 password: @#%IKAVNIa1
 
 
-===== Router Credentials =====
+===== Router Access Codes =====
 Adam Router Device Access Code: %72/#</2%/
 ParklandBay Router Device Access Code: 6132440%4*
 
@@ -40,6 +40,11 @@ psk="5616701699"
 
 Router Public IP: 107.128.123.204
 
+===== Azura Router Credentials =====
+Credentials were not shared with us due to security
+
+Router Public IP: 50.231.242.110
+
 ===== USEFUL COMMANDS =====
 # Command to edit the WiFi network file
 > sudo nano /etc/wpa_supplicant/wpa_supplicant.conf 
@@ -53,6 +58,12 @@ Router Public IP: 107.128.123.204
 ===== USEFUL LINKS =====
 # Change Pi hostname on a network
 > https://thepihut.com/blogs/raspberry-pi-tutorials/19668676-renaming-your-raspberry-pi-the-hostname
+
+# Change SSH Port on Raspberry Pi
+> https://geektechstuff.com/2019/09/08/changing-ssh-port-raspberry-pi/
+
+# Change Raspberry Pi password
+> https://www.raspberrypi-spy.co.uk/2012/10/how-to-change-raspberry-pi-password/
 
 ===== CHANGE VNC PORT =====
 1. Connect to the rpi via ssh and before enabling VNC, create the following file:
