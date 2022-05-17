@@ -42,7 +42,7 @@ try:
 			timestamp = datetime.utcfromtimestamp(imageID)
 			imageID = str(imageID)
 
-			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myzuulsystem1@192.168.2.212:554/Streaming/Channels/101/ -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
+			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myzuulsystem1@192.168.2.212/defaultSecondary?streamType=u -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
 			os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -vf 'crop=iw/2:ih/2' -loglevel quiet "+imagePath+imageID+imageformat)
 
 			user = auth.refresh(user['refreshToken'])
