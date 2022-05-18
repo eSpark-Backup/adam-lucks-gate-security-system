@@ -31,16 +31,17 @@ st = firebase.storage();
 
 try:
 	while True:
+		f = open('log_file.txt', 'r+')
+		content = f.readline()
+
 		capture_prog = db.child(RPI_ID).child(req_node).child("status").get().val()
 
-		if "true" in str(capture_prog).lower():
-			print(capture_prog)
-			cameraMAC = db.child(RPI_ID).child(req_node).child("mac_address").get().val()
-			print(cameraMAC)
+		if ("true" in str(content).lower() or "true" in str(capture_prog).lower()):
 
 			imageID = int(time.time())
 			timestamp = datetime.utcfromtimestamp(imageID)
 			imageID = str(imageID)
+			print(timestamp)
 
 			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:mon22key@192.168.1.220:554/Streaming/Channels/101/ -f image2 -loglevel quiet -y /home/ParklandBay/Pictures/capture.jpg")
 			os.system("ffmpeg -i /home/ParklandBay/Pictures/capture.jpg -vf 'crop=iw/2:ih/2' -loglevel quiet "+imagePath+imageID+imageformat)
@@ -58,6 +59,10 @@ try:
 			os.system("sudo rm "+imagePath+imageID+imageformat)
 			data = {"status": "false"}
 			db.child(RPI_ID).child(req_node).update(data, user['idToken'])
+			f.seek(0)
+			f.write("false")
+			f.truncate()
+			f.close()
 		
 
 except KeyboardInterrupt:

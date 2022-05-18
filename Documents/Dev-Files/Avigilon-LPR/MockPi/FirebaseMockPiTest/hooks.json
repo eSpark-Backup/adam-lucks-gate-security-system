@@ -1,0 +1,26 @@
+[
+  {
+    "id": "response",
+    "execute-command": "/home/pi/response.sh",
+    "command-working-directory": "/home/pi",
+    "response-message": "success",
+    "http-methods":[
+         "Post "
+      ],
+    "incoming-payload-content-type": "application/json",
+    "pass-arguments-to-command":
+    [
+      {
+        "source": "entire-payload",
+      },
+      {
+        "source": "payload",
+        "name": "status"
+      },
+      {
+        "source": "payload",
+        "name": "cameraMAC"
+      },
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+[Unit]
+Description=webhook
+
+[Service]
+ExecStart=webhook -hooks /home/ParklandBay/hooks.json -verbose -ip 192.168.1.82 -port 9000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
