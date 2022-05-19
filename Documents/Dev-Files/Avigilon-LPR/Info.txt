@@ -16,21 +16,21 @@ myzuulsystem1
   "username": "administrator",
   "password": "AZURA_CCTV_ZUUL#1",
   "clientName": "azura",
-  "authorizationToken": "0014y00002a7wDZAAY:1650707656:68a92d8d5e926f89e9aa864bc29778ff1a0eabeb279a30276ff9b0483f8aea87"
+  "authorizationToken": "0014y00002a7wDZAAY:1652991440:c1e2b1fcc4cbe99f2ae489b39f1db7abbb6cebd1947f19e54cb1c91a4f6eec42"
 }
 
-sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUMSpj43BV_mSNx3zw6_3qoTecXiQaEJVklkSUEkzPpabiclenHRAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
+sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUJ3IDpJHdTfM95exqcErylFpbdWwaENxhaA69CEcZn4mrLdDzzIQiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
 
 ===== CREATE WEBHOOK ON AVIGILON =====
 {
-    "session": "AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUMSpj43BV_mSNx3zw6_3qoTecXiQaEJVklkSUEkzPpabiclenHRAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I",
+    "session": "AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUJ3IDpJHdTfM95exqcErylFpbdWwaENxhaA69CEcZn4mrLdDzzIQiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I",
     "webhook": {
         "url": "https://newman-api.getpostman.com/run/20430047/97cdb496-2512-4817-ba8e-437070ff856f",
         "heartbeat": {
             "enable": true,
-            "frequencyMs": 30000
+            "frequencyMs": 10000
         },
-        "authenticationToken": "0014y00002a7wDZAAY:1649770279:d7b41b2dc5f802d0fef7319634f75a2cc1641e21cd748a12496e337ee4a0c3a4",
+        "authenticationToken": "0014y00002a7wDZAAY:1652991440:c1e2b1fcc4cbe99f2ae489b39f1db7abbb6cebd1947f19e54cb1c91a4f6eec42",
         "eventTopics": {
             "whitelist": [
                 "DEVICE_LPR_PLATE_UPDATE"
@@ -41,10 +41,18 @@ sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUMSpj43BV_mSNx3zw6_3qoTecXiQaEJVkl
 
 ===== READ WEBHOOK ON AVIGILON =====
 
-> https://192.168.1.189/mt/api/rest/v1/webhooks?session=AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUMSpj43BV_mSNx3zw6_3qoTecXiQaEJVklkSUEkzPpabiclenHRAiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
+> https://192.168.2.242/mt/api/rest/v1/webhooks?session=AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUJ3IDpJHdTfM95exqcErylFpbdWwaENxhaA69CEcZn4mrLdDzzIQiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
 
 ===== DELETE WEBHOOK ON AVIGILON =====
 
+{
+  "session": "AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUJ3IDpJHdTfM95exqcErylFpbdWwaENxhaA69CEcZn4mrLdDzzIQiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I",
+  "ids": [
+    "IEziwh1iRfSZtiR7DNoCuQ",
+    "c3VAdb6uR066K1Zk5uS0jw",
+    "4PwO4KAmQxCQXzow0qMZGg"
+  ]
+}
 
 ===== URL FOR STILL IMAGE CAPTURE =====
 http://107.128.123.204/media/cam0/still.jpg?res=max
@@ -65,10 +73,6 @@ rtsp: rtsp://ghnjcs0001:H4aEZcxrrU@192.168.1.246/mpeg/1080p/media.amp
 
 =============== AVIGILON AUTHTOKEN PARAMETERS ===============
 userNonce: 0014y00002a7wDZAAY
-userKey: c1a418c5b5e00ca7815de44cd672b75ed503386850b3648df8571185d6f9b34e
-
-=============== AVIGILON AUTHTOKEN PARAMETERS (lowercase) ===============
-userNonce: 0014y00002a7wdzaay
 userKey: c1a418c5b5e00ca7815de44cd672b75ed503386850b3648df8571185d6f9b34e
 
 

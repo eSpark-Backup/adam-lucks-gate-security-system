@@ -1,19 +1,30 @@
 [
   {
-    "id": "response",   
+    "id": "response",
+    "execute-command": "/home/pi/response.sh",
+    "command-working-directory": "/home/pi",
+    "response-message": "success",
+    "http-methods":[
+         "Post "
+      ],
+    "incoming-payload-content-type": "application/json",
     "pass-arguments-to-command":
     [
       {
-        "source": "string",
-        "name": "sudo"
+        "source": "entire-payload",
       },
       {
-        "source": "string",
-        "name": "sh"
-      }
-    ],
-    "execute-command": "/home/pi/response.sh",
-    "command-working-directory": "/home/pi",
-    "response-message": "success"
+        "source": "payload",
+        "name": "notifications.0.event.type"
+      },
+      {
+        "source": "payload",
+        "name": "notifications.0.event.newPlate"
+      },
+      {
+        "source": "payload",
+        "name": "notifications.0.event.timestamp"
+      },
+    ]
   }
 ]

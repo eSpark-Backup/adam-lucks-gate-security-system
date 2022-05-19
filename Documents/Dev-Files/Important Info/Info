@@ -76,5 +76,5 @@ Router Public IP: 50.231.242.110
 1. A hooks.json is developed that initiates the Webhook
 2. To run the webhook, run the command 
 
-> webhook -hooks hooks.json -verbose -ip 192.168.1.253 -port 9000
+> webhook -hooks hooks.json -verbose -ip 192.168.1.222 -port 8192
 > webhook -hooks <path/to/hooks.json/file> -verbose -ip <IP of Pi> -port <desired port num>

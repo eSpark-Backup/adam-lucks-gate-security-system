@@ -19,7 +19,7 @@
       },
       {
         "source": "payload",
-        "name": "cameraMAC"
+        "name": "mac_address"
       },
     ]
   }
