@@ -18,7 +18,7 @@ req_node	   = "capture_request"
 config = {
   "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
   "authDomain": "zuul-master.firebaseapp.com",
-  "databaseURL": "https://zuul-master.firebaseio.com",
+  "databaseURL": "https://zuul-master-404bb.firebaseio.com/",
   "storageBucket": "zuul-master.appspot.com"
 }
 
@@ -33,9 +33,7 @@ try:
     f = open('log_file.txt', 'r+')
     content = f.readline()
 
-    capture_prog = db.child(RPI_ID).child(req_node).child("status").get().val()
-
-    if ("true" in str(content).lower() or "true" in str(capture_prog).lower()):
+    if "true" in str(content).lower():
       
       imageID = int(time.time())
       timestamp = datetime.utcfromtimestamp(imageID)
@@ -57,8 +55,6 @@ try:
 
       db.child("cameras").child(cameraMAC).update(data, user['idToken'])
       os.system("sudo rm "+imagePath+imageID+imageformat)
-      data = {"status": "false"}
-      db.child(RPI_ID).child(req_node).update(data, user['idToken'])
       f.seek(0)
       f.write("false")
       f.truncate()
