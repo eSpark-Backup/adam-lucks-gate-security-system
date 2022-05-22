@@ -6,6 +6,7 @@ import pyrebase
 from time import sleep
 from datetime import datetime
 
+UserUID      = "jEdG2fyfVYTuqBB2qb6AQwAOApH3"
 RPI_ID       = "10000000ac28b34c"
 imagePath    = "/home/pi/Pictures/"
 ImageBaseURL = "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2F"
@@ -24,7 +25,7 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
-user = auth.sign_in_with_email_and_password("ketchuma129@gmail.com", "myzuulsystem!")
+user = auth.sign_in_with_email_and_password("10000000ac28b34c@email.com", "gc?ufS*L9aFcv_}U")
 db = firebase.database()
 st = firebase.storage();
 
@@ -53,7 +54,7 @@ try:
       "plateNum" : ""
       }
 
-      db.child("cameras").child(cameraMAC).update(data, user['idToken'])
+      db.child(UserUID).child(cameraMAC).update(data, user['idToken'])
       os.system("sudo rm "+imagePath+imageID+imageformat)
       f.seek(0)
       f.write("false")
