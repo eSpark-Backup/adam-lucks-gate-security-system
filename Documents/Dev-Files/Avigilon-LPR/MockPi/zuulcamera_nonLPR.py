@@ -14,12 +14,11 @@ ImageAuxURL  = "?alt=media&token="
 imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 cameraMAC    = "64:25:5E:02:35:93"
-req_node	   = "capture_request"
 
 config = {
   "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
   "authDomain": "zuul-master.firebaseapp.com",
-  "databaseURL": "https://zuul-master-404bb.firebaseio.com/",
+  "databaseURL": "https://zuul-master.firebaseio.com/",
   "storageBucket": "zuul-master.appspot.com"
 }
 
