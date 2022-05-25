@@ -122,11 +122,19 @@ Delete a directory
 User: root
 Pass: &M,oLvZCq#}C 
 
-https://72.52.146.4:2087/
+
 
 ssh sshuser@72.52.146.4 -p 522
 
-Username: sshuser 
+https://72.52.146.4:2087/ (cPanel)
+
+Username: zuulsystems
+Password: *4RUVwiEtSTb$623FG498#^j
+
+
+https://72.52.146.4:2087/ (WHM)
+
+Username: root 
 Password: *4RUVwiEtSTb$623FG498#^j (WHM)
 Port: 522
 
