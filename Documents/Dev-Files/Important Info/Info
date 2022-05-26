@@ -24,7 +24,7 @@ password: @#%IKAVNIa1
 Adam Router Device Access Code: %72/#</2%/
 ParklandBay Router Device Access Code: 6132440%4*
 
-===== ParklandBayPi Router Credentials =====
+===== ParklandBay Router Credentials =====
 network={
 ssid="ATTFsSImkI"
 psk="k296?r6g4c6b"
@@ -39,6 +39,10 @@ psk="5616701699"
 }
 
 Router Public IP: 107.128.123.204
+
+===== Azura Router Credentials =====
+
+Router Public IP: 50.231.242.110
 
 ===== ADAM LIQUIDWEB CREDENTIALS =====
 ZUUL_Systems 
