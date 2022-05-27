@@ -1,0 +1,9 @@
+[Unit]
+Description=webhook_fb
+
+[Service]
+ExecStart=webhook -hooks /home/pi/hooks_fb.json -verbose -ip 192.168.2.151 -port 9000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
