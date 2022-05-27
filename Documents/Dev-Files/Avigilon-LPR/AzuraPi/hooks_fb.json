@@ -1,6 +1,6 @@
 [
   {
-    "id": "response",
+    "id": "response_fb",
     "execute-command": "/home/pi/response_fb.sh",
     "command-working-directory": "/home/pi",
     "response-message": "success",

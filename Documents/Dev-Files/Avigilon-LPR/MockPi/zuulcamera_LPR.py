@@ -52,6 +52,7 @@ try:
 
 			f = open("log_file.txt", "r")
 			plateNum = f.readline()
+			f.close()
 
 			user = auth.refresh(user['refreshToken'])
 			st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
