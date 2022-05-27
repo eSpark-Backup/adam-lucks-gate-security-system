@@ -1,8 +1,8 @@
 [
   {
-    "id": "fbrequest",
-    "execute-command": "/home/pi/firebase/fbrequest.sh",
-    "command-working-directory": "/home/pi/firebase",
+    "id": "fbresponse",
+    "execute-command": "/home/pi/firebase/fbresponse.sh",
+    "command-working-directory": "/home/pi",
     "response-message": "success",
     "http-methods":[
          "Post "

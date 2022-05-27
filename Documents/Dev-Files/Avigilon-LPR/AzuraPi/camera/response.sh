@@ -7,7 +7,7 @@ echo "Type: $2"
 echo "plateNum: $3"
 echo "timestamp: $4"
 
-log=plate_info.txt
+log=log_file.txt
 sudo chmod 777 $log
  
 # append date to log file
