@@ -16,7 +16,7 @@ myzuulsystem1
   "username": "administrator",
   "password": "AZURA_CCTV_ZUUL#1",
   "clientName": "azura",
-  "authorizationToken": "0014y00002a7wDZAAY:1652991440:c1e2b1fcc4cbe99f2ae489b39f1db7abbb6cebd1947f19e54cb1c91a4f6eec42"
+  "authorizationToken": "0014y00002a7wDZAAY:1653661023:8a7a5e982d4697ac631a151124b5bc54a2e4176bf5c6f4b2585ee2a128acbf8b"
 }
 
 sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUJ3IDpJHdTfM95exqcErylFpbdWwaENxhaA69CEcZn4mrLdDzzIQiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
@@ -41,7 +41,25 @@ sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUJ3IDpJHdTfM95exqcErylFpbdWwaENxha
 
 ===== READ WEBHOOK ON AVIGILON =====
 
-> https://192.168.2.242/mt/api/rest/v1/webhooks?session=AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUJ3IDpJHdTfM95exqcErylFpbdWwaENxhaA69CEcZn4mrLdDzzIQiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
+> https://192.168.2.242/mt/api/rest/v1/webhooks?session=AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUpdN8_FB8LCEFQ6KTkF7prPcjNB4aEIxJhZvwU0z1pSJYFb4meKYiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I
+
+===== UPDATE WEBHOOK ON AVIGILON =====
+{
+  "session": "AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUpdN8_FB8LCEFQ6KTkF7prPcjNB4aEIxJhZvwU0z1pSJYFb4meKYiEMBucZXl10nYoEzAcVYp5lgqBWF6dXJhMiEaEE2erIRywEb_v4iN8kVXy1cqDWFkbWluaXN0cmF0b3I",
+  "webhook": {
+    "id": "jM-c4uLAQJqdA6F2EKUTfA",
+    "url": "http://192.168.2.151:9001/hooks/response_fb",
+    "heartbeat": {
+      "enable": false
+    },
+    "authenticationToken": "0014y00002a7wDZAAY:1653661023:8a7a5e982d4697ac631a151124b5bc54a2e4176bf5c6f4b2585ee2a128acbf8b",
+    "eventTopics": {
+      "whitelist": [
+        "DEVICE_LPR_PLATE_UPDATE"
+      ]
+    }
+  }
+}
 
 ===== DELETE WEBHOOK ON AVIGILON =====
 

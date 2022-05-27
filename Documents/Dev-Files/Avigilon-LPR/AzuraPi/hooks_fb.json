@@ -1,8 +1,8 @@
 [
   {
-    "id": "response_fb",
-    "execute-command": "/home/pi/response_fb.sh",
-    "command-working-directory": "/home/pi",
+    "id": "fbrequest",
+    "execute-command": "/home/pi/firebase/fbrequest.sh",
+    "command-working-directory": "/home/pi/firebase",
     "response-message": "success",
     "http-methods":[
          "Post "
@@ -19,7 +19,7 @@
       },
       {
         "source": "payload",
-        "name": "mac_address"
+        "name": "cameraMAC"
       },
     ]
   }
