@@ -18,7 +18,7 @@ req_node	 = "capture_request"
 config = {
   "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
   "authDomain": "zuul-master.firebaseapp.com",
-  "databaseURL": "https://zuul-master.firebaseio.com",
+  "databaseURL": "https://zuul-master-404bb.firebaseio.com",
   "storageBucket": "zuul-master.appspot.com"
 }
 
