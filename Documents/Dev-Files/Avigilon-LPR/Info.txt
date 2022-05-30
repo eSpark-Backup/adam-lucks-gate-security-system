@@ -50,7 +50,8 @@ sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUJ3IDpJHdTfM95exqcErylFpbdWwaENxha
     "id": "jM-c4uLAQJqdA6F2EKUTfA",
     "url": "http://192.168.2.151:9001/hooks/response_fb",
     "heartbeat": {
-      "enable": false
+      "enable": true,
+      "frequencyMs":30000
     },
     "authenticationToken": "0014y00002a7wDZAAY:1653661023:8a7a5e982d4697ac631a151124b5bc54a2e4176bf5c6f4b2585ee2a128acbf8b",
     "eventTopics": {

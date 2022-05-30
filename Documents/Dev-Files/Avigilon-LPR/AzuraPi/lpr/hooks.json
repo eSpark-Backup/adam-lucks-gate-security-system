@@ -1,7 +1,7 @@
 [
   {
-    "id": "fbresponse",
-    "execute-command": "/home/pi/firebase/fbresponse.sh",
+    "id": "response",
+    "execute-command": "/home/pi/lpr/response.sh",
     "command-working-directory": "/home/pi",
     "response-message": "success",
     "http-methods":[
@@ -15,11 +15,15 @@
       },
       {
         "source": "payload",
-        "name": "status"
+        "name": "notifications.0.event.type"
       },
       {
         "source": "payload",
-        "name": "cameraMAC"
+        "name": "notifications.0.event.newPlate"
+      },
+      {
+        "source": "payload",
+        "name": "notifications.0.event.timestamp"
       },
     ]
   }

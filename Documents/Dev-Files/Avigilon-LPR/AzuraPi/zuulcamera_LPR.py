@@ -14,12 +14,14 @@ ImageAuxURL  = "?alt=media&token="
 imageformat  = ".jpg"
 zoomfactor   = "scale=4*iw:-1, crop=iw/4:ih/4:x=3200:y=2500"
 cameraMAC    = "00:18:85:3D:3D:90"
+request_node = "capture_request"
 
 config = {
-  "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
-  "authDomain": "zuul-master.firebaseapp.com",
-  "databaseURL": "https://zuul-master-404bb.firebaseio.com",
-  "storageBucket": "zuul-master.appspot.com"
+"apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
+"authDomain": "zuul-master.firebaseapp.com",
+"databaseURL": "https://zuul-master-404bb.firebaseio.com",
+"storageBucket": "zuul-master.appspot.com",
+"serviceAccount": "/home/pi/tmp/zuul-master-firebase-adminsdk-us959-e9bfca113d.json"
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -30,27 +32,28 @@ st = firebase.storage();
 
 
 try:
-	while True:
-    f = open('log_file.txt', 'r+')
-    content = f.readline()
+  while True:
+    capture_prog = db.child(UserUID).child(request_node).child("status").get().val()
 
-		if "true" in str(content).lower():
+    if "true" in str(capture_prog).lower():
+
+      cameraMAC = db.child(UserUID).child(request_node).child("mac_address").get().val()
 
       imageID = int(time.time())
       timestamp = datetime.utcfromtimestamp(imageID)
       imageID = str(imageID)
       print(timestamp)
 
-			os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myzuulsystem1@192.168.2.212/defaultSecondary?streamType=u -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
-			os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -vf 'crop=iw/2:ih/2' -loglevel quiet "+imagePath+imageID+imageformat)
+      os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myzuulsystem1@192.168.2.212/defaultSecondary?streamType=u -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
+      os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -vf 'crop=iw/2:ih/2' -loglevel quiet "+imagePath+imageID+imageformat)
 
-			f = open("plate_info.txt", "r")
-			plateNum = f.readline()
-			f.close()
+      f = open("lpr/plate_info.txt", "r")
+      plateNum = f.readline()
+      f.close()
 
-			user = auth.refresh(user['refreshToken'])
-			st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
-			accesToken = st_response["downloadTokens"]
+      user = auth.refresh(user['refreshToken'])
+      st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
+      accesToken = st_response["downloadTokens"]
 
       data = {"ImageID" : imageID+imageformat,
       "ImageURL" : ImageBaseURL+imageID+imageformat+ImageAuxURL+accesToken,
@@ -58,12 +61,13 @@ try:
       "plateNum" : plateNum
       }
 
+      os.system("curl --location --request GET 'http://zuul2.zuulsystems.com/api/update-camera-image?cam_address="+cameraMAC+"&uid="+UserUID+"'")
+      print("\n")
       db.child(UserUID).child(cameraMAC).update(data, user['idToken'])
       os.system("sudo rm "+imagePath+imageID+imageformat)
-      f.seek(0)
-      f.write("false")
-      f.truncate()
-      f.close()
+
+      data = {"status": "false"}
+      db.child(UserUID).child(request_node).update(data, user['idToken'])
 
 except KeyboardInterrupt:
-	print("Execution Stopped")
+  print("Execution Stopped")
