@@ -1,7 +1,7 @@
 [
   {
     "id": "response",
-    "execute-command": "/home/pi/lpr/response.sh",
+    "execute-command": "/home/pi/response.sh",
     "command-working-directory": "/home/pi",
     "response-message": "success",
     "http-methods":[
@@ -24,7 +24,7 @@
       {
         "source": "payload",
         "name": "notifications.0.event.timestamp"
-      },
+      }
     ]
   }
 ]

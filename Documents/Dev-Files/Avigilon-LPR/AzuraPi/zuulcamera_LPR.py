@@ -47,9 +47,8 @@ try:
       os.system("ffmpeg -rtsp_transport tcp -i rtsp://admin:myzuulsystem1@192.168.2.212/defaultSecondary?streamType=u -f image2 -loglevel quiet -y /home/pi/Pictures/capture.jpg")
       os.system("ffmpeg -i /home/pi/Pictures/capture.jpg -vf 'crop=iw/2:ih/2' -loglevel quiet "+imagePath+imageID+imageformat)
 
-      f = open("lpr/plate_info.txt", "r")
+      f = open("plate_info.txt", "r+")
       plateNum = f.readline()
-      f.close()
 
       user = auth.refresh(user['refreshToken'])
       st_response = st.child("images/"+imageID+imageformat).put(imagePath+imageID+imageformat, user['idToken'])
@@ -68,6 +67,8 @@ try:
 
       data = {"status": "false"}
       db.child(UserUID).child(request_node).update(data, user['idToken'])
+      f.truncate(0)
+      f.close()
 
 except KeyboardInterrupt:
   print("Execution Stopped")
