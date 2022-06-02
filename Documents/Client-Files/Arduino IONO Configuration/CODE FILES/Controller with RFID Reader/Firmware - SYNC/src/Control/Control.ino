@@ -386,8 +386,8 @@ void codeReceived(unsigned long code) {
 		// The last received code was less than 1 seconds ago ? ignore
 		if (diff < 1000) return;
 
-		// The last received code was more than 3 sec ago ? clear codeLast
-		if (diff > 3000) codeLast = 0; // 15 sec
+		// The last received code was more than 1 sec ago ? clear codeLast
+		if (diff > 1000) codeLast = 0; // 1 sec
 
 	}
 
@@ -398,9 +398,9 @@ void codeReceived(unsigned long code) {
 		codeGood2 = 0;
 	}
 	
-	// already received this code in the last 3 sec ?
+	// already received this code in the last 1 sec ?
 	if (codeLast == code) {
-		PRINTLN(" - Already received this code in the last 3 sec..");
+		PRINTLN(" - Already received this code in the last 1 sec..");
 		return;
 	}
 
