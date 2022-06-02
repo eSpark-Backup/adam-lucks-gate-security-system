@@ -60,7 +60,7 @@ try:
       "plateNum" : plateNum
       }
 
-      os.system("curl --location --request GET 'http://zuul2.zuulsystems.com/api/update-camera-image?cam_address="+cameraMAC+"&uid="+UserUID+"'")
+      os.system("curl --location --request GET 'http://app.zuulsystems.com/api/update-camera-image?cam_address="+cameraMAC+"&uid="+UserUID+"'")
       print("\n")
       db.child(UserUID).child(cameraMAC).update(data, user['idToken'])
       os.system("sudo rm "+imagePath+imageID+imageformat)
