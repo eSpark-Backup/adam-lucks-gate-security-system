@@ -118,16 +118,16 @@ Delete a directory
 ### LiquidWeb Backend SSH Credentials
 
 ### Live Server Info
+
 https://72.52.146.4:2087/ (cPanel)
 
-Username: zuulsystems
+Username: zuulsystems 
 Password: *4RUVwiEtSTb$623FG498#^j
 
 https://72.52.146.4:2087/ (WHM)
 
 Username: root 
 Password: *4RUVwiEtSTb$623FG498#^j
-
 
 
 ### Development Server Info
