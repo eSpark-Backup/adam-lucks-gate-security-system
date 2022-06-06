@@ -46,8 +46,8 @@ The router used in the final on-site setup should:
 
 Open firewall ports 42001 -> 42005
 Install the `TCP Listener`: unpack this archive `listener.zip` in a temporary folder /tmp
-> chmod 0700 /tmp/listener/install/install 
-> sudo /tmp/listener/install/install 
+> sudo chmod 0700 tmp/listener/install/install 
+> sudo tmp/listener/install/install 
 
 This will install the listener in `/opt/listener` as user `listener`, and set file permissions.
 

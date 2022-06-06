@@ -59,12 +59,11 @@ try:
       "timestamp" : str(timestamp),
       "plateNum" : plateNum
       }
+      db.child(UserUID).child(cameraMAC).update(data, user['idToken'])
 
       os.system("curl --location --request GET 'http://app.zuulsystems.com/api/update-camera-image?cam_address="+cameraMAC+"&uid="+UserUID+"'")
       print("\n")
-      db.child(UserUID).child(cameraMAC).update(data, user['idToken'])
       os.system("sudo rm "+imagePath+imageID+imageformat)
-
       data = {"status": "false"}
       db.child(UserUID).child(request_node).update(data, user['idToken'])
       f.truncate(0)
