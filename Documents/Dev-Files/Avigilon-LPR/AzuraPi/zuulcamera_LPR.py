@@ -19,7 +19,7 @@ request_node = "capture_request"
 config = {
 "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
 "authDomain": "zuul-master.firebaseapp.com",
-"databaseURL": "https://zuul-master.firebaseio.com",
+"databaseURL": "https://zuul-master-404bb.firebaseio.com",
 "storageBucket": "zuul-master.appspot.com",
 "serviceAccount": "/home/pi/tmp/zuul-master-firebase-adminsdk-us959-e9bfca113d.json"
 }
@@ -61,7 +61,7 @@ try:
       }
       db.child(UserUID).child(cameraMAC).update(data, user['idToken'])
 
-      os.system("curl --location --request GET 'http://app.zuulsystems.com/api/update-camera-image?cam_address="+cameraMAC+"&uid="+UserUID+"'")
+      os.system("curl --location --request GET 'http://zuul2.zuulsystems.com/api/update-camera-image?cam_address="+cameraMAC+"&uid="+UserUID+"'")
       print("\n")
       os.system("sudo rm "+imagePath+imageID+imageformat)
       data = {"status": "false"}
