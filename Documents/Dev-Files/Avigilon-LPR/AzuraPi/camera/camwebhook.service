@@ -1,0 +1,9 @@
+[Unit]
+Description=webhook
+
+[Service]
+ExecStart=webhook -hooks /home/pi/camhooks.json -verbose -ip 192.168.2.151 -port 9002
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -19,7 +19,7 @@ request_node = "capture_request"
 config = {
 "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
 "authDomain": "zuul-master.firebaseapp.com",
-"databaseURL": "https://zuul-master.firebaseio.com",
+"databaseURL": "https://zuul-master-404bb.firebaseio.com",
 "storageBucket": "zuul-master.appspot.com",
 "serviceAccount": "/home/pi/tmp/zuul-master-firebase-adminsdk-us959-e9bfca113d.json"
 }
@@ -33,11 +33,10 @@ st = firebase.storage();
 
 try:
   while True:
-    capture_prog = db.child(UserUID).child(request_node).child("status").get().val()
+    a = open('log_file.txt', 'r+')
+    content = a.readline()
 
-    if "true" in str(capture_prog).lower():
-
-      cameraMAC = db.child(UserUID).child(request_node).child("mac_address").get().val()
+    if "true" in str(content).lower():
 
       imageID = int(time.time())
       timestamp = datetime.utcfromtimestamp(imageID)
@@ -64,10 +63,12 @@ try:
       os.system("curl --location --request GET 'http://app.zuulsystems.com/api/update-camera-image?cam_address="+cameraMAC+"&uid="+UserUID+"'")
       print("\n")
       os.system("sudo rm "+imagePath+imageID+imageformat)
-      data = {"status": "false"}
-      db.child(UserUID).child(request_node).update(data, user['idToken'])
       f.truncate(0)
       f.close()
+      a.seek(0)
+      a.write("false")
+      a.truncate()
+      a.close()
 
 except KeyboardInterrupt:
   print("Execution Stopped")

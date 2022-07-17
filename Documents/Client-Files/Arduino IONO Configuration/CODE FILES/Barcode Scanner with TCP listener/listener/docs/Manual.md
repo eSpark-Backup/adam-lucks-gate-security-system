@@ -119,7 +119,7 @@ Delete a directory
 
 ### Live Server Info
 
-https://72.52.146.4:2087/ (cPanel)
+https://72.52.146.4:2083/ (cPanel)
 
 Username: zuulsystems 
 Password: *4RUVwiEtSTb$623FG498#^j
