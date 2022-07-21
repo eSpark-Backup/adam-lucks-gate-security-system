@@ -10,6 +10,12 @@ password: AzuraZUUL^#$132
 SSH Port: 1234
 VNC Port: 4200
 
+===== Azurapi =====
+username: pi
+password: HamletPi!@#!@#%!@
+SSH Port: 1077
+VNC Port: 4200
+
 ===== Mockuppi =====
 username: pi
 password: mockupzuul1
