@@ -8,7 +8,7 @@ https://www.controlbyweb.com/webrelay-quad/webrelay-quad_qsg.pdf
 https://www.controlbyweb.com/webrelay-quad/webrelay-quad_users_manual.pdf
 
 ### Setup Page for WebRelay Quad
-![setup_page.png](https://github.com/eSpark-Consultants/AdamLucks-GateSecuritySystem/tree/MockPi-Test/setup_page.png?raw=true)
+![setup_page.png](https://github.com/eSpark-Consultants/AdamLucks-GateSecuritySystem/blob/MockPi-Test/Documents/Dev-Files/WebRelay%20Quad/setup_page.png)
 
 ### WebRelay Quad Information
 Setup username: admin
