@@ -11,9 +11,8 @@ https://www.controlbyweb.com/webrelay-quad/webrelay-quad_users_manual.pdf
 ![setup_page.png](https://github.com/eSpark-Consultants/AdamLucks-GateSecuritySystem/blob/MockPi-Test/Documents/Dev-Files/WebRelay%20Quad/setup_page.png)
 
 ### WebRelay Quad Information
-Setup username: admin
-Setup password: zUUlSysTem
-zuulsystemQuadS
+Setup username: admin  
+Setup password: zUUlSysTem  
 
-Control username: admin
-Control password: zUUlSysTem
+Control username: admin  
+Control password: zUUlSysTem  
