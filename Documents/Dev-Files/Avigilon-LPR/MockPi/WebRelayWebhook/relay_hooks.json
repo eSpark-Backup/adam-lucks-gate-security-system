@@ -1,7 +1,7 @@
 [
   {
     "id": "webrelay",
-    "execute-command": "/home/pi/webrelay.sh",
+    "execute-command": "/home/pi/relay_trig.sh",
     "command-working-directory": "/home/pi",
     "response-message": "success",
     "http-methods":[
@@ -19,7 +19,7 @@
       },
       {
         "source": "payload",
-        "name": "relay"
+        "name": "status"
       },
       {
         "source": "payload",
