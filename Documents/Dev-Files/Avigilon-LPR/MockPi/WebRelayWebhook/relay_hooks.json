@@ -1,8 +1,8 @@
 [
   {
     "id": "webrelay",
-    "execute-command": "/home/pi/relay_trig.sh",
-    "command-working-directory": "/home/pi",
+    "execute-command": "/home/pi/WebRelayWebhook/relay_trig.sh",
+    "command-working-directory": "/home/pi/WebRelayWebhook",
     "response-message": "success",
     "http-methods":[
          "Post "
@@ -20,10 +20,6 @@
       {
         "source": "payload",
         "name": "status"
-      },
-      {
-        "source": "payload",
-        "name": "key"
       },
     ]
   }

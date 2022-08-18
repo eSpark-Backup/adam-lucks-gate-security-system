@@ -6,13 +6,12 @@ echo "Entire Payload: $1"
 echo "MAC Address: $2"
 echo "Relay Status: $3"
 
-value=$(<pass.txt)
-echo "$value"
+# value=$(<pass.txt)
+# echo "$value"
 
 sudo chmod 777 $log
  
 # append date to log file
-if [ "$4" = "$value" ]; then
-	echo $3 >  $log
-	echo $4 >> $log
+if [ "$3" = "true" ]; then
+	python3 relay_trig.py
 fi
