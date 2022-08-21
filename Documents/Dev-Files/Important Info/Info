@@ -99,3 +99,6 @@ Router Public IP: 50.231.242.110
 
 ===== DOS2UNIX FILE CONVERSION GUIDE =====
 > https://www.delftstack.com/howto/linux/bash-bad-interpreter-error/
+
+===== Autostart script using systemctl =====
+> https://www.thedigitalpictureframe.com/ultimate-guide-systemd-autostart-scripts-raspberry-pi/

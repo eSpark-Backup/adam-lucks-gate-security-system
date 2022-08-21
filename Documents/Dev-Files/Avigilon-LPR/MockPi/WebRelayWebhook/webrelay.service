@@ -1,0 +1,9 @@
+[Unit]
+Description=webrelay
+
+[Service]
+ExecStart=webhook -hooks /home/pi/WebRelayWebhook/relay_hooks.json -verbose -ip 192.168.1.222 -port 9001
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
