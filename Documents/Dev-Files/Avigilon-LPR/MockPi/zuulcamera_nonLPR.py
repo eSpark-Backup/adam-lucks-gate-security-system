@@ -18,7 +18,7 @@ cameraMAC    = "64:25:5E:02:35:93"
 config = {
   "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
   "authDomain": "zuul-master.firebaseapp.com",
-  "databaseURL": "https://zuul-master-404bb.firebaseio.com/",
+  "databaseURL": "https://zuul-master.firebaseio.com/",
   "storageBucket": "zuul-master.appspot.com"
 }
 
