@@ -37,7 +37,7 @@
 
 
 #define cnst    65536 //RFID Multiplier
-#define sitecode 1     //Community Code 1
+#define sitecode 36     //Community Code 1
 // The object that handles the wiegand protocol
 WIEGAND wiegand;
 Process controlProc;
