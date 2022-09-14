@@ -15,11 +15,11 @@
       },
       {
         "source": "payload",
-        "name": "status"
+        "name": "mac_address"
       },
       {
         "source": "payload",
-        "name": "cameraMAC"
+        "name": "status"
       },
     ]
   }
