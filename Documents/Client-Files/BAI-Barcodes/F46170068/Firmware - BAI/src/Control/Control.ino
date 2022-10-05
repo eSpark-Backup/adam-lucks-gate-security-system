@@ -19,7 +19,7 @@
 #endif
 
 
-#define ApiUrlAllCodes "https://app.zuulsystems.com/api/get_all_rf_code"
+#define ApiUrlAllCodes "http://app.zuulsystems.com/api/get-rfid-codes/"
 #define ApiUrlCode "https://app.zuulsystems.com/api/scanned_rf_code/"
 
 
@@ -37,7 +37,7 @@
 
 
 #define cnst    65536 //RFID Multiplier
-#define sitegnd 1     //Community Code 1
+#define sitegnd 2     //Community Code 1
 // The object that handles the wiegand protocol
 WIEGAND wiegand;
 Process controlProc;
