@@ -218,7 +218,7 @@ void loop() {
 
 
 #ifdef DEBUG2
-		if ((millis() - cronMillis) > 180000) {
+		if ((millis() - cronMillis) > 86400000) {
 #else
 		if ((millis() - cronMillis) > 3000000) {
 #endif
@@ -449,8 +449,8 @@ void codeReceived(unsigned long code) {
 
     PRINT("UniqueID: ");
     PRINTLN(UniqueID);
-    PRINT("API: ");
-    PRINTLN(ApiArg);
+//    PRINT("API: ");
+//    PRINTLN(ApiArg);
     PRINT("Code: ");
     PRINTLN(str);
 
