@@ -4,11 +4,15 @@ password: parklandbay!@#
 SSH Port: 3429
 VNC Port: 4747
 
+Router Public IP: 69.230.72.30
+
 ===== Azurapi =====
 username: pi
 password: AzuraZUUL^#$132
 SSH Port: 1234
 VNC Port: 4200
+
+Router Public IP: 50.231.242.110
 
 ===== HamletPi =====
 username: pi
@@ -25,6 +29,7 @@ VNC Port: 2562
 username: root
 password: @#%IKAVNIa1
 
+Router Public IP: 107.128.123.204
 
 ===== Router Access Codes =====
 Adam Router Device Access Code: %72/#</2%/
