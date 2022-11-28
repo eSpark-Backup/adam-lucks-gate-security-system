@@ -5,11 +5,13 @@ Controller Iono Arduino YUN for RFID Readers
  - AWID readers require no initial setup, but their range and power can be adjusted by connecting them directly to a laptop using a serial to USB adapter and running AWID Setup software
  - Maxtek readers require some configuration changes by connecting them directly to a laptop using a USB Mini-A cable and running the Maxtek Q series programmer software:
 
-MaxSecure		241818 ON
-Get			9 
-Wiegand Format 	26bit
-Read Interval		1 second
-Tag Model		Q-TYPE
+| Name      | Configuration |
+| ----------- | ----------- |
+| MaxSecure      | 241818 ON |
+| Get      | 9       |
+| Wiegand Format   | 26bit        |
+| Read Interval   | 1 second       |
+| Tag Model   | Q-Type      |
 
 
 ## Add the controller to the Zuul Database:
