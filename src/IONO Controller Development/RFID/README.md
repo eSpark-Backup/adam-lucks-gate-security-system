@@ -61,5 +61,3 @@ Tag Model		Q-TYPE
  - Rename  Control.ino.with_bootloader.hex to control_F12345678_MAXTEK.hex
  - Upload the firmware to the controller by browsing to http://[newIp]
  - After the reboot you should hear the relays clicking and in /tmp there will be cache and log files
-
- s5m3g5h9e8
