@@ -1,16 +1,15 @@
 # AVIGILON PARAMETERS
 ## Login information
-1. CAMERA ADMIN 01
-username: administrator
-password AZURA_CCTV_#1!
+1. CAMERA ADMIN 01  
+username: administrator  
+password AZURA_CCTV_#1! 
 
-username: administrator
-password: AZURA_CCTV_ZUUL#1
+    username: administrator  
+    password: AZURA_CCTV_ZUUL#1  
 
-
-2. CAMERA ADMIN 02
-username: admin
-password: myzuulsystem1
+2. CAMERA ADMIN 02  
+username: admin  
+password: myzuulsystem1  
 
 ## AVIGILON LPR Playground API Structures
 ### Login API
@@ -99,11 +98,11 @@ sessionID: AXgAh_8KEGEC7d9aAEEilZCgHj8RM_8SFgoUJ3IDpJHdTfM95exqcErylFpbdWwaENxha
 
 # DOORBIRD PARAMETERS
 ## User Credentials and necessary Info
-username: ghnjcs0001
-password: H4aEZcxrrU
+username: ghnjcs0001  
+password: H4aEZcxrrU  
 rtsp: rtsp://ghnjcs0001:H4aEZcxrrU@192.168.1.246/mpeg/1080p/media.amp
 
 
 ### AVIGILON AUTHTOKEN PARAMETERS
-userNonce: 0014y00002a7wDZAAY
-userKey: c1a418c5b5e00ca7815de44cd672b75ed503386850b3648df8571185d6f9b34e
+userNonce: 0014y00002a7wDZAAY  
+userKey: c1a418c5b5e00ca7815de44cd672b75ed503386850b3648df8571185d6f9b34e  
