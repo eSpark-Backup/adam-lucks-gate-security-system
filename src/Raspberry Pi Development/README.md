@@ -1,13 +1,13 @@
 # AVIGILON PARAMETERS
 ## Login information
-1. CAMERA ADMIN 01  
+### CAMERA ADMIN 01  
 username: administrator  
 password AZURA_CCTV_#1! 
 
-    username: administrator  
-    password: AZURA_CCTV_ZUUL#1  
+username: administrator  
+password: AZURA_CCTV_ZUUL#1  
 
-2. CAMERA ADMIN 02  
+### CAMERA ADMIN 02  
 username: admin  
 password: myzuulsystem1  
 
