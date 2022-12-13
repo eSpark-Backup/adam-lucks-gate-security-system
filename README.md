@@ -8,22 +8,22 @@
 
 https://72.52.146.4:2083/ (cPanel)
 
-Username: zuulsystems 
-Password: *4RUVwiEtSTb$623FG498#^j
+Username: zuulsystems  
+Password: *4RUVwiEtSTb$623FG498#^j  
 
 https://72.52.146.4:2087/ (WHM)
 
-Username: root 
-Password: *4RUVwiEtSTb$623FG498#^j
+Username: root  
+Password: *4RUVwiEtSTb$623FG498#^j  
 
 
 ### Development Server Info
 
-User: root 
-Pass: 8\0lHN-}Bhm0s{
+User: root  
+Pass: 8\0lHN-}Bhm0s{  
 
 https://72.52.146.35:2083/
 
-Username: root
-Password: 8\0lHN-}Bhm0s{
+Username: root  
+Password: 8\0lHN-}Bhm0s{  
 Port: 22
