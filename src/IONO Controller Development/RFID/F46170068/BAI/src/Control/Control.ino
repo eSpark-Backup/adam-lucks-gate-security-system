@@ -289,7 +289,7 @@ void loop() {
 	if (relayArmingMillis > 0) {
 		if (relayArmingOn) {
 			// Turn the relay off after 5 sec
-			if ((millis() - relayArmingMillis) > 5000) {
+			if ((millis() - relayArmingMillis) > 1000) {
 				PRINTLN(" Turning Arming Relay Off");
 				digitalWrite(relayArmingPin, LOW);
 				relayArmingOn = false;
@@ -387,7 +387,7 @@ void codeReceived(unsigned long code) {
 	if (codeLast > 0) {
 
 		// The last received code was less than 5 seconds ago ? ignore
-		if (diff < 5000) return;
+		if (diff < 2000) return;
 
 		// The last received code was more than 15 sec ago ? clear codeLast
 		if (diff > 15000) codeLast = 0; // 15 sec
