@@ -42,7 +42,24 @@
 WIEGAND wiegand;
 Process controlProc;
 
+const int buttonOpenPin = A0;         // triggers "codeReceived"
+const int buttonLearnPin = A1;      
+const int carSensorPin = A2;         
+const int relayGate1Pin = A4;     // On when the gate should open
+const int relayGate2Pin = A5;     // On when the gate should open
+const int relayArmingPin = 5;     // Off when the gate is open
+const int relayRedLightPin = 6;   // Off when the gate is open
 const int gaterelay = 7; // On when the gate should open
+const int buzzerPin = 9;          // 9 - PWM 
+const int ledPin = LED_BUILTIN;   // the PWM pin the LED is attached to
+
+int brightness = 0;    // how bright the LED is
+int fadeAmount = 1;    // how many points to fade the LED by
+bool learningMode = false; // the next unknown code will be added to the server database, to be reviewed
+
+bool buttonOpenOn = false;
+bool buttonLearnOn = false;
+bool carSensorOn = false;
 
 bool relaysOn = false;
 unsigned int relaysLoops = 0;
