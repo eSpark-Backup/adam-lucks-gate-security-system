@@ -1,0 +1,11 @@
+[Unit]
+Description=Heart Beat Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/home/pi/Heartbeat/heartbeat.sh > /home/pi/Heartbeat/sample.log 2>&1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
