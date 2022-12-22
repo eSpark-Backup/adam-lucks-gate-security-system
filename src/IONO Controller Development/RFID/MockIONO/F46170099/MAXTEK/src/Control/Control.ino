@@ -36,30 +36,13 @@
 #include <wtDebug.h> // after Bridge.h
 
 
-#define cnst    65536 //RFID Multiplier
-#define sitecode 36     //Community Code 1
+#define cnst     65536 //RFID Multiplier
+#define sitecode 1     //Demo community
 // The object that handles the wiegand protocol
 WIEGAND wiegand;
 Process controlProc;
 
-const int buttonOpenPin = A0;         // triggers "codeReceived"
-const int buttonLearnPin = A1;      
-const int carSensorPin = A2;         
-const int relayGate1Pin = A4;     // On when the gate should open
-const int relayGate2Pin = A5;     // On when the gate should open
-const int relayArmingPin = 5;     // Off when the gate is open
-const int relayRedLightPin = 6;   // Off when the gate is open
-const int relayGreenLightPin = 7; // On when the gate should open
-const int buzzerPin = 9;          // 9 - PWM 
-const int ledPin = LED_BUILTIN;   // the PWM pin the LED is attached to
-
-int brightness = 0;    // how bright the LED is
-int fadeAmount = 1;    // how many points to fade the LED by
-bool learningMode = false; // the next unknown code will be added to the server database, to be reviewed
-
-bool buttonOpenOn = false;
-bool buttonLearnOn = false;
-bool carSensorOn = false;
+const int gaterelay = 7; // On when the gate should open
 
 bool relaysOn = false;
 unsigned int relaysLoops = 0;
@@ -97,20 +80,8 @@ void setup() {
 	wiegand.begin(100, 0);
 #endif
 
+	pinMode(gaterelay, OUTPUT);
 
-	pinMode(buttonOpenPin, INPUT);
-	pinMode(buttonLearnPin, INPUT);
-	pinMode(carSensorPin, INPUT);
-	pinMode(relayGate1Pin, OUTPUT);
-	pinMode(relayGate2Pin, OUTPUT);
-	pinMode(relayArmingPin, OUTPUT);
-	pinMode(relayRedLightPin, OUTPUT);
-	pinMode(relayGreenLightPin, OUTPUT);
-	//pinMode(buzzerPin, OUTPUT);
-	pinMode(ledPin, OUTPUT);
-
-	analogWrite(ledPin, 255);
-	//analogWrite(buzzerPin, 255); // turns it off
 
 	//Delay for letting the linux side get a clean boot.
 	delay(1000);
@@ -250,7 +221,7 @@ void loop() {
 
 		// Change every 10 loops = 1 second
 		//if (relaysLoops % 10 == 0) {
-		//	digitalWrite(relayGreenLightPin, !digitalRead(relayGreenLightPin));
+		//	digitalWrite(gaterelay, !digitalRead(gaterelay));
 		//	//analogWrite(buzzerPin, 255); // turns it off
 		//}
 
@@ -258,11 +229,7 @@ void loop() {
 		if (!relaysOn) {
 			PRINTLN(" Turning Relays ON");
 			relaysOn = true;
-			digitalWrite(relayGate1Pin, HIGH);
-			digitalWrite(relayGate2Pin, HIGH);
-			digitalWrite(relayRedLightPin, LOW);
-			digitalWrite(relayGreenLightPin, HIGH);
-			//analogWrite(buzzerPin, 0); // turns it on
+			digitalWrite(gaterelay, HIGH);
 
 		}
 
@@ -273,10 +240,8 @@ void loop() {
 		if (relaysOn) {
 			PRINTLN(" Turning Relays Off");
 			relaysOn = false;
-			digitalWrite(relayGate1Pin, LOW);
-			digitalWrite(relayGate2Pin, LOW);
-			digitalWrite(relayRedLightPin, HIGH);
-			digitalWrite(relayGreenLightPin, LOW);
+
+			digitalWrite(gaterelay, LOW);
 		}
 	}
 
