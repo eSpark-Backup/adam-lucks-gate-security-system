@@ -318,7 +318,7 @@ void loop() {
 		if (!buttonOpenOn) {
 			buttonOpenOn = true;
 			PRINTLN("# Button Open ON"); 
-			relaysLoops = 50; // 100 * 0.1 = 10 seconds roughly
+			relaysLoops = 10; // 100 * 0.1 = 10 seconds roughly
 		}
 	} else {
 		if (buttonOpenOn && relaysLoops==0) {
@@ -413,7 +413,7 @@ void codeReceived(unsigned long code) {
 	// For 5 minutes allow again the last 2 good codes
 	if (codeGood == code || codeGood2 == code) {
 		PRINTLN(" - Code Allowed Again!");
-		relaysLoops = 50; // 100 * 0.1 = 10 seconds roughly
+		relaysLoops = 10; // 100 * 0.1 = 10 seconds roughly
 		return;
 	}
 
@@ -458,7 +458,7 @@ void codeReceived(unsigned long code) {
 			PRINTLN(" - Code Allowed!");
 			if (codeGood != codeGood2) codeGood2=codeGood;
 			codeGood=code;
-			relaysLoops = 50; // 100 * 0.1 = 10 seconds roughly
+			relaysLoops = 10; // 100 * 0.1 = 10 seconds roughly
 			return;
 		}
 	} 

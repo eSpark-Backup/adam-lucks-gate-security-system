@@ -39,6 +39,8 @@
 //  #define cnst     65536 //RFID Multiplier
 //  #define sitecode 1     //Demo community
 # define cnst 2359296 // facility code * 65536 (36 * 65536)
+
+
   // The object that handles the wiegand protocol
   WIEGAND wiegand;
   Process controlProc;
@@ -129,16 +131,8 @@
 
   // the loop function runs over and over again until power down or reset
   void loop() {
-
-  //  if (millis() - currentMillis > 15000) {
-  //    codeReceived(2371966);
-  //    currentMillis = millis();
-  //  }
     
     if (wiegand.available()) {
-
-  #ifdef DEBUG2
-//      if (wiegand.getCode() != 65537 && wiegand.getCode() != 65536) {
         unsigned long code = wiegand.getCode();
         
         PRINT("Wiegand HEX = ");
@@ -149,84 +143,12 @@
         PRINTLN(wiegand.getWiegandType());
 
 
-        /*
-
-        PRINTLN(code, BIN);
-        for (int i = 0; i < bits; i++) {
-          PRINT(bool(bitRead(code, bits - i - 1)));
-        }
-        PRINTLN();
-        */
-
-        //delay(2000);
-
-//        if (wiegand.hasNoise()) {
-//          PRINT("NOISE bin:");
-//          PRINT(wiegand.getNoise(), BIN);
-//          PRINTLN();
-//        }
-//    }
-
-  #endif
-//      if (wiegand.parityOkW26()) codeReceived(wiegand.getCode());
         codeReceived(code);
-
-  }
-    
-
-
-//    analogWrite(ledPin, brightness/10);
-//    brightness = brightness + fadeAmount;
-//    // reverse the direction of the fading at the ends of the fade:
-//    if (brightness <= 0 || brightness >= 2550) {
-//      fadeAmount = -fadeAmount;
+        
+    }
 
 
-//  #ifdef DEBUG2
-//      if ((millis() - cronMillis) > 180000) {
-//  #else
-//      if ((millis() - cronMillis) > 3000000) {
-//  #endif
-//        
-//        cronMillis = millis();
-//        
-//        // Get All Codes:
-       // if (!controlProc.running()) {
 
-       //   PRINTLN(" - Running /root/control.sh allcodes");
-       //   PRINT("ApiArg: ");
-       //   PRINTLN(ApiArg);
-       //   PRINT("ApiArgs: ");
-       //   PRINTLN(ApiArgs);
-
-       //   controlProc.begin("/root/control.sh");
-       //   controlProc.addParameter("allcodes");
-       //   controlProc.addParameter(UniqueID);
-       //   controlProc.addParameter(ApiArgs);
-
-       //   controlProc.run();
-       
-       //   if (controlProc.exitValue() == 0) {
-       //     PRINTLN(" - All Codes Fetched!");
-       //   } else {
-       //     PRINTLN(" - Problem: Unable to fetch all codes!");
-       //   }
-       // }
-//
-//
-//      }
-//    }
-
-
-    if (relaysLoops > 0) {
-      relaysLoops--;
-
-
-      // Change every 10 loops = 1 second
-      //if (relaysLoops % 10 == 0) {
-      //  digitalWrite(gaterelay, !digitalRead(gaterelay));
-      //  //analogWrite(buzzerPin, 255); // turns it off
-      //}
 
 
       if (!relaysOn) {
@@ -331,9 +253,8 @@
 
 
 
-  void codeReceived(unsigned long code) {
+  void codeReceived(unsigned long code, uint8_t tpye) {
 
-//    // Silently drop invalid codes
     if (code == 0) return;
     
     if (!controlProc.running()) {
@@ -342,105 +263,50 @@
       PRINTLN(ApiArg);
       PRINT("ApiArgs: ");
       PRINTLN(ApiArgs);
+      
+      controlProc.begin("/root/control.sh");
+      controlProc.addParameter("allcodes");
+      controlProc.addParameter(UniqueID);
+      controlProc.addParameter(ApiArgs);
+      
+      controlProc.run();
+      
+      if (controlProc.exitValue() == 0) {
+        PRINTLN(" - All Codes Fetched!");
+      } 
+      
+      else {
+        PRINTLN(" - Problem: Unable to fetch all codes!");
+      }
+    }
 
-         controlProc.begin("/root/control.sh");
-         controlProc.addParameter("allcodes");
-         controlProc.addParameter(UniqueID);
-         controlProc.addParameter(ApiArgs);
-
-         controlProc.run();
-       
-         if (controlProc.exitValue() == 0) {
-           PRINTLN(" - All Codes Fetched!");
-         } else {
-           PRINTLN(" - Problem: Unable to fetch all codes!");
-         }
-       }
-//
-//  #if READER_TYPE == 2 // AWID
-//    if (code <= 65537) return;
-//  #endif
-//    
-//    
-//    if (relaysLoops > 0) return; // gate is being opened right now ?
-//
-//    unsigned long diff = millis() - codeReceivedMillis;
-//    
-//    // Was a code read in the last 30 sec ?
-//    if (codeLast > 0) {
-//
-//      // The last received code was less than 5 seconds ago ? ignore
-//      if (diff < 5000) return;
-//
-//      // The last received code was more than 15 sec ago ? clear codeLast
-//      if (diff > 15000) codeLast = 0; // 15 sec
-//
-//    }
-//
-//    // Clear codeGood after 3 minutes since the last code received
-//    if (diff > 200000) {
-//      PRINTLN(" - clearing codeGood after 3 min");
-//      codeGood = 0;
-//      codeGood2 = 0;
-//    }
-//    
-//    // already received this code in the last 15 sec ?
-//    if (codeLast == code) {
-//      PRINTLN(" - Already received this code in the last 15 sec..");
-//      return;
-//    }
-//
-//    codeLast = code;
-//    codeReceivedMillis = millis();
-//
-//    // For 5 minutes allow again the last 2 good codes
-//    if (codeGood == code || codeGood2 == code) {
-//      PRINTLN(" - Code Allowed Again!");
-//      relaysLoops = 50; // 100 * 0.1 = 10 seconds roughly
-//      return;
-//    }
-//
-//
-//    //return true;
-//
-//
-//
     if (!controlProc.running()) {
 
-      char str[10] = "";
-
-      // int tag_num = code - cnst * sitecode;
-      // code = cnst * sitecode + tag_num;
-      code = code - cnst;
-      ltoa(code, str, DEC);
-      /*
-      ltoa(code, str, HEX);
-      uint8_t size = strlen(str);
-      for (int i = 0; i < size; i++) {
-        str[i] = toupper(str[i]);
-      }
-      */
+    char str[10] = "";
+    
+    code = code - cnst;
+    ltoa(code, str, DEC);
       
-      PRINT(" - Running /root/control.sh code ");
-      PRINTLN(str);
+    PRINT(" - Running /root/control.sh code ");
+    PRINTLN(str);
 
-      controlProc.begin("/root/control.sh");
-      controlProc.addParameter("code");
-      controlProc.addParameter(UniqueID);
-      controlProc.addParameter(ApiArg);
-      controlProc.addParameter(str);
-      controlProc.run();
+    controlProc.begin("/root/control.sh");
+    controlProc.addParameter("code");
+    controlProc.addParameter(UniqueID);
+    controlProc.addParameter(ApiArg);
+    controlProc.addParameter(str);
+    controlProc.run();
 
-      PRINT("UniqueID: ");
-      PRINTLN(UniqueID);
-      PRINT("API: ");
-      PRINTLN(ApiArg);
-      PRINT("Code: ");
-      PRINTLN(str);
+    PRINT("UniqueID: ");
+    PRINTLN(UniqueID);
+    PRINT("API: ");
+    PRINTLN(ApiArg);
+    PRINT("Code: ");
+    PRINTLN(str);
 
-      if (controlProc.exitValue() == 0) {
-        PRINTLN(" - Code Allowed!");
-        if (codeGood != codeGood2) codeGood2=codeGood;
+    if (controlProc.exitValue() == 0) {
+      PRINTLN(" - Code Allowed!");
+      if (codeGood != codeGood2) codeGood2=codeGood;
         codeGood=code;
         relaysLoops = 50; // 100 * 0.1 = 10 seconds roughly
         return;
