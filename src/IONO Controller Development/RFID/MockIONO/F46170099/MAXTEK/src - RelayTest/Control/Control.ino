@@ -36,8 +36,9 @@
   #include <wtDebug.h> // after Bridge.h
 
 
-  #define cnst     65536 //RFID Multiplier
-  #define sitecode 1     //Demo community
+//  #define cnst     65536 //RFID Multiplier
+//  #define sitecode 1     //Demo community
+# define cnst 2359296 // facility code * 65536 (36 * 65536)
   // The object that handles the wiegand protocol
   WIEGAND wiegand;
   Process controlProc;
@@ -190,27 +191,27 @@
 //        cronMillis = millis();
 //        
 //        // Get All Codes:
-//        if (!controlProc.running()) {
-//
-//          PRINTLN(" - Running /root/control.sh allcodes");
-//          PRINT("ApiArg: ");
-//          PRINTLN(ApiArg);
-//          PRINT("ApiArgs: ");
-//          PRINTLN(ApiArgs);
-//
-//          controlProc.begin("/root/control.sh");
-//          controlProc.addParameter("allcodes");
-//          controlProc.addParameter(UniqueID);
-//          controlProc.addParameter(ApiArgs);
-//
-//          controlProc.run();
-//        
-//          if (controlProc.exitValue() == 0) {
-//            PRINTLN(" - All Codes Fetched!");
-//          } else {
-//            PRINTLN(" - Problem: Unable to fetch all codes!");
-//          }
-//        }
+       // if (!controlProc.running()) {
+
+       //   PRINTLN(" - Running /root/control.sh allcodes");
+       //   PRINT("ApiArg: ");
+       //   PRINTLN(ApiArg);
+       //   PRINT("ApiArgs: ");
+       //   PRINTLN(ApiArgs);
+
+       //   controlProc.begin("/root/control.sh");
+       //   controlProc.addParameter("allcodes");
+       //   controlProc.addParameter(UniqueID);
+       //   controlProc.addParameter(ApiArgs);
+
+       //   controlProc.run();
+       
+       //   if (controlProc.exitValue() == 0) {
+       //     PRINTLN(" - All Codes Fetched!");
+       //   } else {
+       //     PRINTLN(" - Problem: Unable to fetch all codes!");
+       //   }
+       // }
 //
 //
 //      }
@@ -334,6 +335,27 @@
 
 //    // Silently drop invalid codes
     if (code == 0) return;
+    
+    if (!controlProc.running()) {
+      PRINTLN(" - Running /root/control.sh allcodes");
+      PRINT("ApiArg: ");
+      PRINTLN(ApiArg);
+      PRINT("ApiArgs: ");
+      PRINTLN(ApiArgs);
+
+         controlProc.begin("/root/control.sh");
+         controlProc.addParameter("allcodes");
+         controlProc.addParameter(UniqueID);
+         controlProc.addParameter(ApiArgs);
+
+         controlProc.run();
+       
+         if (controlProc.exitValue() == 0) {
+           PRINTLN(" - All Codes Fetched!");
+         } else {
+           PRINTLN(" - Problem: Unable to fetch all codes!");
+         }
+       }
 //
 //  #if READER_TYPE == 2 // AWID
 //    if (code <= 65537) return;
@@ -387,8 +409,9 @@
 
       char str[10] = "";
 
-      int tag_num = code - cnst * sitecode;
-      code = cnst * sitecode + tag_num;
+      // int tag_num = code - cnst * sitecode;
+      // code = cnst * sitecode + tag_num;
+      code = code - cnst;
       ltoa(code, str, DEC);
       /*
       ltoa(code, str, HEX);
@@ -569,9 +592,9 @@
 //
 //void setup() {
 //
-//	pinMode(gaterelay, OUTPUT);
-//	delay(1000);
-//	
+//  pinMode(gaterelay, OUTPUT);
+//  delay(1000);
+//  
 //  Bridge.begin();
 //  Serial.begin(9600);
 ////  wg.begin();
@@ -591,12 +614,12 @@
 ////  }
 //  
 //  PRINTLN(" Turning Relay ON");
-//	digitalWrite(gaterelay, HIGH);
+//  digitalWrite(gaterelay, HIGH);
 //
-//	delay(3000);
+//  delay(3000);
 //
-//	PRINTLN(" Turning Relays Off");
-//	digitalWrite(gaterelay, LOW);
+//  PRINTLN(" Turning Relays Off");
+//  digitalWrite(gaterelay, LOW);
 //
 //  delay(3000);
 //}
