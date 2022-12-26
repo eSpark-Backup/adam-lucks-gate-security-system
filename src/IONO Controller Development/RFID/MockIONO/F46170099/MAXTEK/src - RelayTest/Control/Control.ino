@@ -142,9 +142,7 @@
         PRINT(", Type W");
         PRINTLN(wiegand.getWiegandType());
 
-
-        codeReceived(code);
-        
+        static bool relay_flag = codeReceived(code);
     }
 
 
