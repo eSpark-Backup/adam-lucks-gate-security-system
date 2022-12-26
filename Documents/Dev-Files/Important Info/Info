@@ -20,6 +20,8 @@ password: HamletPi!@#!@#%!@
 SSH Port: 1077
 VNC Port: 7777
 
+Router Public IP: 24.186.120.199
+
 ===== Mockuppi =====
 username: pi
 password: mockupzuul1
