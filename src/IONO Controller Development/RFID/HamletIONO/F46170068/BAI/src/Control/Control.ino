@@ -426,8 +426,8 @@ void codeReceived(unsigned long code) {
 
 		char str[10] = "";
 
-    int tag_num = code - cnst * sitegnd;
-    code = (cnst * sitegnd) + tag_num;
+    //int tag_num = code - cnst * sitegnd;
+    //code = (cnst * sitegnd) + tag_num;
 		ltoa(code, str, DEC);
 		/*
 		ltoa(code, str, HEX);
