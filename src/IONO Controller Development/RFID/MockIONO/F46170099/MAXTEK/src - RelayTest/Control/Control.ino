@@ -34,11 +34,12 @@
   #include <Process.h>
   #include <Wiegand.h>
   #include <wtDebug.h> // after Bridge.h
+  #include <Console.h>
 
 
 //  #define cnst     65536 //RFID Multiplier
 //  #define sitecode 1     //Demo community
-# define cnst 2359296 // facility code * 65536 (36 * 65536)
+# define cnst 2359296 // facility code * 65536 (36 * 65536) (For Maxtek only)
 
 
   // The object that handles the wiegand protocol
@@ -56,7 +57,7 @@
   unsigned long relayArmingMillis = 0;
   //unsigned long relayArmingLoops = 0;
   unsigned long cronMillis = 0;
-  unsigned long currentMillis = 0;
+  unsigned long currentMillis = 0, newMillis = 0;
 
   unsigned long codeLast = 0;
   unsigned long codeGood = 0;
@@ -110,10 +111,10 @@
 
   #ifdef DEBUG
     Serial.begin(9600);
-    PRINTLN("Bridge.begin()");
-    //PRINTLN(wtFreeRam());
-    PRINT("UniqueID: ");
-    PRINTLN(UniqueID);
+//    PRINTLN("Bridge.begin()");
+    
+//    PRINT("UniqueID: ");
+//    PRINTLN(UniqueID);
   #endif
 
     relaysLoops = 10;
@@ -142,31 +143,43 @@
         PRINT(", Type W");
         PRINTLN(wiegand.getWiegandType());
 
-        static bool relay_flag = codeReceived(code);
+        codeReceived(code);
     }
 
+  currentMillis = millis();
+  
+  if (currentMillis - newMillis >=2000) {
+    unsigned long code = 1;
+    codeReceived(code);
+    newMillis = millis();
+  }
+  
+  delay(1000);
+  while (controlProc.available()>0) {
+    char c = controlProc.read();
+    PRINT(c);
+  }
 
 
 
-
-      if (!relaysOn) {
-        PRINTLN(" Turning Relays ON");
-        relaysOn = true;
-        digitalWrite(gaterelay, HIGH);
-
-      }
-
-      delay(100);
-      return;
-
-    } else {
-      if (relaysOn) {
-        PRINTLN(" Turning Relays Off");
-        relaysOn = false;
-
-        digitalWrite(gaterelay, LOW);
-      }
-    }
+//      if (!relaysOn) {
+//        PRINTLN(" Turning Relays ON");
+//        relaysOn = true;
+//        digitalWrite(gaterelay, HIGH);
+//
+//      }
+//
+//      delay(100);
+//      return;
+//
+//    } else {
+//      if (relaysOn) {
+//        PRINTLN(" Turning Relays Off");
+//        relaysOn = false;
+//
+//        digitalWrite(gaterelay, LOW);
+//      }
+//    }
 
 //    if (relayArmingMillis > 0) {
 //      if (relayArmingOn) {
@@ -251,69 +264,82 @@
 
 
 
-  void codeReceived(unsigned long code, uint8_t tpye) {
+  void codeReceived(unsigned long code) {
 
     if (code == 0) return;
     
-    if (!controlProc.running()) {
-      PRINTLN(" - Running /root/control.sh allcodes");
-      PRINT("ApiArg: ");
-      PRINTLN(ApiArg);
-      PRINT("ApiArgs: ");
-      PRINTLN(ApiArgs);
-      
-      controlProc.begin("/root/control.sh");
-      controlProc.addParameter("allcodes");
-      controlProc.addParameter(UniqueID);
-      controlProc.addParameter(ApiArgs);
-      
-      controlProc.run();
-      
-      if (controlProc.exitValue() == 0) {
-        PRINTLN(" - All Codes Fetched!");
-      } 
-      
-      else {
-        PRINTLN(" - Problem: Unable to fetch all codes!");
-      }
-    }
+//    if (!controlProc.running()) {
+//      PRINTLN(" - Running /root/control.sh allcodes");
+//      PRINT("ApiArg: ");
+//      PRINTLN(ApiArg);
+//      PRINT("ApiArgs: ");
+//      PRINTLN(ApiArgs);
+//      
+//      controlProc.begin("/root/control.sh");
+//      controlProc.addParameter("allcodes");
+//      controlProc.addParameter(UniqueID);
+//      controlProc.addParameter(ApiArgs);
+//      
+//      controlProc.run();
+//      
+//      if (controlProc.exitValue() == 0) {
+//        PRINTLN(" - All Codes Fetched!");
+//      } 
+//      
+//      else {
+//        PRINTLN(" - Problem: Unable to fetch all codes!");
+//      }
+//    }
 
-    if (!controlProc.running()) {
 
-    char str[10] = "";
-    
-    code = code - cnst;
-    ltoa(code, str, DEC);
-      
-    PRINT(" - Running /root/control.sh code ");
-    PRINTLN(str);
+controlProc.begin("curl");
+controlProc.addParameter(" -u ");
+controlProc.addParameter(UniqueID);
+controlProc.addParameter(":");
+controlProc.addParameter(SecretKey);
+controlProc.addParameter(" -i ");
+controlProc.addParameter(ApiUrlAllCodes);
 
-    controlProc.begin("/root/control.sh");
-    controlProc.addParameter("code");
-    controlProc.addParameter(UniqueID);
-    controlProc.addParameter(ApiArg);
-    controlProc.addParameter(str);
-    controlProc.run();
 
-    PRINT("UniqueID: ");
-    PRINTLN(UniqueID);
-    PRINT("API: ");
-    PRINTLN(ApiArg);
-    PRINT("Code: ");
-    PRINTLN(str);
-
-    if (controlProc.exitValue() == 0) {
-      PRINTLN(" - Code Allowed!");
-      if (codeGood != codeGood2) codeGood2=codeGood;
-        codeGood=code;
-        relaysLoops = 50; // 100 * 0.1 = 10 seconds roughly
-        return;
-      }
-    } 
-    else {
-      PRINTLN(" - Problem: controlProc already running !?!");
-      return;
-    }
+controlProc.runAsynchronously();
+PRINTLN("Code HIT");
+//
+//    if (!controlProc.running()) {
+//
+//    char str[10] = "";
+//    
+//    code = code - cnst;
+//    ltoa(code, str, DEC);
+//      
+//    PRINT(" - Running /root/control.sh code ");
+//    PRINTLN(str);
+//
+//    controlProc.begin("/root/control.sh");
+//    controlProc.addParameter("code");
+//    controlProc.addParameter(UniqueID);
+//    controlProc.addParameter(ApiArg);
+//    controlProc.addParameter(str);
+//    controlProc.run();
+//
+//    PRINT("UniqueID: ");
+//    PRINTLN(UniqueID);
+//    PRINT("API: ");
+//    PRINTLN(ApiArg);
+//    PRINT("Code: ");
+//    PRINTLN(str);
+//
+//    if (controlProc.exitValue() == 0) {
+//      PRINTLN(" - Code Allowed!");
+//      if (codeGood != codeGood2) codeGood2=codeGood;
+//        codeGood=code;
+//        relaysLoops = 50; // 100 * 0.1 = 10 seconds roughly
+//        return;
+//      }
+//    } 
+//    else {
+//      PRINTLN(" - Problem: controlProc already running !?!");
+//      return;
+//    }
 //
 //    // This is an unknown code.. Learn it if in learning mode..
 //    if (learningMode) {
