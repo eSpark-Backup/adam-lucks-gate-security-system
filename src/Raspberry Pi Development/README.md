@@ -1,3 +1,60 @@
+# Community Database
+
+## Parklandbay
+username: ParklandBay  
+password: parklandbay!@#  
+SSH Port: 3429  
+VNC Port: 4747
+
+Router Public IP: 69.230.72.30  
+ParklandBay Router Device Access Code: 6132440%4*
+
+network={
+ssid="ATTFsSImkI"
+psk="k296?r6g4c6b"
+}
+
+## Azura HOA
+username: pi  
+password: AzuraZUUL^#$132  
+SSH Port: 1234  
+VNC Port: 4200
+
+Router Public IP: 50.231.242.110
+
+## Hamlet HOA
+username: pi  
+password: HamletPi!@#!@#%!@  
+SSH Port: 1077  
+VNC Port: 7777
+
+Router Public IP: 24.186.120.199
+
+## Mock setup (Adam Office)
+username: pi  
+password: mockupzuul1  
+SSH Port: 1131  
+VNC Port: 2562
+
+username: root  
+password: @#%IKAVNIa1
+
+Router Public IP: 107.128.123.204  
+Adam Router Device Access Code: %72/#</2%/  
+
+network={
+ssid="ATTxBtrTdS"
+psk="5616701699"
+}
+
+## ADAM LIQUIDWEB CREDENTIALS
+username: ZUUL_Systems  
+password: $T@ythEFuCk0ut0fMy$yStEm  
+
+## ADAM AVIGILON CREDENTIALS
+username: adam@zuulsystems.com  
+password: Luckyme1$  
+
 # AVIGILON PARAMETERS
 ## Login information
 ### CAMERA ADMIN 01  
@@ -106,3 +163,46 @@ rtsp: rtsp://ghnjcs0001:H4aEZcxrrU@192.168.1.246/mpeg/1080p/media.amp
 ### AVIGILON AUTHTOKEN PARAMETERS
 userNonce: 0014y00002a7wDZAAY  
 userKey: c1a418c5b5e00ca7815de44cd672b75ed503386850b3648df8571185d6f9b34e  
+
+
+### USEFUL COMMANDS
+#### Command to edit the WiFi network file
+> sudo nano /etc/wpa_supplicant/wpa_supplicant.conf 
+
+#### To change subnet through windows powershell
+> Set-NetIPAddress -InterfaceIndex 4 -PrefixLength 16 
+
+#### Raspberry Pi Serial Number
+> cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2 
+
+### USEFUL LINKS
+#### Change Pi hostname on a network
+> https://thepihut.com/blogs/raspberry-pi-tutorials/19668676-renaming-your-raspberry-pi-the-hostname
+
+#### Change SSH Port on Raspberry Pi
+> https://geektechstuff.com/2019/09/08/changing-ssh-port-raspberry-pi/
+
+#### Change Raspberry Pi password
+> https://www.raspberrypi-spy.co.uk/2012/10/how-to-change-raspberry-pi-password/
+
+#### CHANGE VNC PORT
+1. Connect to the rpi via ssh and before enabling VNC, create the following file:
+> sudo nano /etc/vnc/config.d/vncserver-x11
+
+2. RfbPort=xxxx (where xxxx is the port you wish to use)
+
+
+#### ADNANH WEBHOOK DEVELOPMENT
+1. A hooks.json is developed that initiates the Webhook
+2. To run the webhook, run the command 
+
+> webhook -hooks hooks.json -verbose -ip 192.168.1.222 -port 8192
+> webhook -hooks <path/to/hooks.json/file> -verbose -ip <IP of Pi> -port <desired port num>
+
+3. Make sure to give R/W access to shell script using "sudo chmod 777 <name_of_shell_script>"
+
+#### DOS2UNIX FILE CONVERSION GUIDE
+> https://www.delftstack.com/howto/linux/bash-bad-interpreter-error/
+
+#### Autostart script using systemctl
+> https://www.thedigitalpictureframe.com/ultimate-guide-systemd-autostart-scripts-raspberry-pi/
