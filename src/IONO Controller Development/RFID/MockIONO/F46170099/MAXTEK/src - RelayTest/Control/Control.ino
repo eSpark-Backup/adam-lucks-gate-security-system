@@ -23,7 +23,8 @@
   #define ApiUrlCode "http://zuul2.zuulsystems.com/api/scanned-rfid-code/"
 
 
-
+  #define SUCCESS 1
+  #define FAILURE 0
 
 
   #ifndef READER_TYPE
@@ -35,7 +36,7 @@
   #include <Wiegand.h>
   #include <wtDebug.h> // after Bridge.h
   #include <Console.h>
-
+  #include <HttpClient.h>
 
 //  #define cnst     65536 //RFID Multiplier
 //  #define sitecode 1     //Demo community
@@ -143,22 +144,24 @@
         PRINT(", Type W");
         PRINTLN(wiegand.getWiegandType());
 
-        codeReceived(code);
+        int code_status = codeReceived(code);
+
+        if (code_status == SUCCESS) {
+          digitalWrite(gaterelay, HIGH);
+          delay(1000);
+          digitalWrite(gaterelay, LOW);
+        }
+
+        
     }
 
-  currentMillis = millis();
-  
-  if (currentMillis - newMillis >=2000) {
-    unsigned long code = 1;
-    codeReceived(code);
-    newMillis = millis();
-  }
-  
-  delay(1000);
-  while (controlProc.available()>0) {
-    char c = controlProc.read();
-    PRINT(c);
-  }
+//  currentMillis = millis();
+//  
+//  if (currentMillis - newMillis >=2000) {
+//    unsigned long code = 2362648;
+//    codeReceived(code);
+//    newMillis = millis();
+//  }
 
 
 
@@ -264,7 +267,7 @@
 
 
 
-  void codeReceived(unsigned long code) {
+  int codeReceived(unsigned long code) {
 
     if (code == 0) return;
     
@@ -290,46 +293,62 @@
 //        PRINTLN(" - Problem: Unable to fetch all codes!");
 //      }
 //    }
-
-
-controlProc.begin("curl");
-controlProc.addParameter(" -u ");
-controlProc.addParameter(UniqueID);
-controlProc.addParameter(":");
-controlProc.addParameter(SecretKey);
-controlProc.addParameter(" -i ");
-controlProc.addParameter(ApiUrlAllCodes);
-
-
-controlProc.runAsynchronously();
+//HttpClient client;
+//client.setHeader("Authorization: Basic RjQ2TcwMDY4Omc0azF5Nmw1Yjc=");
+//client.setHeader("Content-Type: text/plain");
+//client.get(ApiUrlAllCodes);
+//
+//while (client.available()) {
+//    char c = client.read();
+//    PRINT(c);
+//  }
+    
+//controlProc.begin("curl");
+//controlProc.addParameter(" -u ");
+//controlProc.addParameter(UniqueID);
+//controlProc.addParameter(":");
+//controlProc.addParameter(SecretKey);
+//controlProc.addParameter(" -i ");
+//controlProc.addParameter(ApiUrlAllCodes);
+//
+//
+//controlProc.runAsynchronously();
 PRINTLN("Code HIT");
 //
-//    if (!controlProc.running()) {
-//
-//    char str[10] = "";
-//    
-//    code = code - cnst;
-//    ltoa(code, str, DEC);
-//      
-//    PRINT(" - Running /root/control.sh code ");
-//    PRINTLN(str);
-//
-//    controlProc.begin("/root/control.sh");
-//    controlProc.addParameter("code");
-//    controlProc.addParameter(UniqueID);
-//    controlProc.addParameter(ApiArg);
-//    controlProc.addParameter(str);
-//    controlProc.run();
-//
-//    PRINT("UniqueID: ");
-//    PRINTLN(UniqueID);
-//    PRINT("API: ");
-//    PRINTLN(ApiArg);
-//    PRINT("Code: ");
-//    PRINTLN(str);
-//
-//    if (controlProc.exitValue() == 0) {
-//      PRINTLN(" - Code Allowed!");
+    if (!controlProc.running()) {
+
+    char str[10] = "";
+    
+    code = code - cnst;
+    ltoa(code, str, DEC);
+      
+    PRINT(" - Running /root/control.sh code ");
+    PRINTLN(str);
+
+    controlProc.begin("/root/control.sh");
+    controlProc.addParameter("code");
+    controlProc.addParameter(UniqueID);
+    controlProc.addParameter(ApiArg);
+    controlProc.addParameter(str);
+    controlProc.run();
+
+    PRINT("UniqueID: ");
+    PRINTLN(UniqueID);
+    PRINT("API: ");
+    PRINTLN(ApiArg);
+    PRINT("Code: ");
+    PRINTLN(str);
+
+    if (controlProc.exitValue() == 0) {
+      PRINTLN(" - Code Allowed!");
+      return SUCCESS;
+    }
+
+    else {
+      PRINTLN(" - Code Denied!");
+      return FAILURE;
+    }
+    }
 //      if (codeGood != codeGood2) codeGood2=codeGood;
 //        codeGood=code;
 //        relaysLoops = 50; // 100 * 0.1 = 10 seconds roughly
