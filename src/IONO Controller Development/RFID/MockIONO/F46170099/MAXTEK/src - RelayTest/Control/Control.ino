@@ -81,7 +81,7 @@ void setup() {
 
 
   #ifdef DEBUG
-    Serial.begin(9600);
+//    Serial.begin(9600);
   #endif
 
 
@@ -110,7 +110,7 @@ void loop() {
       digitalWrite(gaterelay, HIGH);
       delay(1000);
       digitalWrite(gaterelay, LOW);
-    }  
+    }
   }
 }
 
@@ -143,16 +143,16 @@ int codeReceived(unsigned long code) {
 //    PRINTLN(UniqueID);
 //    PRINT("API: ");
 //    PRINTLN(ApiArg);
-    PRINT("Code: ");
-    PRINTLN(str);
+//    PRINT("Code: ");
+//    PRINTLN(str);
 
     if (controlProc.exitValue() == 0) {
-      PRINTLN(" - Code Allowed!");
+//      PRINTLN(" - Code Allowed!");
       return SUCCESS;
     }
 
     else {
-      PRINTLN(" - Code Denied!");
+//      PRINTLN(" - Code Denied!");
       return FAILURE;
     }
   }
