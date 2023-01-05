@@ -30,7 +30,7 @@ VNC Port: 7777
 
 Router Public IP: 24.186.120.199
 
-## Mock setup (Adam Office)
+## Mockpi setup (Adam Office)
 username: pi  
 password: mockupzuul1  
 SSH Port: 1131  
@@ -38,6 +38,21 @@ VNC Port: 2562
 
 username: root  
 password: @#%IKAVNIa1
+
+Router Public IP: 107.128.123.204  
+Adam Router Device Access Code: %72/#</2%/  
+
+network={
+ssid="ATTxBtrTdS"
+psk="5616701699"
+}
+
+## Mockionopi setup (Adam Office)
+username: pi  
+password: mockionopizuul1  
+SSH Port: 9876  
+VNC Port: 4444
+
 
 Router Public IP: 107.128.123.204  
 Adam Router Device Access Code: %72/#</2%/  
