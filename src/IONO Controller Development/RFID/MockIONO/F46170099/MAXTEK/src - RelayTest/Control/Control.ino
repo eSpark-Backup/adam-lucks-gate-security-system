@@ -108,7 +108,7 @@ void loop() {
     int code_status = codeReceived(code);
     if (code_status == SUCCESS) {
       digitalWrite(gaterelay, HIGH);
-      delay(1000);
+      delay(250);
       digitalWrite(gaterelay, LOW);
     }
   }
@@ -126,7 +126,7 @@ int codeReceived(unsigned long code) {
   if (!controlProc.running()) {
     
     char str[10] = "";
-    code = code - cnst;
+    //code = code - cnst;
     ltoa(code, str, DEC);
       
 //    PRINT(" - Running /root/control.sh code ");
