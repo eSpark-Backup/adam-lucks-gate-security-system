@@ -87,22 +87,22 @@ void setup() {
 
   Bridge.begin();
        
-  ApiArg = "--user ";
-  ApiArg += UniqueID;
-  ApiArg += ":";
-  ApiArg += SecretKey;
-  ApiArg += " -w %{http_code} ";
-
-  ApiArgs = ApiArg;
-  ApiArgs += ApiUrlAllCodes;
-  ApiArg += ApiUrlCode;
+//  ApiArg = "--user ";
+//  ApiArg += UniqueID;
+//  ApiArg += ":";
+//  ApiArg += SecretKey;
+//  ApiArg += " -w %{http_code} ";
+//
+//  ApiArgs = ApiArg;
+//  ApiArgs += ApiUrlAllCodes;
+//  ApiArg += ApiUrlCode;
 
 
 
 
 
   #ifdef DEBUG
-//    Serial.begin(9600);
+    Serial.begin(9600);
   #endif
 
 
@@ -168,56 +168,57 @@ void rfid() {
     }
     else if (bitCount == 26)
     {
+      PRINTLN("Received 26-bit frame");
       
       // standard 26 bit format
       // facility code = bits 2 to 9
-      for (i=1; i<9; i++)
-      {
-         facilityCode <<=1;
-         facilityCode |= databits[i];
-      }
-      
-      // card code = bits 10 to 23
-      for (i=9; i<25; i++)
-      {
-         cardCode <<=1;
-         cardCode |= databits[i];
-      }
-      char binchar[24];
-      String bitstring;
-      for(i=1; i<25;i++){bitstring = bitstring + databits[i];}
-
-      bitstring.toCharArray(binchar, 25);
-      
-      long  b, k, m, n;
-        long  len, sum = 0;
-
-        len = strlen(binchar) - 1;
-        for(k = 0; k <= len; k++)
-        {
-                n = (binchar[k] - '0'); // char to numeric value
-                //Serial.print(n);
-               if ((n > 1) || (n < 0))
-                {
-                        puts("\n\n ERROR! BINARY has only 1 and 0!\n");
-                      
-                }
-                for(b = 1, m = len; m > k; m--)
-                {
-                        // 1 2 4 8 16 32 64 ... place-values, reversed here
-                        b *= 2;
-                        
-                }
-                
-                // sum it up
-                //Serial.println(sum);
-                sum = sum + n * b;
-                //Serial.println(sum);  // uncomment to show the way this works
-        }
-        
-  
-      cardnum=sum;      
-      printBits();  
+//      for (i=1; i<9; i++)
+//      {
+//         facilityCode <<=1;
+//         facilityCode |= databits[i];
+//      }
+//      
+//      // card code = bits 10 to 23
+//      for (i=9; i<25; i++)
+//      {
+//         cardCode <<=1;
+//         cardCode |= databits[i];
+//      }
+//      char binchar[24];
+//      String bitstring;
+//      for(i=1; i<25;i++){bitstring = bitstring + databits[i];}
+//
+//      bitstring.toCharArray(binchar, 25);
+//      
+//      long  b, k, m, n;
+//        long  len, sum = 0;
+//
+//        len = strlen(binchar) - 1;
+//        for(k = 0; k <= len; k++)
+//        {
+//                n = (binchar[k] - '0'); // char to numeric value
+//                //Serial.print(n);
+//               if ((n > 1) || (n < 0))
+//                {
+//                        puts("\n\n ERROR! BINARY has only 1 and 0!\n");
+//                      
+//                }
+//                for(b = 1, m = len; m > k; m--)
+//                {
+//                        // 1 2 4 8 16 32 64 ... place-values, reversed here
+//                        b *= 2;
+//                        
+//                }
+//                
+//                // sum it up
+//                //Serial.println(sum);
+//                sum = sum + n * b;
+//                //Serial.println(sum);  // uncomment to show the way this works
+//        }
+//        
+//  
+//      cardnum=sum;      
+//      printBits();  
     }
     else {
      PRINTLN("Unable to decode."); 
