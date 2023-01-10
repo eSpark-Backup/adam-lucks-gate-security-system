@@ -13,5 +13,6 @@ sudo chmod 777 $log
  
 # append date to log file
 if [ "$3" = "true" ]; then
+	echo "Calling script"
 	python3 relay_trig.py
 fi

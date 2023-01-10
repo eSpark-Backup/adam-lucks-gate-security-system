@@ -1,0 +1,26 @@
+[
+  {
+    "id": "camresponse",
+    "execute-command": "/home/pi/scripts/camera/camresponse.sh",
+    "command-working-directory": "/home/pi/scripts/camera",
+    "response-message": "success",
+    "http-methods":[
+         "Post "
+      ],
+    "incoming-payload-content-type": "application/json",
+    "pass-arguments-to-command":
+    [
+      {
+        "source": "entire-payload",
+      },
+      {
+        "source": "payload",
+        "name": "mac_address"
+      },
+      {
+        "source": "payload",
+        "name": "status"
+      },
+    ]
+  }
+]
