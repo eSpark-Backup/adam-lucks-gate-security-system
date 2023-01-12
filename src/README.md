@@ -49,7 +49,7 @@ psk="5616701699"
 
 ## Mockionopi setup (Adam Office)
 username: pi  
-password: mockionopizuul1  
+password: mockIonopi12  
 SSH Port: 9876  
 VNC Port: 4444
 
