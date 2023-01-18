@@ -6,8 +6,8 @@ import pyrebase
 from time import sleep
 from datetime import datetime
 
-UserUID      = "jEdG2fyfVYTuqBB2qb6AQwAOApH3"
-RPI_ID       = "10000000ac28b34c"
+UserUID      = "bo7V24mF7haiHI3EYgVQMpAUBdm2"
+RPI_ID       = "10000000de07f81a"
 imagePath    = "/home/pi/Pictures/"
 ImageBaseURL = "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2F"
 ImageAuxURL  = "?alt=media&token="
@@ -24,7 +24,7 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
-user = auth.sign_in_with_email_and_password("10000000ac28b34c@email.com", "gc?ufS*L9aFcv_}U")
+user = auth.sign_in_with_email_and_password("10000000de07f81a@email.com", "EPeD2r8839KPwR6")
 db = firebase.database()
 st = firebase.storage();
 
@@ -50,7 +50,7 @@ data = {
 
 db.child(UserUID).child(cameraMAC).update(data, user['idToken'])
 os.system("sudo rm "+imagePath+imageID+imageformat)
-f = open('log_file.txt', 'w')
+f = open('log_file.txt', 'a')
 f.write(str(timestamp)+" Image Upload Success "+imageID+imageformat+"\n")
 f.close()
 
