@@ -41,7 +41,7 @@ while True:
         if value == " ":
             indices.append(idx)
     
-    timestamp = scanData[0:indices[1]-1]
+    #timestamp = scanData[0:indices[1]-1]
     scanData = scanData[indices[1]+1:]
     w_bits = format(int(scanData), '026b')
     f_code = int(w_bits[1:9], 2)
@@ -54,7 +54,6 @@ while True:
     os.system("echo 1 > /sys/class/ionopi/relay/o1")
     time.sleep(2)
     os.system("echo 0 > /sys/class/ionopi/relay/o1")
-    timestamp = int(timestamp)
     f = open('log_file.txt', 'a')
     f.write(str(timestamp)+" Relay Trigger Success\n")
     f.close()
