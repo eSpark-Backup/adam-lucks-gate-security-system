@@ -51,7 +51,7 @@ while True:
     print("Facility Code =", f_code)
     print("Card Number = " , card_number)
     card_number = constant + card_number
-    os.system("curl -X GET -k 'http://zuul2.zuulsystems.com/api/scanned-rfid-code/"+str(card_number)+"' -H 'Content-Type: text/plain' -H 'Authorization: Basic MTAwMDAwMDBkZTA3ZjgxYTpQN3hGQjJzZGk1'")
+    os.system("curl -X GET -k 'http://app.zuulsystems.com/api/scanned-rfid-code/"+str(card_number)+"' -H 'Content-Type: text/plain' -H 'Authorization: Basic MTAwMDAwMDBlNjcwZmE3OTptUFd4YXhxdVNz'")
     os.system("echo 1 > /sys/class/ionopi/relay/o1")
     time.sleep(2)
     os.system("echo 0 > /sys/class/ionopi/relay/o1")
