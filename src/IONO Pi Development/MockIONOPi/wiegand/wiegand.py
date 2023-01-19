@@ -11,7 +11,7 @@ parameters = {
   "w1_pulse_itvl_max":20000
 }
 param = list(parameters.values())
-constant = 65536*36
+constant = 65536*36 #65536*36 For MAXTEK ADAM OFFICE only
 
 file = [open("/sys/class/ionopi/wiegand/w1_enabled",'w'), open("/sys/class/ionopi/wiegand/w1_pulse_width_min",'w'), open("/sys/class/ionopi/wiegand/w1_pulse_width_max",'w'),
          open("/sys/class/ionopi/wiegand/w1_pulse_itvl_min",'w'), open("/sys/class/ionopi/wiegand/w1_pulse_itvl_max",'w')]
@@ -42,6 +42,7 @@ while True:
             indices.append(idx)
     
     #timestamp = scanData[0:indices[1]-1]
+    timestamp = datetime.datetime.now()
     scanData = scanData[indices[1]+1:]
     w_bits = format(int(scanData), '026b')
     f_code = int(w_bits[1:9], 2)
@@ -55,5 +56,5 @@ while True:
     time.sleep(2)
     os.system("echo 0 > /sys/class/ionopi/relay/o1")
     f = open('log_file.txt', 'a')
-    f.write(str(timestamp)+" Relay Trigger Success\n")
+    f.write(str(timestamp)+" Relay Trigger Success against code"+card_number+"\n")
     f.close()

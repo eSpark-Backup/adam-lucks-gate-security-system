@@ -33,8 +33,8 @@ Router Public IP: 24.186.120.199
 ## HamletIONOPI HOA
 username: pi  
 password: HamIONO@#$!#PI12   
-SSH Port: 1077  
-VNC Port: 7777
+SSH Port: 2254  
+VNC Port: 8545
 
 Router Public IP: 24.186.120.199
 
