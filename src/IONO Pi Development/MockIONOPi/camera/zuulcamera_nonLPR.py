@@ -7,7 +7,8 @@ from time import sleep
 from datetime import datetime
 
 UserUID      = "bo7V24mF7haiHI3EYgVQMpAUBdm2"
-RPI_ID       = "10000000de07f81a"
+RPI_ID       = "10000000de07f81a@email.com"
+RPI_PASS     = "EPeD2r8839KPwR6"
 imagePath    = "/home/pi/Pictures/"
 ImageBaseURL = "https://firebasestorage.googleapis.com/v0/b/zuul-master.appspot.com/o/images%2F"
 ImageAuxURL  = "?alt=media&token="
@@ -18,13 +19,13 @@ cameraMAC    = "64:25:5E:02:35:93"
 config = {
   "apiKey": "AIzaSyBMJa73RYD3-HOwR9ndGWS3SxH9mp4qkJA",
   "authDomain": "zuul-master.firebaseapp.com",
-  "databaseURL": "https://zuul-master.firebaseio.com/",
+  "databaseURL": "https://zuul-master-404bb.firebaseio.com/",
   "storageBucket": "zuul-master.appspot.com"
 }
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
-user = auth.sign_in_with_email_and_password("10000000de07f81a@email.com", "EPeD2r8839KPwR6")
+user = auth.sign_in_with_email_and_password(RPI_ID, RPI_PASS)
 db = firebase.database()
 st = firebase.storage();
 
