@@ -53,7 +53,7 @@ while True:
     card_number = constant + card_number
     os.system("curl -X GET -k 'http://app.zuulsystems.com/api/scanned-rfid-code/"+str(card_number)+"' -H 'Content-Type: text/plain' -H 'Authorization: Basic MTAwMDAwMDBlNjcwZmE3OTptUFd4YXhxdVNz'")
     os.system("echo 1 > /sys/class/ionopi/relay/o1")
-    time.sleep(2)
+    time.sleep(1)
     os.system("echo 0 > /sys/class/ionopi/relay/o1")
     log = open('log_file.txt', 'a')
     log.write(str(timestamp)+" Relay Trigger Success against code"+str(card_number)+"\n")
